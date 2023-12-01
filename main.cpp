@@ -20,7 +20,6 @@ int main(int argc, char **argv) {
     }
     k = atoi(argv[3]);
     image = imread(argv[1]);
-    cvtColor(image, image, COLOR_BGR2GRAY);
     image.convertTo(image, CV_64F);
     if(image.empty()) {
 
@@ -36,21 +35,29 @@ int main(int argc, char **argv) {
 }
 Mat compressImage(const Mat &image, int k) {
 
-    double min, max;
-    Mat u, w, vt, sigma, compressedImage, checkValues;
-    SVD svd;
+    Mat compressedImage;
+    vector<Mat> channels;
 
-    svd.compute(image, w, u, vt);
-    cout << "U:" << u.size() << endl;
-    cout << "S:" << w.size() << endl;
-    minMaxLoc(w, &min , &max);
-    cout << min << " " << max << endl;
-    compare(w, k, checkValues, CMP_GT);
-    w.copyTo(sigma, checkValues);
-    sigma = Mat::diag(sigma);
-    cout << "Rows:\t" << sigma.rows << endl;
-    cout << "k:\t" << k << endl;
-    compressedImage = u * sigma * vt;
+    split(image, channels);
+    for(Mat i: channels) {
+
+        double min, max;
+        Mat u, w, vt, sigma, checkValues;
+        SVD svd;
+        svd.compute(i, w, u, vt);
+        cout << "U:" << u.size() << endl;
+        cout << "S:" << w.size() << endl;
+        minMaxLoc(w, &min , &max);
+        cout << min << " " << max << endl;
+        compare(w, k, checkValues, CMP_GT);
+        w.copyTo(sigma, checkValues);
+        sigma = Mat::diag(sigma);
+        cout << "Rows:\t" << sigma.rows << endl;
+        cout << "k:\t" << k << endl;
+        i = u * sigma * vt;
+
+    }
+    merge(channels, compressedImage);
     cout << image.size() << " " << compressedImage.size() << endl;
     return compressedImage;
 

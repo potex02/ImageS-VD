@@ -4,7 +4,7 @@ The goal is the creation of a desktop application for image compression using th
 The project is written in C++ and uses CMake as build system.
 
 ## Current status
-The project is in a very early state of development, and the only functionality currently present is the compression of grayscale images (every color image is treated as a grayscale image).
+The project is in a very early state of development and can be used only by command line for now.
 
 ## Dependecies
 - OpenCV;
