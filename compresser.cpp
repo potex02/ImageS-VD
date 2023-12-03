@@ -1,4 +1,5 @@
 #include "Compresser.h"
+#include<iostream>
 
 Compresser::Compresser(std:: string path) {
 
@@ -6,7 +7,7 @@ Compresser::Compresser(std:: string path) {
     this->image.convertTo(this->image, CV_64F);
     if(this->image.empty()) {
 
-        //throw new std::exception("Empty image");
+        throw new std::exception();
 
     }
 

@@ -18,11 +18,20 @@ int main(int argc, char **argv) {
         return 1;
 
     }
-    k = atoi(argv[3]);
-    Compresser compresser = Compresser(argv[1]);
-    cout << compresser.image.size() << endl;
-    compressedImage = compressImage(compresser.image, k);
-    imwrite(argv[2], compressedImage);
+    try {
+
+        k = atoi(argv[3]);
+        Compresser compresser = Compresser(argv[1]);
+        cout << compresser.image.size() << endl;
+        compressedImage = compressImage(compresser.image, k);
+        imwrite(argv[2], compressedImage);
+
+    } catch(exception e) {
+
+        cout << e.what() << endl;
+
+    }
+
     return 0;
 
 }
