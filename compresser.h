@@ -7,6 +7,7 @@ class Compresser {
 
     public:
         Compresser(std::string path);
+        cv::Mat compress(int k);
         cv::Mat image;
 
 };
