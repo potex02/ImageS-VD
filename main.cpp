@@ -1,6 +1,6 @@
 #include <iostream>
-#include <fstream>
 #include <opencv2/opencv.hpp>
+#include "compresser.h"
 
 using namespace std;
 using namespace cv;
@@ -9,7 +9,7 @@ Mat compressImage(const Mat &image, int k);
 
 int main(int argc, char **argv) {
 
-    Mat image, compressedImage;
+    Mat compressedImage;
     int k;
 
     if(argc < 4) {
@@ -19,16 +19,9 @@ int main(int argc, char **argv) {
 
     }
     k = atoi(argv[3]);
-    image = imread(argv[1]);
-    image.convertTo(image, CV_64F);
-    if(image.empty()) {
-
-        cout << "Error. Please select an image" << endl;
-        return 1;
-
-    }
-    cout << image.size() << endl;
-    compressedImage = compressImage(image, k);
+    Compresser compresser = Compresser(argv[1]);
+    cout << compresser.image.size() << endl;
+    compressedImage = compressImage(compresser.image, k);
     imwrite(argv[2], compressedImage);
     return 0;
 
