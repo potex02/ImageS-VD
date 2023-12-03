@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 
         k = atoi(argv[3]);
         Compresser compresser = Compresser(argv[1]);
-        cout << compresser.image.size() << endl;
+        cout << compresser.getImage().size() << endl;
         compressedImage = compresser.compress(k);
         imwrite(argv[2], compressedImage);
 
@@ -33,10 +33,5 @@ int main(int argc, char **argv) {
     }
 
     return 0;
-
-}
-Mat compressImage(const Mat &image, int k) {
-
-
 
 }

@@ -12,6 +12,11 @@ Compresser::Compresser(std:: string path) {
     }
 
 }
+cv::Mat Compresser::getImage() {
+
+    return this->image;
+
+}
 cv::Mat Compresser::compress(int k) {
 
     cv::Mat compressedImage;
