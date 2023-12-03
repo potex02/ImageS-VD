@@ -1,6 +1,4 @@
 #pragma once
-#ifndef COMPRESSER_H
-#define COMPRESSER_H
 #include<opencv2/opencv.hpp>
 
 class Compresser {
@@ -13,5 +11,3 @@ class Compresser {
         cv::Mat image;
 
 };
-
-#endif // COMPRESSER_H
