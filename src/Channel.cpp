@@ -6,10 +6,9 @@ Channel::Channel(cv::Mat _matrix) {
     this->matrix = _matrix;
 
 }
-cv::Mat Channel::compress(int k) {
+void Channel::decompose() {
 
     double min, max;
-    cv::Mat sigma, checkValues;
     cv::SVD svd;
 
     svd.compute(this->matrix, this->w, this->u, this->vt);
@@ -17,6 +16,12 @@ cv::Mat Channel::compress(int k) {
     std::cout << "S:" << this->w.size() << std::endl;
     cv::minMaxLoc(this->w, &min , &max);
     std::cout << min << " " << max << std::endl;
+
+}
+cv::Mat Channel::compose(double k) {
+
+    cv::Mat sigma, checkValues;
+
     cv::compare(this->w, k, checkValues, cv::CMP_GT);
     this->w.copyTo(sigma, checkValues);
     sigma = cv::Mat::diag(sigma);

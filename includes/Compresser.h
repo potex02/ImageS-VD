@@ -7,7 +7,7 @@ class Compresser {
     public:
         Compresser(std::string path);
         cv::Mat getImage();
-        cv::Mat compress(int k);
+        cv::Mat compress(double k);
     private:
         cv::Mat image;
         std::vector<Channel> channels;

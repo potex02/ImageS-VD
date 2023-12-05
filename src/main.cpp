@@ -10,7 +10,7 @@ Mat compressImage(const Mat &image, int k);
 int main(int argc, char **argv) {
 
     Mat compressedImage;
-    int k;
+    double k;
 
     if(argc < 4) {
 
@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     }
     try {
 
-        k = atoi(argv[3]);
+        k = atof(argv[3]);
         Compresser compresser = Compresser(argv[1]);
         cout << compresser.getImage().size() << endl;
         compressedImage = compresser.compress(k);

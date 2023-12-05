@@ -5,7 +5,8 @@ class Channel {
 
     public:
         Channel(cv::Mat _matrix);
-        cv::Mat compress(int k);
+        void decompose();
+        cv::Mat compose(double k);
     private:
         cv::Mat matrix;
         cv::Mat u;
