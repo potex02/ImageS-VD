@@ -1,5 +1,6 @@
 #pragma once
 #include<opencv2/opencv.hpp>
+#include "Channel.h"
 
 class Compresser {
 
@@ -9,5 +10,6 @@ class Compresser {
         cv::Mat compress(int k);
     private:
         cv::Mat image;
+        std::vector<Channel> channels;
 
 };
