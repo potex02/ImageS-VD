@@ -1,5 +1,4 @@
 #include "Compresser.h"
-#include<iostream>
 
 Compresser::Compresser(std:: string path) {
 
@@ -25,7 +24,6 @@ void Compresser::decompose() {
     for(cv::Mat i: c) {
 
         this->channels.emplace_back(i);
-        this->channels.back().decompose();
 
     }
 
@@ -41,7 +39,6 @@ cv::Mat Compresser::compose(double k) {
 
     }
     cv::merge(c, compressedImage);
-    std::cout << this->image.size() << " " << compressedImage.size() << std::endl;
     return compressedImage;
 
 };
