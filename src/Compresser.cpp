@@ -17,21 +17,31 @@ cv::Mat Compresser::getImage() {
     return this->image;
 
 }
-cv::Mat Compresser::compress(double k) {
+void Compresser::decompose() {
 
-    cv::Mat compressedImage;
     std::vector<cv::Mat> c;
 
     cv::split(this->image, c);
-    for(int i = 0; i != c.size(); i++) {
+    for(cv::Mat i: c) {
 
-        this->channels.emplace_back(c[i]);
-        this->channels[i].decompose();
-        c[i] = this->channels[i].compose(k);
+        this->channels.emplace_back(i);
+        this->channels.back().decompose();
+
+    }
+
+};
+cv::Mat Compresser::compose(double k) {
+
+    std::vector<cv::Mat> c;
+    cv::Mat compressedImage;
+
+    for(Channel i: this->channels) {
+
+        c.emplace_back(i.compose(k));
 
     }
     cv::merge(c, compressedImage);
-    std::cout << image.size() << " " << compressedImage.size() << std::endl;
+    std::cout << this->image.size() << " " << compressedImage.size() << std::endl;
     return compressedImage;
 
-}
+};
