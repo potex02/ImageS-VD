@@ -9,7 +9,6 @@ The project is in a very early state of development and can be used only by comm
 
 ## Dependecies
 - OpenCV;
-- JSON for Modern C++ (planned, not used yet);
 - Gtkmm (planned, not used yet).
 
 ## Compilation

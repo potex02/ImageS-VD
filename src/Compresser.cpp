@@ -19,6 +19,19 @@ Compresser::Compresser(std:: string path) {
     }
 
 }
+void Compresser::save() {
+
+    cv::FileStorage fs("output.json", cv::FileStorage::WRITE);
+    int i = 0;
+
+    for(Channel j: this->channels) {
+
+        j.save(fs, i);
+
+    }
+    fs.release();
+
+}
 cv::Mat Compresser::compose(double k) {
 
     std::vector<cv::Mat> c;

@@ -10,6 +10,13 @@ Channel::Channel(cv::Mat matrix) {
     std::cout << min << " " << max << std::endl;
 
 }
+void Channel::save(cv::FileStorage &fs, int i) {
+
+    fs << "U_" + i << this->u;
+    fs << "W_" + i << this->w;
+    fs << "Vt_" + i << this->vt;
+
+}
 cv::Mat Channel::compose(double k) {
 
     cv::Mat sigma, checkValues;

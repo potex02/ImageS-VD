@@ -1,11 +1,10 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <nlohmann/json.hpp>
 #include "compresser.h"
 
 using namespace std;
 using namespace cv;
-
-Mat compressImage(const Mat &image, int k);
 
 int main(int argc, char **argv) {
 
@@ -23,6 +22,7 @@ int main(int argc, char **argv) {
         k = atof(argv[3]);
         Compresser compresser = Compresser(argv[1]);
         compressedImage = compresser.compose(k);
+        compresser.save();
         imwrite(argv[2], compressedImage);
 
     } catch(exception e) {
