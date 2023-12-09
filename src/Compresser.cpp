@@ -2,32 +2,23 @@
 
 Compresser::Compresser(std:: string path) {
 
-    this->image = cv::imread(path);
-    this->image.convertTo(this->image, CV_64F);
-    if(this->image.empty()) {
+    cv::Mat image = cv::imread(path);
+    std::vector<cv::Mat> c;
+
+    image.convertTo(image, CV_64F);
+    if(image.empty()) {
 
         throw new std::exception();
 
     }
-
-}
-cv::Mat Compresser::getImage() {
-
-    return this->image;
-
-}
-void Compresser::decompose() {
-
-    std::vector<cv::Mat> c;
-
-    cv::split(this->image, c);
+    cv::split(image, c);
     for(cv::Mat i: c) {
 
         this->channels.emplace_back(i);
 
     }
 
-};
+}
 cv::Mat Compresser::compose(double k) {
 
     std::vector<cv::Mat> c;

@@ -22,8 +22,6 @@ int main(int argc, char **argv) {
 
         k = atof(argv[3]);
         Compresser compresser = Compresser(argv[1]);
-        cout << compresser.getImage().size() << endl;
-        compresser.decompose();
         compressedImage = compresser.compose(k);
         imwrite(argv[2], compressedImage);
 
