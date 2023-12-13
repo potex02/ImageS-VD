@@ -19,9 +19,14 @@ Compresser::Compresser(std:: string path) {
     }
 
 }
-void Compresser::save() {
+void Compresser::saveImage(std::string p) {
 
-    cv::FileStorage fs("output.json", cv::FileStorage::WRITE);
+    cv::imwrite(p, this->image);
+
+}
+void Compresser::saveChannels(std::string p) {
+
+    cv::FileStorage fs(p, cv::FileStorage::WRITE);
     int i = 0;
 
     for(Channel j: this->channels) {
@@ -32,7 +37,7 @@ void Compresser::save() {
     fs.release();
 
 }
-cv::Mat Compresser::compose(double k) {
+void Compresser::compose(double k) {
 
     std::vector<cv::Mat> c;
     cv::Mat compressedImage;
@@ -43,6 +48,6 @@ cv::Mat Compresser::compose(double k) {
 
     }
     cv::merge(c, compressedImage);
-    return compressedImage;
+    this->image = compressedImage;
 
 };

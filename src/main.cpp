@@ -8,7 +8,6 @@ using namespace cv;
 
 int main(int argc, char **argv) {
 
-    Mat compressedImage;
     double k;
 
     if(argc < 4) {
@@ -21,9 +20,8 @@ int main(int argc, char **argv) {
 
         k = atof(argv[3]);
         Compresser compresser = Compresser(argv[1]);
-        compressedImage = compresser.compose(k);
-        compresser.save();
-        imwrite(argv[2], compressedImage);
+        compresser.compose(k);
+        compresser.saveImage(argv[2]);
 
     } catch(exception e) {
 

@@ -7,9 +7,11 @@ class Compresser {
 
     public:
         Compresser(std::string path);
-        void save();
-        cv::Mat compose(double k);
+        void saveImage(std::string p);
+        void saveChannels(std::string p);
+        void compose(double k);
     private:
+        cv::Mat image;
         std::vector<Channel> channels;
 
 };
