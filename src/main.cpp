@@ -1,4 +1,5 @@
 #include <iostream>
+#include<filesystem>
 #include <opencv2/opencv.hpp>
 #include <nlohmann/json.hpp>
 #include "compresser.h"
@@ -9,6 +10,7 @@ using namespace cv;
 int main(int argc, char **argv) {
 
     double k;
+    filesystem::path p(argv[2]);
 
     if(argc < 4) {
 
@@ -20,15 +22,22 @@ int main(int argc, char **argv) {
 
         k = atof(argv[3]);
         Compresser compresser = Compresser(argv[1]);
-        compresser.compose(k);
-        compresser.saveImage(argv[2]);
+        if(p.extension() == ".png" || p.extension() == ".jpg" || p.extension() == ".jpeg") {
+
+            compresser.compose(k);
+            compresser.saveImage(argv[2]);
+
+        } else {
+
+            compresser.saveChannels(argv[2]);
+
+        }
 
     } catch(exception e) {
 
         cout << e.what() << endl;
 
     }
-
     return 0;
 
 }
