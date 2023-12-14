@@ -5,7 +5,7 @@
 class Channel {
 
     public:
-        Channel(cv::Mat matrix);
+        Channel(cv::Mat &matrix);
         void save(cv::FileStorage &fs, int i);
         cv::Mat compose(double k);
     private:

@@ -1,6 +1,6 @@
 #include "Compresser.h"
 
-Compresser::Compresser(std::string file) {
+Compresser::Compresser(const std::string &file) {
 
     std::filesystem::path p(file);
 
@@ -8,10 +8,14 @@ Compresser::Compresser(std::string file) {
 
         this->loadImage(file);
 
+    } else {
+
+        this->loadChannels(file);
+
     }
 
 }
-void Compresser::loadImage(std::string file) {
+void Compresser::loadImage(const std::string &file) {
 
     cv::Mat image = cv::imread(file);
     std::vector<cv::Mat> c;
@@ -30,12 +34,18 @@ void Compresser::loadImage(std::string file) {
     }
 
 }
-void Compresser::saveImage(std::string file) {
+void Compresser::loadChannels(const std::string &file) {
+
+    cv::FileStorage fs(file, cv::FileStorage::READ);
+
+}
+
+void Compresser::saveImage(const std::string &file) {
 
     cv::imwrite(file, this->image);
 
 }
-void Compresser::saveChannels(std::string file) {
+void Compresser::saveChannels(const std::string &file) {
 
     cv::FileStorage fs(file, cv::FileStorage::WRITE);
     int i = 0;
@@ -43,6 +53,7 @@ void Compresser::saveChannels(std::string file) {
     for(Channel j: this->channels) {
 
         j.save(fs, i);
+        i++;
 
     }
     fs.release();

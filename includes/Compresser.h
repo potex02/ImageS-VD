@@ -7,10 +7,11 @@
 class Compresser {
 
     public:
-        Compresser(std::string file);
-        void loadImage(std::string file);
-        void saveImage(std::string file);
-        void saveChannels(std::string file);
+        Compresser(const std::string &file);
+        void loadImage(const std::string &file);
+        void loadChannels(const std::string &file);
+        void saveImage(const std::string &file);
+        void saveChannels(const std::string &file);
         void compose(double k);
     private:
         cv::Mat image;
