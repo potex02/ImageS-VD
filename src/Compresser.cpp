@@ -1,8 +1,19 @@
 #include "Compresser.h"
 
-Compresser::Compresser(std:: string path) {
+Compresser::Compresser(std::string file) {
 
-    cv::Mat image = cv::imread(path);
+    std::filesystem::path p(file);
+
+    if(p.extension() == ".png" || p.extension() == ".jpg" || p.extension() == ".jpeg") {
+
+        this->loadImage(file);
+
+    }
+
+}
+void Compresser::loadImage(std::string file) {
+
+    cv::Mat image = cv::imread(file);
     std::vector<cv::Mat> c;
 
     image.convertTo(image, CV_64F);
@@ -19,14 +30,14 @@ Compresser::Compresser(std:: string path) {
     }
 
 }
-void Compresser::saveImage(std::string p) {
+void Compresser::saveImage(std::string file) {
 
-    cv::imwrite(p, this->image);
+    cv::imwrite(file, this->image);
 
 }
-void Compresser::saveChannels(std::string p) {
+void Compresser::saveChannels(std::string file) {
 
-    cv::FileStorage fs(p, cv::FileStorage::WRITE);
+    cv::FileStorage fs(file, cv::FileStorage::WRITE);
     int i = 0;
 
     for(Channel j: this->channels) {
