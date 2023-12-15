@@ -36,7 +36,29 @@ void Compresser::loadImage(const std::string &file) {
 }
 void Compresser::loadChannels(const std::string &file) {
 
+    int i = 0;
+    bool finish = false;
     cv::FileStorage fs(file, cv::FileStorage::READ);
+
+    while(!finish) {
+
+        cv::Mat u, w, vt;
+
+        fs["U_" + std::to_string(i)] >> u;
+        fs["W_" + std::to_string(i)] >> w;
+        fs["Vt_" + std::to_string(i)] >> vt;
+        if(u.empty() || w.empty() || vt.empty()) {
+
+            finish = true;
+
+        } else {
+
+            this->channels.emplace_back(u, w, vt);
+
+        }
+        i++;
+
+    }
 
 }
 

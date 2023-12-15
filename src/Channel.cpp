@@ -1,6 +1,6 @@
 #include "channel.h"
 
-Channel::Channel(cv::Mat &matrix) {
+Channel::Channel(const cv::Mat &matrix) {
 
     double min, max;
     cv::SVD svd;
@@ -10,6 +10,7 @@ Channel::Channel(cv::Mat &matrix) {
     std::cout << min << " " << max << std::endl;
 
 }
+Channel::Channel(const cv::Mat &_u, const cv::Mat &_w, const cv::Mat &_vt): u(_u), w(_w), vt(_vt) {}
 void Channel::save(cv::FileStorage &fs, int i) {
 
     fs << "U_" + std::to_string(i) << this->u;
