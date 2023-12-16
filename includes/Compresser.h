@@ -19,5 +19,6 @@ class Compresser {
     private:
         cv::Mat image;
         std::vector<Channel> channels;
+        cv::Mat convertToPgm();
 
 };

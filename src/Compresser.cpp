@@ -30,7 +30,7 @@ Compresser::Compresser(const std::string &file) {
     }
 
 }
-bool Compresser::isImage(const std::string &file) {
+inline bool Compresser::isImage(const std::string &file) {
 
     std::filesystem::path p(file);
 
@@ -86,6 +86,14 @@ void Compresser::loadChannels(const std::string &file) {
 
 void Compresser::saveImage(const std::string &file) {
 
+    std::filesystem::path p(file);
+
+    if(p.extension() == ".pgm") {
+
+        cv::imwrite(file, this->convertToPgm());
+        return;
+
+    }
     cv::imwrite(file, this->image);
 
 }
@@ -117,3 +125,17 @@ void Compresser::compose(double k) {
     this->image = compressedImage;
 
 };
+cv::Mat Compresser::convertToPgm() {
+
+    std::vector<cv::Mat> channels;
+    cv::Mat result = cv::Mat::zeros(this->image.size(), CV_64FC1);
+
+    cv::split(this->image, channels);
+    for(cv::Mat i: channels) {
+
+        result += i;
+
+    }
+    return result / channels.size();
+
+}
