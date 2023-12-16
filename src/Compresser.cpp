@@ -1,10 +1,25 @@
 #include "Compresser.h"
 
+std::vector<std::string> Compresser::supportedExtensions = {
+    // Windows bitmaps
+    ".bmp", ".dib",
+    //JPEG files
+    ".jpeg", ".jpg", ".jpe",
+    //JPEG 2000 files
+    ".jp2",
+    //Portable Network Graphics
+    ".png",
+    //Portable image format
+    ".pbm", ".pgm", ".ppm",
+    //Sun rasters
+    ".sr", ".ras"
+    //TIFF files
+    ".tiff", ".tif"
+};
+
 Compresser::Compresser(const std::string &file) {
 
-    std::filesystem::path p(file);
-
-    if(p.extension() == ".png" || p.extension() == ".jpg" || p.extension() == ".jpeg") {
+    if(Compresser::isImage(file)) {
 
         this->loadImage(file);
 
@@ -13,6 +28,13 @@ Compresser::Compresser(const std::string &file) {
         this->loadChannels(file);
 
     }
+
+}
+bool Compresser::isImage(const std::string &file) {
+
+    std::filesystem::path p(file);
+
+    return std::find(Compresser::supportedExtensions.begin(), Compresser::supportedExtensions.end(), p.extension()) != Compresser::supportedExtensions.end();
 
 }
 void Compresser::loadImage(const std::string &file) {

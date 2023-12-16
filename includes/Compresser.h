@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 #include <filesystem>
 #include <opencv2/opencv.hpp>
 #include "Channel.h"
@@ -7,6 +8,8 @@
 class Compresser {
 
     public:
+        static std::vector<std::string> supportedExtensions;
+        static inline bool isImage(const std::string &file);
         Compresser(const std::string &file);
         void loadImage(const std::string &file);
         void loadChannels(const std::string &file);

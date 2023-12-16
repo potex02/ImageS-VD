@@ -70,7 +70,7 @@ cmake --build .
 ```
 imageS-VD <input-file-name> <output-file-name> <singular-value-threshold>
 ```
-The input file and output file are treaten as images if their extensions is png, jpg or jpeg, or as decomposed images files otherwise.<br/>
+The input file and output file are treaten as images if their extensions is a [supported](https://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html?highlight=imread#imread) image extension, or as decomposed images files otherwise.<br/>
 If the output file is a decompose image file, the threshold is useless (although the same it must be specified).
 
 # License
