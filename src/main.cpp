@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
         return 1;
 
     }
-    //try {
+    try {
 
         k = atof(argv[3]);
         Compresser compresser = Compresser(argv[1]);
@@ -31,11 +31,11 @@ int main(int argc, char **argv) {
 
         }
 
-    //} catch(exception e) {
+    } catch(exception e) {
 
-    //    cout << e.what() << endl;
+        cout << e.what() << endl;
 
-    //}
+    }
     return 0;
 
 }

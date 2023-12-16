@@ -30,7 +30,7 @@ Compresser::Compresser(const std::string &file) {
     }
 
 }
-inline bool Compresser::isImage(const std::string &file) {
+bool Compresser::isImage(const std::string &file) {
 
     std::filesystem::path p(file);
 
@@ -39,7 +39,7 @@ inline bool Compresser::isImage(const std::string &file) {
 }
 void Compresser::loadImage(const std::string &file) {
 
-    cv::Mat image = cv::imread(file);
+    cv::Mat image = cv::imread(file, cv::IMREAD_UNCHANGED);
     std::vector<cv::Mat> c;
 
     image.convertTo(image, CV_64F);
@@ -88,6 +88,12 @@ void Compresser::saveImage(const std::string &file) {
 
     std::filesystem::path p(file);
 
+    if(p.extension() == ".pbm") {
+
+        cv::imwrite(file, this->convertToPbm());
+        return;
+
+    }
     if(p.extension() == ".pgm") {
 
         cv::imwrite(file, this->convertToPgm());
@@ -131,11 +137,24 @@ cv::Mat Compresser::convertToPgm() {
     cv::Mat result = cv::Mat::zeros(this->image.size(), CV_64FC1);
 
     cv::split(this->image, channels);
+    if(channels.size() >= 3) {
+
+        return 0.299 * channels[0] + 0.587 * channels[1] + 0.114 * channels[2];
+
+    }
     for(cv::Mat i: channels) {
 
         result += i;
 
     }
     return result / channels.size();
+
+}
+cv::Mat Compresser::convertToPbm() {
+
+    cv::Mat grayscaleImage = this->convertToPgm();
+
+    cv::threshold(grayscaleImage, grayscaleImage, 128, 255, cv::THRESH_BINARY);
+    return grayscaleImage;
 
 }
