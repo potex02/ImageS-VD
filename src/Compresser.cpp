@@ -135,12 +135,12 @@ void Compresser::compose(double k) {
 cv::Mat Compresser::convertToPgm() {
 
     std::vector<cv::Mat> channels;
-    cv::Mat result = cv::Mat::zeros(this->image.size(), CV_8U);
+    cv::Mat result = cv::Mat::zeros(this->image.size(), CV_8UC1);
 
     cv::split(this->image, channels);
     if(channels.size() >= 3) {
 
-        return 0.114 * channels[0] + 0.587 * channels[1] + 0.299     * channels[2];
+        return 0.114 * channels[0] + 0.587 * channels[1] + 0.299 * channels[2];
 
     }
     for(cv::Mat i: channels) {
