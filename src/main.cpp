@@ -1,7 +1,6 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <nlohmann/json.hpp>
-#include "compresser.h"
+#include "Compresser.h"
 
 using namespace std;
 using namespace cv;
