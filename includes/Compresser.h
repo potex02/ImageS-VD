@@ -1,4 +1,5 @@
 #pragma once
+#include <stdexcept>
 #include <vector>
 #include <algorithm>
 #include <filesystem>
@@ -8,8 +9,10 @@
 class Compresser {
 
     public:
-        static std::vector<std::string> supportedExtensions;
+        static std::vector<std::string> supportedImageExtensions;
+        static std::vector<std::string> supportedFileExtensions;
         static inline bool isImage(const std::string &file);
+        static inline bool isFile(const std::string &file);
         Compresser(const std::string &file);
         void loadImage(const std::string &file);
         void loadChannels(const std::string &file);

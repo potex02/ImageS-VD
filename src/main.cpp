@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include <opencv2/opencv.hpp>
 #include "Compresser.h"
 
@@ -23,12 +24,16 @@ int main(int argc, char **argv) {
 
             compresser.compose(k);
             compresser.saveImage(argv[2]);
-
-        } else {
-
-            compresser.saveChannels(argv[2]);
+            return 0;
 
         }
+        if(Compresser::isFile(argv[2])) {
+
+            compresser.saveChannels(argv[2]);
+            return 0;
+
+        }
+        throw new std::invalid_argument("unknown extension for output file");
 
     } catch(exception e) {
 

@@ -1,6 +1,6 @@
 #include "Compresser.h"
 
-std::vector<std::string> Compresser::supportedExtensions = {
+std::vector<std::string> Compresser::supportedImageExtensions = {
     // Windows bitmaps
     ".bmp", ".dib",
     //JPEG files
@@ -16,25 +16,39 @@ std::vector<std::string> Compresser::supportedExtensions = {
     //TIFF files
     ".tiff", ".tif"
 };
+std::vector<std::string> Compresser::supportedFileExtensions = {
+    ".json", ".yaml", ".xml", ".bin"
+};
 
 Compresser::Compresser(const std::string &file) {
 
     if(Compresser::isImage(file)) {
 
         this->loadImage(file);
-
-    } else {
-
-        this->loadChannels(file);
+        return;
 
     }
+    if(Compresser::isFile(file)) {
+
+        this->loadChannels(file);
+        return;
+
+    }
+    throw new std::invalid_argument("unknown extension for input file");
 
 }
 bool Compresser::isImage(const std::string &file) {
 
     std::filesystem::path p(file);
 
-    return std::find(Compresser::supportedExtensions.begin(), Compresser::supportedExtensions.end(), p.extension()) != Compresser::supportedExtensions.end();
+    return std::find(Compresser::supportedImageExtensions.begin(), Compresser::supportedImageExtensions.end(), p.extension()) != Compresser::supportedImageExtensions.end();
+
+}
+bool Compresser::isFile(const std::string &file) {
+
+    std::filesystem::path p(file);
+
+    return std::find(Compresser::supportedFileExtensions.begin(), Compresser::supportedFileExtensions.end(), p.extension()) != Compresser::supportedFileExtensions.end();
 
 }
 void Compresser::loadImage(const std::string &file) {
@@ -45,7 +59,7 @@ void Compresser::loadImage(const std::string &file) {
     image.convertTo(image, CV_64F);
     if(image.empty()) {
 
-        throw new std::exception();
+        throw new std::invalid_argument("Input file does not exixts");
 
     }
     cv::split(image, c);
@@ -62,6 +76,11 @@ void Compresser::loadChannels(const std::string &file) {
     bool finish = false;
     cv::FileStorage fs(file, cv::FileStorage::READ);
 
+    if(!std::filesystem::exists(std::filesystem::path(file))) {
+
+        throw new std::invalid_argument("Input file does not exixts");
+
+    }
     while(!finish) {
 
         cv::Mat u, w, vt;
