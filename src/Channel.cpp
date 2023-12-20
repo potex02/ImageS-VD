@@ -1,3 +1,7 @@
+/*
+ * This file is part of ImageS-VD Application.
+ * See the file LICENSE for licensing information.
+ */
 #include "Channel.h"
 
 Channel::Channel(const cv::Mat &matrix) {
@@ -10,14 +14,16 @@ Channel::Channel(const cv::Mat &matrix) {
 
 }
 Channel::Channel(const cv::Mat &_u, const cv::Mat &_w, const cv::Mat &_vt): u(_u), w(_w), vt(_vt) {}
-void Channel::save(cv::FileStorage &fs, int i) {
+void Channel::save(cv::FileStorage &fs, const int i) const {
 
-    fs << "U_" + std::to_string(i) << this->u;
-    fs << "W_" + std::to_string(i) << this->w;
-    fs << "Vt_" + std::to_string(i) << this->vt;
+    std::string j = std::to_string(i);
+
+    fs << "U_" + j << this->u;
+    fs << "W_" + j << this->w;
+    fs << "Vt_" + j << this->vt;
 
 }
-cv::Mat Channel::compose(double k) {
+cv::Mat Channel::compose(double k) const {
 
     cv::Mat sigma, checkValues;
 

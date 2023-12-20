@@ -1,6 +1,10 @@
-#include "Compresser.h"
+/*
+ * This file is part of ImageS-VD Application.
+ * See the file LICENSE for licensing information.
+ */
+#include "Compressor.h"
 
-std::vector<std::string> Compresser::supportedImageExtensions = {
+std::vector<std::string> Compressor::supportedImageExtensions = {
     // Windows bitmaps
     ".bmp", ".dib",
     //JPEG files
@@ -16,19 +20,19 @@ std::vector<std::string> Compresser::supportedImageExtensions = {
     //TIFF files
     ".tiff", ".tif"
 };
-std::vector<std::string> Compresser::supportedFileExtensions = {
+std::vector<std::string> Compressor::supportedFileExtensions = {
     ".json", ".yaml", ".xml", ".bin"
 };
 
-Compresser::Compresser(const std::string &file) {
+Compressor::Compressor(const std::string &file) {
 
-    if(Compresser::isImage(file)) {
+    if(Compressor::isImage(file)) {
 
         this->loadImage(file);
         return;
 
     }
-    if(Compresser::isFile(file)) {
+    if(Compressor::isFile(file)) {
 
         this->loadChannels(file);
         return;
@@ -37,21 +41,21 @@ Compresser::Compresser(const std::string &file) {
     throw new std::invalid_argument("unknown extension for input file");
 
 }
-bool Compresser::isImage(const std::string &file) {
+bool Compressor::isImage(const std::string &file) {
 
     std::filesystem::path p(file);
 
-    return std::find(Compresser::supportedImageExtensions.begin(), Compresser::supportedImageExtensions.end(), p.extension()) != Compresser::supportedImageExtensions.end();
+    return std::find(Compressor::supportedImageExtensions.begin(), Compressor::supportedImageExtensions.end(), p.extension()) != Compressor::supportedImageExtensions.end();
 
 }
-bool Compresser::isFile(const std::string &file) {
+bool Compressor::isFile(const std::string &file) {
 
     std::filesystem::path p(file);
 
-    return std::find(Compresser::supportedFileExtensions.begin(), Compresser::supportedFileExtensions.end(), p.extension()) != Compresser::supportedFileExtensions.end();
+    return std::find(Compressor::supportedFileExtensions.begin(), Compressor::supportedFileExtensions.end(), p.extension()) != Compressor::supportedFileExtensions.end();
 
 }
-void Compresser::loadImage(const std::string &file) {
+void Compressor::loadImage(const std::string &file) {
 
     cv::Mat image = cv::imread(file, cv::IMREAD_UNCHANGED);
     std::vector<cv::Mat> c;
@@ -70,7 +74,7 @@ void Compresser::loadImage(const std::string &file) {
     }
 
 }
-void Compresser::loadChannels(const std::string &file) {
+void Compressor::loadChannels(const std::string &file) {
 
     int i = 0;
     bool finish = false;
@@ -84,10 +88,11 @@ void Compresser::loadChannels(const std::string &file) {
     while(!finish) {
 
         cv::Mat u, w, vt;
+        std::string j = std::to_string(i);
 
-        fs["U_" + std::to_string(i)] >> u;
-        fs["W_" + std::to_string(i)] >> w;
-        fs["Vt_" + std::to_string(i)] >> vt;
+        fs["U_" + j] >> u;
+        fs["W_" + j] >> w;
+        fs["Vt_" + j] >> vt;
         if(u.empty() || w.empty() || vt.empty()) {
 
             finish = true;
@@ -103,7 +108,7 @@ void Compresser::loadChannels(const std::string &file) {
 
 }
 
-void Compresser::saveImage(const std::string &file) {
+void Compressor::saveImage(const std::string &file) {
 
     std::filesystem::path p(file);
 
@@ -123,7 +128,7 @@ void Compresser::saveImage(const std::string &file) {
     cv::imwrite(file, this->image);
 
 }
-void Compresser::saveChannels(const std::string &file) {
+void Compressor::saveChannels(const std::string &file) const {
 
     cv::FileStorage fs(file, cv::FileStorage::WRITE);
     int i = 0;
@@ -137,7 +142,7 @@ void Compresser::saveChannels(const std::string &file) {
     fs.release();
 
 }
-void Compresser::compose(double k) {
+void Compressor::compose(double k) {
 
     std::vector<cv::Mat> c;
     cv::Mat compressedImage;
@@ -151,7 +156,7 @@ void Compresser::compose(double k) {
     this->image = compressedImage;
 
 };
-cv::Mat Compresser::convertToPgm() {
+cv::Mat Compressor::convertToPgm() const {
 
     std::vector<cv::Mat> channels;
     cv::Mat result = cv::Mat::zeros(this->image.size(), CV_8UC1);
@@ -170,7 +175,7 @@ cv::Mat Compresser::convertToPgm() {
     return result / channels.size();
 
 }
-cv::Mat Compresser::convertToPbm() {
+cv::Mat Compressor::convertToPbm() const{
 
     cv::Mat grayscaleImage = this->convertToPgm();
 

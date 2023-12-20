@@ -1,7 +1,11 @@
+/*
+ * This file is part of ImageS-VD Application.
+ * See the file LICENSE for licensing information.
+ */
 #include <iostream>
 #include <stdexcept>
 #include <opencv2/opencv.hpp>
-#include "Compresser.h"
+#include "Compressor.h"
 
 using namespace std;
 using namespace cv;
@@ -19,17 +23,17 @@ int main(int argc, char **argv) {
     try {
 
         k = atof(argv[3]);
-        Compresser compresser = Compresser(argv[1]);
-        if(Compresser::isImage(argv[2])) {
+        Compressor compressor = Compressor(argv[1]);
+        if(Compressor::isImage(argv[2])) {
 
-            compresser.compose(k);
-            compresser.saveImage(argv[2]);
+            compressor.compose(k);
+            compressor.saveImage(argv[2]);
             return 0;
 
         }
-        if(Compresser::isFile(argv[2])) {
+        if(Compressor::isFile(argv[2])) {
 
-            compresser.saveChannels(argv[2]);
+            compressor.saveChannels(argv[2]);
             return 0;
 
         }
