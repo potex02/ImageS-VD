@@ -2,7 +2,7 @@
 ImageS-VD is a project developed as a part of a Bachelor's thesis in Computer Science and Technologies at the University of Basilicata.<br/>
 The goal is the creation of a desktop application for image compression using the Singulat Value Decomposition (SVD).<br/>
 The program allow also to save the decomposed matrices of an image in JSON, YAML or binary format to avoid do decompose the image again and load the matrices from the file.<br/>
-The project is written in C++ and uses CMake as build system.
+The project is written in C++, uses CMake as build system and requires the version 17 of the C++ standard.
 
 ## Current status
 The project is in a very early state of development and can be used only by command line for now.

@@ -7,7 +7,6 @@ Channel::Channel(const cv::Mat &matrix) {
 
     svd.compute(matrix, this->w, this->u, this->vt);
     cv::minMaxLoc(this->w, &min , &max);
-    std::cout << min << " " << max << std::endl;
 
 }
 Channel::Channel(const cv::Mat &_u, const cv::Mat &_w, const cv::Mat &_vt): u(_u), w(_w), vt(_vt) {}

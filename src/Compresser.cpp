@@ -12,7 +12,7 @@ std::vector<std::string> Compresser::supportedExtensions = {
     //Portable image format
     ".pbm", ".pgm", ".ppm",
     //Sun rasters
-    ".sr", ".ras"
+    ".sr", ".ras",
     //TIFF files
     ".tiff", ".tif"
 };
