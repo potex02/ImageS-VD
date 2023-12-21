@@ -4,19 +4,24 @@
  */
 #include <iostream>
 #include <stdexcept>
+#include <gtkmm.h>
 #include <opencv2/opencv.hpp>
+#include "MainWindow.h"
 #include "Compressor.h"
 
 using namespace std;
+using namespace Gtk;
 using namespace cv;
 
 int main(int argc, char **argv) {
 
     double k;
+    auto app = Application::create(argc, argv, "potex02.images-vd");
+    MainWindow window;
 
     if(argc < 4) {
 
-        cout << "Error. Bad arguments" << endl;
+        app->run(window);
         return 1;
 
     }

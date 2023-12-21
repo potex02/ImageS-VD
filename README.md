@@ -8,8 +8,9 @@ The project is written in C++, uses CMake as build system and requires the versi
 The project is in a very early state of development and can be used only by command line for now.
 
 ## Dependecies
-- OpenCV;
-- Gtkmm (planned, not used yet).
+- Pkg-config;
+- Gtkmm3;
+- OpenCV.
 
 ## Compilation
 ### Windows
@@ -21,30 +22,29 @@ The project is in a very early state of development and can be used only by comm
 # Update the system
 pacman -Syu
 # For 64-bit systems
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-opencv
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-pkg-config mingw-w64-x86_64-gtkmm3 mingw-w64-x86_64-opencv
 # For 32-bit systems
-pacman -S mingw-w64-i686-gcc mingw-w64-i686-cmake mingw-w64-i686-opencv
+pacman -S mingw-w64-i686-gcc mingw-w64-i686-cmake mingw-w64-i686-pkg-config mingw-w64-i686-gtkmm3 mingw-w64-i686-opencv
 ```
 ### Debian/Ubuntu
 ```bash
 sudo apt update
-sudo apt-get install g++ cmake libopencv-dev
+sudo apt-get install g++ cmake pkg-config libgtkmm-3.0-dev libopencv-dev
 ```
 ### Fedora 
 ```bash
 sudo dnf update
-sudo dnf upgrade
-sudo dnf install gcc-c++ cmake opencv-devel
+sudo dnf install gcc-c++ cmake pkgconf gtkmm3-devel opencv-devel
 ```
 ### Arch linux
 ```bash
 sudo pacman -Syu
-sudo pacman -S gcc cmake opencv
+sudo pacman -S gcc cmake pkgconf gtkmm3 opencv
 ```
 ### FreeBSD
 ```bash
 sudo pkg update
-sudo pkg install cmake opencv
+sudo pkg install cmake pkgconf gtkmm30 opencv
 ```
 ### Mac OS
 1. Install [Brew](https://brew.sh/) following the instruction of the official site;
@@ -52,7 +52,7 @@ sudo pkg install cmake opencv
 3. Run the following commands:
 ```bash
 brew update
-brew install gcc cmake opencv
+brew install gcc cmake pkg-config gtkmm3 opencv
 ```
 
 # Build
