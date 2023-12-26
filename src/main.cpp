@@ -47,7 +47,7 @@ bool isCliUsage(vector<string> args) {
 }
 bool validAruments(vector<string> args) {
 
-    if(args.size() < 2) {// || !Compressor::isValid(args[0]) || !Compressor::isValid(args[1])) {
+    if(args.size() < 2 || !Compressor::isValid(args[0]) || !Compressor::isValid(args[1])) {
 
         return false;
 

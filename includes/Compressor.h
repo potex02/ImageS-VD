@@ -44,21 +44,37 @@ class Compressor {
          * @param file is the path of the file to be checked.
          * @return true if the file is a supported file.
          */
-        static inline bool isValid(const std::string &file);
+        static inline bool isValid(const std::string &file) {
+
+            return Compressor::isImage(file) || Compressor::isFile(file);
+
+        }
         /**
          * Check if the input file is a supported image.
          *
          * @param file is the path of the file to be checked.
          * @return true if the file is a supported image.
          */
-        static inline bool isImage(const std::string &file);
+        static inline bool isImage(const std::string &file) {
+
+            std::filesystem::path p(file);
+
+            return std::find(Compressor::supportedImageExtensions.begin(), Compressor::supportedImageExtensions.end(), p.extension()) != Compressor::supportedImageExtensions.end();
+
+        }
         /**
          * Check if the input file is a supported file to save the channels.
          *
          * @param file is the path of the file to be checked.
          * @return true if the file is a supported file.
          */
-        static inline bool isFile(const std::string &file);
+        static inline bool isFile(const std::string &file) {
+
+            std::filesystem::path p(file);
+
+            return std::find(Compressor::supportedFileExtensions.begin(), Compressor::supportedFileExtensions.end(), p.extension()) != Compressor::supportedFileExtensions.end();
+
+        }
         /**
          * Load an image from a file.
          *

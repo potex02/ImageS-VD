@@ -41,25 +41,6 @@ Compressor::Compressor(const std::string &file) {
     throw new std::invalid_argument("unknown extension for input file");
 
 }
-inline bool Compressor::isValid(const std::string &file) {
-
-    return true;//Compressor::isImage(file) || Compressor::isFile(file);
-
-}
-inline bool Compressor::isImage(const std::string &file) {
-
-    std::filesystem::path p(file);
-
-    return std::find(Compressor::supportedImageExtensions.begin(), Compressor::supportedImageExtensions.end(), p.extension()) != Compressor::supportedImageExtensions.end();
-
-}
-inline bool Compressor::isFile(const std::string &file) {
-
-    std::filesystem::path p(file);
-
-    return std::find(Compressor::supportedFileExtensions.begin(), Compressor::supportedFileExtensions.end(), p.extension()) != Compressor::supportedFileExtensions.end();
-
-}
 void Compressor::loadImage(const std::string &file) {
 
     cv::Mat image = cv::imread(file, cv::IMREAD_UNCHANGED);
