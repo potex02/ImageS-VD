@@ -67,11 +67,12 @@ cmake --build .
 ```
 
 # Usage
+The application can be used also in cli mode:
 ```
-imageS-VD <input-file-name> <output-file-name> <singular-value-threshold>
+imageS-VD --cli <input-file-name> <output-file-name> [<singular-value-threshold>]
 ```
 The input file and output file are treaten as images if their extensions is a [supported](https://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html?highlight=imread#imread) image extension, or as decomposed images files if they are JSON, YAML, XML or BIN files. If the arguments don't have a supported extension, an error occurs.<br/>
-If the output file is a decompose image file, the threshold is useless (although the same it must be specified).
+If the output file is a decompose image file, the threshold is useless and can be omitted.
 
 # License
 This project is distributed under the BSD-3 license.

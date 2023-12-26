@@ -13,33 +13,72 @@ using namespace std;
 using namespace Gtk;
 using namespace cv;
 
+bool isCliUsage(vector<string> args);
+bool validAruments(vector<string> args);
+void cliUsage(vector<string> args);
+
 int main(int argc, char **argv) {
 
-    double k;
+    std::vector<std::string> arguments(argv + 1, argv + argc);
     auto app = Application::create(argc, argv, "potex02.images-vd");
     MainWindow window;
 
-    if(argc < 4) {
+    if(isCliUsage(arguments)) {
 
-        app->run(window);
-        return 1;
+        arguments.erase(arguments.begin());
+        if(!validAruments(arguments)) {
 
-    }
-    try {
-
-        k = atof(argv[3]);
-        Compressor compressor = Compressor(argv[1]);
-        if(Compressor::isImage(argv[2])) {
-
-            compressor.compose(k);
-            compressor.saveImage(argv[2]);
-            return 0;
+            cerr << "Bad arguments" << endl;
+            return 1;
 
         }
-        if(Compressor::isFile(argv[2])) {
+        cliUsage(arguments);
+        return 0;
 
-            compressor.saveChannels(argv[2]);
-            return 0;
+    }
+    app->run(window);
+    return 0;
+
+}
+bool isCliUsage(vector<string> args) {
+
+    return !args.empty() && args[0] == "--cli";
+
+}
+bool validAruments(vector<string> args) {
+
+    if(args.size() < 2) {// || !Compressor::isValid(args[0]) || !Compressor::isValid(args[1])) {
+
+        return false;
+
+    }
+    if(Compressor::isFile(args[1])) {
+
+        return true;
+
+    }
+    return args.size() >= 3;
+
+}
+void cliUsage(vector<string> args) {
+
+    try {
+
+        Compressor compressor = Compressor(args[0]);
+
+        if(Compressor::isImage(args[1])) {
+
+            double k = stod(args[2]);
+
+            compressor.compose(k);
+            compressor.saveImage(args[1]);
+            return;
+
+        }
+        if(Compressor::isFile(args[1])) {
+
+            compressor.saveChannels(args[1]);
+            return;
 
         }
         throw new std::invalid_argument("unknown extension for output file");
@@ -49,6 +88,5 @@ int main(int argc, char **argv) {
         cout << e.what() << endl;
 
     }
-    return 0;
 
 }

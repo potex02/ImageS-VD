@@ -41,14 +41,19 @@ Compressor::Compressor(const std::string &file) {
     throw new std::invalid_argument("unknown extension for input file");
 
 }
-bool Compressor::isImage(const std::string &file) {
+inline bool Compressor::isValid(const std::string &file) {
+
+    return true;//Compressor::isImage(file) || Compressor::isFile(file);
+
+}
+inline bool Compressor::isImage(const std::string &file) {
 
     std::filesystem::path p(file);
 
     return std::find(Compressor::supportedImageExtensions.begin(), Compressor::supportedImageExtensions.end(), p.extension()) != Compressor::supportedImageExtensions.end();
 
 }
-bool Compressor::isFile(const std::string &file) {
+inline bool Compressor::isFile(const std::string &file) {
 
     std::filesystem::path p(file);
 

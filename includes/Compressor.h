@@ -39,6 +39,13 @@ class Compressor {
          */
         Compressor(const std::string &file);
         /**
+         * Check if the input file is a supported image or file to save the channels.
+         *
+         * @param file is the path of the file to be checked.
+         * @return true if the file is a supported file.
+         */
+        static inline bool isValid(const std::string &file);
+        /**
          * Check if the input file is a supported image.
          *
          * @param file is the path of the file to be checked.
