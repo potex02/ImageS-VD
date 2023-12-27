@@ -161,7 +161,7 @@ cv::Mat Compressor::convertToPgm() const {
     return result / channels.size();
 
 }
-cv::Mat Compressor::convertToPbm() const{
+cv::Mat Compressor::convertToPbm() const {
 
     cv::Mat grayscaleImage = this->convertToPgm();
 

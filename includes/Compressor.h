@@ -57,9 +57,10 @@ class Compressor {
          */
         static inline bool isImage(const std::string &file) {
 
-            std::filesystem::path p(file);
+            std::string extension = std::filesystem::path(file).extension().string();
 
-            return std::find(Compressor::supportedImageExtensions.begin(), Compressor::supportedImageExtensions.end(), p.extension()) != Compressor::supportedImageExtensions.end();
+            std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+            return std::find(Compressor::supportedImageExtensions.begin(), Compressor::supportedImageExtensions.end(), extension) != Compressor::supportedImageExtensions.end();
 
         }
         /**
@@ -70,9 +71,10 @@ class Compressor {
          */
         static inline bool isFile(const std::string &file) {
 
-            std::filesystem::path p(file);
+            std::string extension = std::filesystem::path(file).extension().string();
 
-            return std::find(Compressor::supportedFileExtensions.begin(), Compressor::supportedFileExtensions.end(), p.extension()) != Compressor::supportedFileExtensions.end();
+            std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+            return std::find(Compressor::supportedFileExtensions.begin(), Compressor::supportedFileExtensions.end(), extension) != Compressor::supportedFileExtensions.end();
 
         }
         /**
