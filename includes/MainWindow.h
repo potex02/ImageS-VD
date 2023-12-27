@@ -4,12 +4,25 @@
  */
 #include <gtkmm.h>
 
-class MainWindow : public Gtk::Window {
+/**
+ * Contains classes related to the application's gui following the MVC architecture.
+ *
+ * Classes:
+ *   - @ref view::MainWindow: The main window of the application.
+ */
+namespace view {
 
-    public:
-        MainWindow() {
-            this->set_title("ImageS-VD");
-            this->set_default_size(400, 200);
-        }
+    /**
+     * The main window of the application.
+     */
+    class MainWindow : public Gtk::Window {
 
-};
+        public:
+            /**
+             * Create a MainWindow used as the main window by the application.
+             */
+            MainWindow();
+
+    };
+
+}

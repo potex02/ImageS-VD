@@ -4,7 +4,7 @@
  */
 #include "Compressor.h"
 
-std::vector<std::string> Compressor::supportedImageExtensions = {
+std::vector<std::string> model::Compressor::supportedImageExtensions = {
     // Windows bitmaps
     ".bmp", ".dib",
     //JPEG files
@@ -20,11 +20,11 @@ std::vector<std::string> Compressor::supportedImageExtensions = {
     //TIFF files
     ".tiff", ".tif"
 };
-std::vector<std::string> Compressor::supportedFileExtensions = {
+std::vector<std::string> model::Compressor::supportedFileExtensions = {
     ".json", ".yaml", ".xml", ".bin"
 };
 
-Compressor::Compressor(const std::string &file) {
+model::Compressor::Compressor(const std::string &file) {
 
     if(Compressor::isImage(file)) {
 
@@ -41,7 +41,7 @@ Compressor::Compressor(const std::string &file) {
     throw new std::invalid_argument("unknown extension for input file");
 
 }
-void Compressor::loadImage(const std::string &file) {
+void model::Compressor::loadImage(const std::string &file) {
 
     cv::Mat image = cv::imread(file, cv::IMREAD_UNCHANGED);
     std::vector<cv::Mat> c;
@@ -60,7 +60,7 @@ void Compressor::loadImage(const std::string &file) {
     }
 
 }
-void Compressor::loadChannels(const std::string &file) {
+void model::Compressor::loadChannels(const std::string &file) {
 
     int i = 0;
     bool finish = false;
@@ -94,7 +94,7 @@ void Compressor::loadChannels(const std::string &file) {
 
 }
 
-void Compressor::saveImage(const std::string &file) {
+void model::Compressor::saveImage(const std::string &file) {
 
     std::filesystem::path p(file);
 
@@ -114,7 +114,7 @@ void Compressor::saveImage(const std::string &file) {
     cv::imwrite(file, this->image);
 
 }
-void Compressor::saveChannels(const std::string &file) const {
+void model::Compressor::saveChannels(const std::string &file) const {
 
     cv::FileStorage fs(file, cv::FileStorage::WRITE);
     int i = 0;
@@ -128,7 +128,7 @@ void Compressor::saveChannels(const std::string &file) const {
     fs.release();
 
 }
-void Compressor::compose(double k) {
+void model::Compressor::compose(double k) {
 
     std::vector<cv::Mat> c;
     cv::Mat compressedImage;
@@ -142,7 +142,7 @@ void Compressor::compose(double k) {
     this->image = compressedImage;
 
 };
-cv::Mat Compressor::convertToPgm() const {
+cv::Mat model::Compressor::convertToPgm() const {
 
     std::vector<cv::Mat> channels;
     cv::Mat result = cv::Mat::zeros(this->image.size(), CV_8UC1);
@@ -161,7 +161,7 @@ cv::Mat Compressor::convertToPgm() const {
     return result / channels.size();
 
 }
-cv::Mat Compressor::convertToPbm() const {
+cv::Mat model::Compressor::convertToPbm() const {
 
     cv::Mat grayscaleImage = this->convertToPgm();
 

@@ -4,15 +4,16 @@
  */
 #include "Channel.h"
 
-Channel::Channel(const cv::Mat &matrix) {
+
+model::Channel::Channel(const cv::Mat &matrix) {
 	
     cv::SVD svd;
 
     svd.compute(matrix, this->w, this->u, this->vt);
 
 }
-Channel::Channel(const cv::Mat &_u, const cv::Mat &_w, const cv::Mat &_vt): u(_u), w(_w), vt(_vt) {}
-void Channel::save(cv::FileStorage &fs, const int i) const {
+model::Channel::Channel(const cv::Mat &_u, const cv::Mat &_w, const cv::Mat &_vt): u(_u), w(_w), vt(_vt) {}
+void model::Channel::save(cv::FileStorage &fs, const int i) const {
 
     std::string j = std::to_string(i);
 
@@ -21,7 +22,7 @@ void Channel::save(cv::FileStorage &fs, const int i) const {
     fs << "Vt_" + j << this->vt;
 
 }
-cv::Mat Channel::compose(double k) const {
+cv::Mat model::Channel::compose(double k) const {
 
     cv::Mat sigma, checkValues;
 

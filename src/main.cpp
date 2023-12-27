@@ -12,6 +12,8 @@
 using namespace std;
 using namespace Gtk;
 using namespace cv;
+using namespace model;
+using namespace view;
 
 bool isCliUsage(vector<string> args);
 bool validAruments(vector<string> args);
