@@ -96,16 +96,17 @@ void model::Compressor::loadChannels(const std::string &file) {
 
 void model::Compressor::saveImage(const std::string &file) {
 
-    std::filesystem::path p(file);
+    std::string extension = std::filesystem::path(file).extension().string();
 
+    std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
     this->image.convertTo(this->image, CV_8U);
-    if(p.extension() == ".pbm") {
+    if(extension == ".pbm") {
 
         cv::imwrite(file, this->convertToPbm());
         return;
 
     }
-    if(p.extension() == ".pgm") {
+    if(extension == ".pgm") {
 
         cv::imwrite(file, this->convertToPgm());
         return;
