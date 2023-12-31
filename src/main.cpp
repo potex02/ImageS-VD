@@ -3,6 +3,7 @@
  * See the file LICENSE for licensing information.
  */
 #include <iostream>
+#include <vector>
 #include <stdexcept>
 #include <gtkmm.h>
 #include <opencv2/opencv.hpp>
@@ -38,7 +39,7 @@ int main(int argc, char **argv) {
         return 0;
 
     }
-    app->run(window);
+    window.run(app);
     return 0;
 
 }

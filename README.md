@@ -29,12 +29,12 @@ pacman -S mingw-w64-i686-gcc mingw-w64-i686-cmake mingw-w64-i686-pkg-config ming
 ### Debian/Ubuntu
 ```bash
 sudo apt update
-sudo apt-get install g++ cmake pkg-config libgtkmm-3.0-dev libopencv-dev
+sudo apt install g++ cmake pkg-config libgtkmm-3.0-dev libopencv-dev
 ```
 ### Fedora 
 ```bash
 sudo dnf update
-sudo dnf install gcc-c++ cmake pkgconf gtkmm3-devel opencv-devel
+sudo dnf install gcc-c++ cmake pkgconf gtkmm30-devel opencv-devel
 ```
 ### Arch linux
 ```bash
