@@ -3,7 +3,6 @@
  * See the file LICENSE for licensing information.
  */
 #pragma once
-#include <iostream>
 #include <opencv2/opencv.hpp>
 
 namespace model {

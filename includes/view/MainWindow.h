@@ -3,7 +3,6 @@
  * See the file LICENSE for licensing information.
  */
 #include <iostream>
-#include <vector>
 #include <gtkmm.h>
 
 /**
@@ -25,10 +24,6 @@ namespace view {
              */
             MainWindow();
             /**
-             * Delete all widget pointers stored in the widgets vector.
-             */
-            ~MainWindow();
-            /**
              * Add the widgets to the window and show it.
              *
              * @param app is the app used to run the window.
@@ -36,15 +31,17 @@ namespace view {
             void run(Glib::RefPtr<Gtk::Application> &app);
         private:
             /**
-             * The vector af all widget pointers in order to delete them in the destructor.
-             */
-            std::vector<Gtk::Widget*> widgets;
-            /**
              * Create the menubar of the window.
              *
-             * @return the menubar of the window.
+             * @return The menubar that is added to the window.
              */
-            Gtk::MenuBar createMenuBar();
+            Gtk::MenuBar* createMenuBar();
+            /**
+             * Create the main notebook of the window.
+             *
+             * @return The notebook that is added to the window.
+             */
+            Gtk::Notebook* createNotebook();
 
     };
 

@@ -23,7 +23,7 @@ void cliUsage(vector<string> args);
 int main(int argc, char **argv) {
 
     std::vector<std::string> arguments(argv + 1, argv + argc);
-    auto app = Application::create(argc, argv, "potex02.images-vd");
+    Glib::RefPtr<Application> app = Application::create(argc, argv, "potex02.images-vd");
     MainWindow window;
 
     if(isCliUsage(arguments)) {
