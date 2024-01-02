@@ -47,9 +47,9 @@ Gtk::MenuBar* view::MainWindow::createMenuBar() {
 Gtk::Notebook* view::MainWindow::createNotebook() {
 
     Gtk::Notebook* notebook = Gtk::make_managed<Gtk::Notebook>();
-    Gtk::Label* label = Gtk::make_managed<Gtk::Label>("ImageS-VD");
+    MainPanel* panel= Gtk::make_managed<MainPanel>();
 
-    notebook->append_page(*label, "Page 1");
+    notebook->append_page(*panel, "Page 1");
     return notebook;
 
 }

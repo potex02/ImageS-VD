@@ -4,6 +4,7 @@
  */
 #include <iostream>
 #include <gtkmm.h>
+#include "MainPanel.h"
 
 /**
  * Contains classes related to the application's gui following the MVC architecture.
