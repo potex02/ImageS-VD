@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
-#include <gtkmm.h>
+#include <gtkmm/application.h>
 #include <opencv2/opencv.hpp>
 #include "MainWindow.h"
 #include "Compressor.h"

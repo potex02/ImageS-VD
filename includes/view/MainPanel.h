@@ -2,7 +2,8 @@
  * This file is part of ImageS-VD Application.
  * See the file LICENSE for licensing information.
  */
-#include <gtkmm.h>
+#include <gtkmm/box.h>
+#include <gtkmm/label.h>
 
 namespace view {
 

@@ -3,7 +3,14 @@
  * See the file LICENSE for licensing information.
  */
 #include <iostream>
-#include <gtkmm.h>
+#include <gtkmm/application.h>
+#include <gtkmm/window.h>
+#include <gtkmm/box.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/menubar.h>
+#include <gtkmm/menu.h>
+#include <gtkmm/menuitem.h>
+#include <gtkmm/notebook.h>
 #include "MainPanel.h"
 
 /**

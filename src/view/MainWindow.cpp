@@ -8,13 +8,16 @@ view::MainWindow::MainWindow() {}
 void view::MainWindow::run(Glib::RefPtr<Gtk::Application> &app) {
 
     Gtk::Box vbox(Gtk::ORIENTATION_VERTICAL);
+    Gtk::ScrolledWindow *scrolledWindow = Gtk::make_managed<Gtk::ScrolledWindow>();
     Gtk::MenuBar* menubar = this->createMenuBar();
     Gtk::Notebook* notebook = this->createNotebook();
 
     this->set_title("ImageS-VD");
     this->set_default_size(500, 500);
+    scrolledWindow->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    scrolledWindow->add(*notebook);
     vbox.pack_start(*menubar, Gtk::PACK_SHRINK);
-    vbox.pack_start(*notebook);
+    vbox.pack_start(*scrolledWindow);
     this->add(vbox);
     this->show_all();
     app->run(*this);
