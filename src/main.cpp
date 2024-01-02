@@ -39,7 +39,8 @@ int main(int argc, char **argv) {
         return 0;
 
     }
-    window.run(app);
+    window.addWidgets();
+    app->run(window);
     return 0;
 
 }

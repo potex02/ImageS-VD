@@ -3,13 +3,15 @@
  * See the file LICENSE for licensing information.
  */
 #include <iostream>
-#include <gtkmm/application.h>
 #include <gtkmm/window.h>
 #include <gtkmm/box.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/menubar.h>
 #include <gtkmm/menu.h>
 #include <gtkmm/menuitem.h>
+#include <gtkmm/toolbar.h>
+#include <gtkmm/toolbutton.h>
+#include <gtkmm/stock.h>
 #include <gtkmm/notebook.h>
 #include "MainPanel.h"
 
@@ -32,11 +34,9 @@ namespace view {
              */
             MainWindow();
             /**
-             * Add the widgets to the window and show it.
-             *
-             * @param app is the app used to run the window.
+             * Add the widgets to the window.
              */
-            void run(Glib::RefPtr<Gtk::Application> &app);
+            void addWidgets();
         private:
             /**
              * Create the menubar of the window.
@@ -44,6 +44,12 @@ namespace view {
              * @return The menubar that is added to the window.
              */
             Gtk::MenuBar* createMenuBar();
+            /**
+             * Create the toolbar of the window.
+             *
+             * @return The toolbar that is added to the window.
+             */
+            Gtk::Toolbar* createToolBar();
             /**
              * Create the main notebook of the window.
              *
