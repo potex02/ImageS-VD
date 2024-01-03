@@ -6,6 +6,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/scale.h>
+#include <gtkmm/image.h>
 
 namespace view {
 
@@ -21,9 +22,13 @@ namespace view {
             MainPanel();
         private:
             /**
-             * Thw widget used to set the singular values threshold.
+             * The widget used to set the singular values threshold.
              */
             Gtk::Scale *scale;
+            /**
+             * The image that is compressed.
+             */
+            Gtk::Image *image;
 
     };
 
