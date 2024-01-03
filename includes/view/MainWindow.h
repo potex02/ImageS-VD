@@ -39,6 +39,10 @@ namespace view {
             void addWidgets();
         private:
             /**
+             * The main notebook of the window whxich contains all the panels.
+             */
+            Gtk::Notebook *notebook;
+            /**
              * Create the menubar of the window.
              *
              * @return The menubar that is added to the window.
@@ -52,10 +56,8 @@ namespace view {
             Gtk::Toolbar* createToolBar();
             /**
              * Create the main notebook of the window.
-             *
-             * @return The notebook that is added to the window.
              */
-            Gtk::Notebook* createNotebook();
+            void createNotebook();
 
     };
 

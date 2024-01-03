@@ -40,8 +40,7 @@ int main(int argc, char **argv) {
 
     }
     window.addWidgets();
-    app->run(window);
-    return 0;
+    return app->run(window);
 
 }
 bool isCliUsage(vector<string> args) {

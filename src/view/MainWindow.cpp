@@ -12,13 +12,13 @@ void view::MainWindow::addWidgets() {
     Gtk::ScrolledWindow *scrolledWindow = Gtk::make_managed<Gtk::ScrolledWindow>();
     Gtk::MenuBar* menubar = this->createMenuBar();
     Gtk::Toolbar* toolbar = this->createToolBar();
-    Gtk::Notebook* notebook = this->createNotebook();
 
+    this->createNotebook();
     this->set_title("ImageS-VD");
     this->set_default_size(500, 500);
     scrolledWindow->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     scrolledBox->pack_start(*toolbar, Gtk::PACK_SHRINK);
-    scrolledBox->pack_start(*notebook);
+    scrolledBox->pack_start(*this->notebook);
     scrolledWindow->add(*scrolledBox);
     box->pack_start(*menubar, Gtk::PACK_SHRINK);
     box->pack_start(*scrolledWindow);
@@ -62,12 +62,11 @@ Gtk::Toolbar* view::MainWindow::createToolBar() {
     return toolbar;
 
 }
-Gtk::Notebook* view::MainWindow::createNotebook() {
+void view::MainWindow::createNotebook() {
 
-    Gtk::Notebook *notebook = Gtk::make_managed<Gtk::Notebook>();
     MainPanel *panel= Gtk::make_managed<MainPanel>();
 
-    notebook->append_page(*panel, "Page 1");
-    return notebook;
+    this->notebook = Gtk::make_managed<Gtk::Notebook>();
+    this->notebook->append_page(*panel, "Page 1");
 
 }
