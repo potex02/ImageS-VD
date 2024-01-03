@@ -4,6 +4,8 @@
  */
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
+#include <gtkmm/adjustment.h>
+#include <gtkmm/scale.h>
 
 namespace view {
 
@@ -17,6 +19,11 @@ namespace view {
              * Create a MainPanel.
              */
             MainPanel();
+        private:
+            /**
+             * Thw widget used to set the singular values threshold.
+             */
+            Gtk::Scale *scale;
 
     };
 
