@@ -14,7 +14,7 @@ The project is in a very early state of development and can be used only by comm
 
 ## Compilation
 ### Windows
-1. Install [MSYS2](https://www.msys2.org/) following the instruction of the official site;
+1. Install [MSYS2](https://www.msys2.org/) following the instructions of the official site;
 2. Select options to install packages for C++ development during installation;
 3. Open MSYS2 shell;
 4. Run the following commands:
@@ -39,7 +39,7 @@ sudo dnf install gcc-c++ cmake pkgconf gtkmm30-devel opencv-devel
 ### Arch linux
 ```bash
 sudo pacman -Syu
-sudo pacman -S gcc cmake pkgconf gtkmm3 opencv
+sudo pacman -S gcc cmake pkgconf gtkmm3 opencv vtk hdf5 fmt qt5 qt6 glew
 ```
 ### FreeBSD
 ```bash
@@ -47,7 +47,7 @@ sudo pkg update
 sudo pkg install cmake pkgconf gtkmm30 opencv
 ```
 ### Mac OS
-1. Install [Brew](https://brew.sh/) following the instruction of the official site;
+1. Install [Brew](https://brew.sh/) following the instructions of the official site;
 2. Open a shell;
 3. Run the following commands:
 ```bash
