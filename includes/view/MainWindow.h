@@ -2,7 +2,9 @@
  * This file is part of ImageS-VD Application.
  * See the file LICENSE for licensing information.
  */
+#pragma once
 #include <iostream>
+#include <memory>
 #include <gtkmm/window.h>
 #include <gtkmm/box.h>
 #include <gtkmm/scrolledwindow.h>
@@ -14,6 +16,9 @@
 #include <gtkmm/stock.h>
 #include <gtkmm/notebook.h>
 #include "MainPanel.h"
+#include "MenuController.h"
+
+namespace control { class MenuController; }
 
 /**
  * Contains classes related to the application's gui following the MVC architecture.
@@ -38,6 +43,10 @@ namespace view {
              */
             void addWidgets();
         private:
+            /**
+             * The controller of the application's menu.
+             */
+            std::shared_ptr<control::MenuController> menuController;
             /**
              * The main notebook of the window whxich contains all the panels.
              */

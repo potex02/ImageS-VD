@@ -2,6 +2,7 @@
  * This file is part of ImageS-VD Application.
  * See the file LICENSE for licensing information.
  */
+#pragma once
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
 #include <gtkmm/adjustment.h>

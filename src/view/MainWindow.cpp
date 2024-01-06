@@ -4,7 +4,7 @@
  */
 #include "MainWindow.h"
 
-view::MainWindow::MainWindow() {}
+view::MainWindow::MainWindow(): menuController(std::make_shared<control::MenuController>(this)) {}
 void view::MainWindow::addWidgets() {
 
     Gtk::Box *box = Gtk::make_managed<Gtk::Box>(Gtk::ORIENTATION_VERTICAL);

@@ -18,7 +18,7 @@ namespace model {
              *
              * @param matrix is the matrix which is decomposed in the u, w (or sigma) and vt matrices
              */
-            Channel(const cv::Mat &matrix);
+            Channel(const cv::Mat& matrix);
             /**
              * Create Channel with the specified parameters.
              *
@@ -26,14 +26,14 @@ namespace model {
              * @param _w is the w (or sigma) matrix.
              * @param _vt is the transposed v matrix.
              */
-            Channel(const cv::Mat &_u, const cv::Mat &_w, const cv::Mat &_vt);
+            Channel(const cv::Mat& _u, const cv::Mat& _w, const cv::Mat& _vt);
             /**
              * Save the u, w (or sigma) and vt matrices on the file system.
              *
              * @param fs is the cv::FileStorage used to save the Channel.
              * @param i is the number of the current Channel in the matrix.
              */
-            void save(cv::FileStorage &fs, const int i) const;
+            void save(cv::FileStorage& fs, const int i) const;
             /**
              * Compose the matrix from u, w (or sigma) and vt.
              *

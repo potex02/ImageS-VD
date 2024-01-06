@@ -46,14 +46,14 @@ namespace model {
              * @param file is the file from which to read the data.
              * @throw an std::invalid_argument is the file has an unsupported exception.
              */
-            Compressor(const std::string &file);
+            Compressor(const std::string& file);
             /**
              * Check if the input file is a supported image or file to save the channels.
              *
              * @param file is the path of the file to be checked.
              * @return true if the file is a supported file.
              */
-            static inline bool isValid(const std::string &file) {
+            static inline bool isValid(const std::string& file) {
 
                 return Compressor::isImage(file) || Compressor::isFile(file);
 
@@ -64,7 +64,7 @@ namespace model {
              * @param file is the path of the file to be checked.
              * @return true if the file is a supported image.
              */
-            static inline bool isImage(const std::string &file) {
+            static inline bool isImage(const std::string& file) {
 
                 std::string extension = std::filesystem::path(file).extension().string();
 
@@ -78,7 +78,7 @@ namespace model {
              * @param file is the path of the file to be checked.
              * @return true if the file is a supported file.
              */
-            static inline bool isFile(const std::string &file) {
+            static inline bool isFile(const std::string& file) {
 
                 std::string extension = std::filesystem::path(file).extension().string();
 
@@ -92,26 +92,26 @@ namespace model {
              * @param file is the path of the image.
              * @throw an std::invalid_argument if the file does not exist.
              */
-            void loadImage(const std::string &file);
+            void loadImage(const std::string& file);
             /**
              * Load and create the channels from the file.
              *
              * @param file is the path of the file.
              * @throw an std::invalid_argument if the file does not exist.
              */
-            void loadChannels(const std::string &file);
+            void loadChannels(const std::string& file);
             /**
              * Save the image.
              *
              * @param file is the path where to save the image,
              */
-            void saveImage(const std::string &file);
+            void saveImage(const std::string& file);
             /**
              * Save the channels.
              *
              * @param file is the path where to save the channels.
              */
-            void saveChannels(const std::string &file) const;
+            void saveChannels(const std::string& file) const;
             /**
              * Compose and merge the channels.
              *

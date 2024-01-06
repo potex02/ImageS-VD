@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(
     includes/model
     includes/view
+    includes/control
 )
 file(GLOB_RECURSE SOURCES src/*.cpp)
 find_package(PkgConfig)

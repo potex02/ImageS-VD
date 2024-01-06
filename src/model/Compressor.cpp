@@ -24,7 +24,7 @@ std::vector<std::string> model::Compressor::supportedFileExtensions = {
     ".json", ".yaml", ".xml", ".bin"
 };
 
-model::Compressor::Compressor(const std::string &file) {
+model::Compressor::Compressor(const std::string& file) {
 
     if(Compressor::isImage(file)) {
 
@@ -41,7 +41,7 @@ model::Compressor::Compressor(const std::string &file) {
     throw new std::invalid_argument("unknown extension for input file");
 
 }
-void model::Compressor::loadImage(const std::string &file) {
+void model::Compressor::loadImage(const std::string& file) {
 
     cv::Mat image = cv::imread(file, cv::IMREAD_UNCHANGED);
     std::vector<cv::Mat> c;
@@ -60,7 +60,7 @@ void model::Compressor::loadImage(const std::string &file) {
     }
 
 }
-void model::Compressor::loadChannels(const std::string &file) {
+void model::Compressor::loadChannels(const std::string& file) {
 
     int i = 0;
     bool finish = false;
@@ -94,7 +94,7 @@ void model::Compressor::loadChannels(const std::string &file) {
 
 }
 
-void model::Compressor::saveImage(const std::string &file) {
+void model::Compressor::saveImage(const std::string& file) {
 
     std::string extension = std::filesystem::path(file).extension().string();
 
@@ -115,7 +115,7 @@ void model::Compressor::saveImage(const std::string &file) {
     cv::imwrite(file, this->image);
 
 }
-void model::Compressor::saveChannels(const std::string &file) const {
+void model::Compressor::saveChannels(const std::string& file) const {
 
     cv::FileStorage fs(file, cv::FileStorage::WRITE);
     int i = 0;
