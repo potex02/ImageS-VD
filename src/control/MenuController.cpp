@@ -4,4 +4,17 @@
  */
 #include "MenuController.h"
 
-control::MenuController::MenuController(view::MainWindow *_window): window(_window) {}
+control::MenuController::MenuController(view::MainWindow *_window): window(_window) {
+
+    this->actions["open"] = []() {
+
+        std::cout << "Open" << std::endl;
+
+    };
+
+}
+std::function<void()> control::MenuController::getAction(std::string action) const {
+
+    return this->actions.at(action);
+
+}

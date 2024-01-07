@@ -15,7 +15,7 @@ void view::MainWindow::addWidgets() {
 
     this->createNotebook();
     this->set_title("ImageS-VD");
-    this->set_default_size(500, 500);
+    this->set_default_size(1000, 800);
     scrolledWindow->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     scrolledBox->pack_start(*toolbar, Gtk::PACK_SHRINK);
     scrolledBox->pack_start(*this->notebook);
@@ -42,9 +42,7 @@ Gtk::MenuBar* view::MainWindow::createMenuBar() {
     imageSvd->append(*about);
     menubar->append(*fileMenu);
     menubar->append(*imageSvdMenu);
-    open->signal_activate().connect([&]() {
-        std::cout << "Open" << std::endl;
-    });
+    open->signal_activate().connect(this->menuController->getAction("open"));
     about->signal_activate().connect([&]() {
         std::cout << "About" << std::endl;
     });
@@ -55,9 +53,7 @@ Gtk::Toolbar* view::MainWindow::createToolBar() {
     Gtk::Toolbar *toolbar = Gtk::make_managed<Gtk::Toolbar>();
     Gtk::ToolButton *button = Gtk::make_managed<Gtk::ToolButton>(Gtk::Stock::OPEN);
 
-    button->signal_clicked().connect([&]() {
-        std::cout << "Open toolbar" << std::endl;
-    });
+    button->signal_clicked().connect(this->menuController->getAction("open"));
     toolbar->append(*button);
     return toolbar;
 
