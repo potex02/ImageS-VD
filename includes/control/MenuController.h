@@ -12,7 +12,8 @@ namespace view { class MainWindow; }
 /**
  * Contains classes related to the application's control following the MVC architecture.
  *
- * @ref controller::MenuController: Contains the actions for the menu of the application.
+ * @ref control::MenuController: Contains the actions for the menu of the application.
+ * @ref control::Action Contains the code to execute one action in the app and manage the widget's behaviour.
  */
 namespace control {
 

@@ -14,13 +14,13 @@ namespace model {
 
         public:
             /**
-             * Create Channel decomposing the matrix parameter using the SVD decomposition.
+             * Create a Channel decomposing the matrix parameter using the SVD decomposition.
              *
              * @param matrix is the matrix which is decomposed in the u, w (or sigma) and vt matrices
              */
             Channel(const cv::Mat& matrix);
             /**
-             * Create Channel with the specified parameters.
+             * Create a Channel with the specified parameters.
              *
              * @param _u is the u matrix.
              * @param _w is the w (or sigma) matrix.

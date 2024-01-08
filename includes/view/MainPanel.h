@@ -8,6 +8,7 @@
 #include <gtkmm/adjustment.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/image.h>
+#include "Compressor.h"
 
 namespace view {
 
@@ -30,6 +31,11 @@ namespace view {
              * The image that is compressed.
              */
             Gtk::Image *image;
+            /**
+             * The compressor used to compress the image.
+             */
+            model::Compressor *compressor;
+
 
     };
 
