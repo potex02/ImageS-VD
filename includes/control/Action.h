@@ -6,8 +6,10 @@
 #include <vector>
 #include <functional>
 #include <gtkmm/widget.h>
+#include <gtkmm/button.h>
+#include <gtkmm/menuitem.h>
+#include <gtkmm/toolbutton.h>
 #include <gtkmm/stock.h>
-#include "MainWindow.h"
 
 namespace control {
 
@@ -22,7 +24,13 @@ namespace control {
              *
              * @param _fun is the code executed by the action.
              */
-            Action(std::function<void()> _fun);
+            Action(const std::function<void()>& _fun, const Glib::ustring& _text, const Glib::ustring& _tooltip, Gtk::BuiltinStockID _image, bool _sensitive = true);
+            /**
+             * Register a widget to the action.
+             *
+             * @param widget is the widget to be registered.
+             */
+            void registerWidget(Gtk::Widget *widget);
         private:
             /**
              * The code executed by the action.
@@ -41,9 +49,13 @@ namespace control {
              */
             Gtk::BuiltinStockID image;
             /**
+             * Check if the action can be executed.
+             */
+            bool sensitive;
+            /**
              * The vector of the wigets associated with the action.
              */
-            std::vector<Gtk::Widget> widgets;
+            std::vector<Gtk::Widget*> widgets;
 
     };
 

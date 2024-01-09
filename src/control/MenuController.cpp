@@ -6,15 +6,15 @@
 
 control::MenuController::MenuController(view::MainWindow *_window): window(_window) {
 
-    this->actions["open"] = []() {
+    this->actions.emplace("open", Action([]() {
 
         std::cout << "Open" << std::endl;
 
-    };
+    }, "Open", "Open a file", Gtk::Stock::OPEN));
 
 }
-std::function<void()> control::MenuController::getAction(std::string action) const {
+void control::MenuController::registerWidget(const std::string action, Gtk::Widget *widget) {
 
-    return this->actions.at(action);
+    this->actions.at(action).registerWidget(widget);
 
 }

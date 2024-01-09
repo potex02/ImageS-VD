@@ -5,7 +5,9 @@
 #pragma once
 #include <unordered_map>
 #include <functional>
+#include <gtkmm/stock.h>
 #include "MainWindow.h"
+#include "Action.h"
 
 namespace view { class MainWindow; }
 
@@ -30,21 +32,21 @@ namespace control {
              */
             MenuController(view::MainWindow *_window);
             /**
-             * Return the action identified by the parameter.
+             * Register a widget to an action.
              *
              * @param action is the string that identifies the action.
-             * @return teha action identified by the parameter.
+             * @param widget is the widget to be registered.
              */
-            std::function<void()> getAction(std::string action) const;
+            void registerWidget(const std::string action, Gtk::Widget *widget);
         private:
             /**
              * The pointer to the main window of the application.
              */
             view::MainWindow *window;
             /**
-             * A map containing the actions pf the menu.
+             * A map containing the actions of the menu.
              */
-            std::unordered_map<std::string, std::function<void()>> actions;
+            std::unordered_map<std::string, Action> actions;
 
     };
 

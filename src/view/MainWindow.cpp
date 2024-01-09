@@ -34,7 +34,7 @@ Gtk::MenuBar* view::MainWindow::createMenuBar() {
     Gtk::MenuItem *fileMenu = Gtk::make_managed<Gtk::MenuItem>("file");
     Gtk::MenuItem *imageSvdMenu = Gtk::make_managed<Gtk::MenuItem>("ImageS-VD");
     Gtk::MenuItem *about = Gtk::make_managed<Gtk::MenuItem>("About");
-    Gtk::MenuItem *open = Gtk::make_managed<Gtk::MenuItem>("Open");
+    Gtk::MenuItem *open = Gtk::make_managed<Gtk::MenuItem>();
 
     fileMenu->set_submenu(*file);
     file->append(*open);
@@ -42,7 +42,7 @@ Gtk::MenuBar* view::MainWindow::createMenuBar() {
     imageSvd->append(*about);
     menubar->append(*fileMenu);
     menubar->append(*imageSvdMenu);
-    open->signal_activate().connect(this->menuController->getAction("open"));
+    this->menuController->registerWidget("open", open);
     about->signal_activate().connect([&]() {
         std::cout << "About" << std::endl;
     });
@@ -51,10 +51,10 @@ Gtk::MenuBar* view::MainWindow::createMenuBar() {
 Gtk::Toolbar* view::MainWindow::createToolBar() {
 
     Gtk::Toolbar *toolbar = Gtk::make_managed<Gtk::Toolbar>();
-    Gtk::ToolButton *button = Gtk::make_managed<Gtk::ToolButton>(Gtk::Stock::OPEN);
+    Gtk::ToolButton *open = Gtk::make_managed<Gtk::ToolButton>();
 
-    button->signal_clicked().connect(this->menuController->getAction("open"));
-    toolbar->append(*button);
+    this->menuController->registerWidget("open", open);
+    toolbar->append(*open);
     return toolbar;
 
 }
