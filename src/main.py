@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 from PIL import Image
 
@@ -19,9 +20,12 @@ def compress_image(image_path: str, k: int) -> Image.Image:
     return compressed_image
 
 
-original_image_path: str = '../images/image.jpeg'
-compressed_image_path: str = '../images/compressed_image.jpeg'
-k: int = 500
-
-compressed_image: Image.Image = compress_image(original_image_path, k)
-compressed_image.save(compressed_image_path)
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Bad arguments", file=sys.stderr)
+        sys.exit(1)
+    original_image_path: str = sys.argv[1]
+    compressed_image_path: str = sys.argv[2]
+    k: int = 500
+    compressed_image: Image.Image = compress_image(original_image_path, k)
+    compressed_image.save(compressed_image_path)
