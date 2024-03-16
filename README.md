@@ -11,8 +11,14 @@ The project is in a very early state of development and can be used only by comm
 - Numpy.
 
 # Usage
+The project provides two scripts to launch the program.
+## Windows
 ```
-python src/main <input-file-name> <output-file-name> <singular-value-threshold>
+imageS-VD <input-file-name> <output-file-name> <singular-value-threshold>
+```
+## Unix
+```
+./imageS-VD.sh <input-file-name> <output-file-name> <singular-value-threshold>
 ```
 
 # License

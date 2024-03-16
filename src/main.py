@@ -11,18 +11,22 @@ def compress_image(image_path: str, k: int) -> Image.Image:
     if len(image_array.shape) == 3:
         _, _, channels = image_array.shape
     for i in range(channels):
-        channels: np.ndarray = image_array[:, :, i]
+        if channels == 1:
+            channel: np.ndarray = image_array
+        else:
+            channel: np.ndarray = image_array[:, :, i]
         u: np.ndarray
         s: np.ndarray
         vt: np.ndarray
-        u, s, vt = np.linalg.svd(channels, full_matrices=False)
+        u, s, vt = np.linalg.svd(channel, full_matrices=False)
         print(u.shape, s.shape, vt.shape)
         print(s[k])
         s[k:] = 0
         compressed_channels.append(np.dot(u, np.dot(np.diag(s), vt)))
     compressed_image_array: np.ndarray = np.stack(compressed_channels, axis=-1)
     compressed_image_array = np.clip(compressed_image_array, 0, 255).astype(np.uint8)
-    result: Image.Image = Image.fromarray(compressed_image_array)
+    print("Shape:\t",compressed_image_array.shape)
+    result: Image.Image = Image.fromarray(compressed_image_array.squeeze())
     return result
 
 
