@@ -1,11 +1,5 @@
-import json
-import csv
 import sys
-import xml.etree.ElementTree as ET
-import numpy as np
-import yaml
-from PIL import Image
-from model import main
+from model.compressor import Compressor
 
 
 """def save_channels(channels: list[np.ndarray], path: str) -> bool:
@@ -48,7 +42,6 @@ if __name__ == "__main__":
     original_image_path: str = sys.argv[1]
     result_image_path: str = sys.argv[2]
     k: int = int(sys.argv[3])
-    #compress_image(original_image_path, result_image_path, k)
-    compressor: main.Compressor = main.Compressor()
+    compressor: Compressor = Compressor()
     compressor.load(original_image_path)
     compressor.save(result_image_path, k)

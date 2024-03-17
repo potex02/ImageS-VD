@@ -4,18 +4,52 @@ from PIL import Image
 
 
 class Compressor:
+    """
+    A class used to compress images using svd decomposition.
+
+    Attributes:
+        __path (str): The path to the image to compress.
+        __channels (str): The channels of the decomposed image.
+
+    Methods:
+        get_compression_rate(original_file: str, compressed_file: str) -> float:
+            Calculates the compression rate of a result image.
+        load(path: str) -> None:
+            Loads an image to compress.
+        save(path: str, k: int) -> None:
+            Compresses and saves the image to the specified path using 'k' singular values.
+    """
     def __init__(self):
+        """
+        Creates a Compressor instances.
+        """
         self.__path: str = ""
         self.__channels: list[dict] = list[dict]()
 
     @staticmethod
     def get_compression_rate(original_file: str, compressed_file: str) -> float:
+        """
+        Calculates the compression rate of a result image.
+
+        Args:
+            original_file (str): The path to the original uncompressed file.
+            compressed_file (str): The path to the compressed file.
+
+        Returns:
+            float: The compression rate.
+        """
         original_size: int = os.path.getsize(original_file)
         compressed_size: int = os.path.getsize(compressed_file)
         compression_rate: float = 1 - (compressed_size / original_size)
         return compression_rate
 
     def load(self, path: str) -> None:
+        """
+        Loads an image to compress.
+
+        Args:
+            path (str): path to the image.
+        """
         self.__path = path
         image = Image.open(self.__path)
         image_array: np.ndarray = np.array(image)
@@ -37,7 +71,14 @@ class Compressor:
             u, s, vt = np.linalg.svd(channel, full_matrices=False)
             self.__channels.append({"u": u, "s": s, "vt": vt})
 
-    def save(self, path: str, k: int):
+    def save(self, path: str, k: int) -> None:
+        """
+        Loads an image to compress.
+
+        Args:
+            path (str): path where to save the image.
+            k (int): number of singular values to use for compression.
+        """
         compressed_channels: list[np.ndarray] = list[np.ndarray]()
         for i in self.__channels:
             i["s"][k:] = 0
