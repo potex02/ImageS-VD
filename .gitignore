@@ -3,3 +3,4 @@ results/
 .mypy_cache/
 .venv/
 .idea/
+**/*.pyc

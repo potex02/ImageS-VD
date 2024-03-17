@@ -1,6 +1,8 @@
 import os
+from typing import List
 import numpy as np
 from PIL import Image
+from .channel import Channel
 
 
 class Compressor:
@@ -8,8 +10,8 @@ class Compressor:
     A class used to compress images using svd decomposition.
 
     Attributes:
-        path (str): The path to the image to compress.
-        channels (str): The channels of the decomposed image.
+        _path (str): The path to the image to compress.
+        _channels (List[Channel]): The channels of the decomposed image.
 
     Methods:
         get_compression_rate(original_file: str, compressed_file: str) -> float:
@@ -24,7 +26,7 @@ class Compressor:
         Creates a Compressor instances.
         """
         self._path: str = ""
-        self._channels: list[dict] = list[dict]()
+        self._channels: List[Channel] = []
 
     @property
     def path(self) -> str:
@@ -37,12 +39,12 @@ class Compressor:
         return self._path
 
     @property
-    def channels(self) -> list[dict]:
+    def channels(self) -> List[Channel]:
         """
         Gets the image decomposed channels
 
         Returns:
-            list[dict]: The image decomposed channels.
+            List[Channel]: The image decomposed channels.
         """
         return self._channels
 
@@ -85,11 +87,7 @@ class Compressor:
                 channel = image_array
             else:
                 channel = image_array[:, :, i]
-            u: np.ndarray
-            s: np.ndarray
-            vt: np.ndarray
-            u, s, vt = np.linalg.svd(channel, full_matrices=False)
-            self._channels.append({"u": u, "s": s, "vt": vt})
+            self._channels.append(Channel(channel))
 
     def save(self, path: str, k: int) -> None:
         """
@@ -99,10 +97,9 @@ class Compressor:
             path (str): path where to save the image.
             k (int): number of singular values to use for compression.
         """
-        compressed_channels: list[np.ndarray] = list[np.ndarray]()
+        compressed_channels: List[np.ndarray] = []
         for i in self._channels:
-            i["s"][k:] = 0
-            compressed_channels.append(np.dot(i["u"], np.dot(np.diag(i["s"]), i["vt"])))
+            compressed_channels.append(i.compose(k))
         compressed_image_array: np.ndarray = np.stack(compressed_channels, axis=-1)
         compressed_image_array = np.clip(compressed_image_array, 0, 255).astype(np.uint8)
         result: Image.Image = Image.fromarray(compressed_image_array.squeeze())

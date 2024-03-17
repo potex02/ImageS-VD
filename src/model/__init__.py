@@ -3,4 +3,5 @@
 
 Classes:
     - :class:`model.Compressor`: Implementation of an image compressor through SVD decomposition.
+    - :class:`model.Channel`: Representation of an SVD decomposition of a matrix.
 """
