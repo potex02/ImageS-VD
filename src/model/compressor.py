@@ -8,8 +8,8 @@ class Compressor:
     A class used to compress images using svd decomposition.
 
     Attributes:
-        __path (str): The path to the image to compress.
-        __channels (str): The channels of the decomposed image.
+        path (str): The path to the image to compress.
+        channels (str): The channels of the decomposed image.
 
     Methods:
         get_compression_rate(original_file: str, compressed_file: str) -> float:
@@ -23,8 +23,28 @@ class Compressor:
         """
         Creates a Compressor instances.
         """
-        self.__path: str = ""
-        self.__channels: list[dict] = list[dict]()
+        self._path: str = ""
+        self._channels: list[dict] = list[dict]()
+
+    @property
+    def path(self) -> str:
+        """
+        Gets the path of the image to compress.
+
+        Returns:
+            str: The path to the image.
+        """
+        return self._path
+
+    @property
+    def channels(self) -> list[dict]:
+        """
+        Gets the image decomposed channels
+
+        Returns:
+            list[dict]: The image decomposed channels.
+        """
+        return self._channels
 
     @staticmethod
     def get_compression_rate(original_file: str, compressed_file: str) -> float:
@@ -50,8 +70,8 @@ class Compressor:
         Args:
             path (str): path to the image.
         """
-        self.__path = path
-        image = Image.open(self.__path)
+        self._path = path
+        image = Image.open(self._path)
         image_array: np.ndarray = np.array(image)
         index: int = path.rfind('.')
         if index != -1 and path[index + 1:].lower() == "pbm":
@@ -69,7 +89,7 @@ class Compressor:
             s: np.ndarray
             vt: np.ndarray
             u, s, vt = np.linalg.svd(channel, full_matrices=False)
-            self.__channels.append({"u": u, "s": s, "vt": vt})
+            self._channels.append({"u": u, "s": s, "vt": vt})
 
     def save(self, path: str, k: int) -> None:
         """
@@ -80,11 +100,11 @@ class Compressor:
             k (int): number of singular values to use for compression.
         """
         compressed_channels: list[np.ndarray] = list[np.ndarray]()
-        for i in self.__channels:
+        for i in self._channels:
             i["s"][k:] = 0
             compressed_channels.append(np.dot(i["u"], np.dot(np.diag(i["s"]), i["vt"])))
         compressed_image_array: np.ndarray = np.stack(compressed_channels, axis=-1)
         compressed_image_array = np.clip(compressed_image_array, 0, 255).astype(np.uint8)
         result: Image.Image = Image.fromarray(compressed_image_array.squeeze())
         result.save(path)
-        print(Compressor.get_compression_rate(self.__path, path))
+        print(Compressor.get_compression_rate(self._path, path))
