@@ -1,7 +1,7 @@
 # ImageS-VD
 ImageS-VD is a project developed as a part of a Bachelor's thesis in Computer Science and Technologies at the University of Basilicata.<br/>
 The goal is the creation of a desktop application for image compression using the Singular Value Decomposition (SVD).<br/>
-<!--The program allows also to save the decomposed matrices of an image in JSON, YAML or XML format to avoid do decompose the image again and load the matrices from the file.<br/>-->
+The program allows also to save the decomposed matrices of an image as npz file to avoid do decompose the image again and load the matrices from the file.<br/>
 The project is written in Python using the numpy library.
 
 ## Current status

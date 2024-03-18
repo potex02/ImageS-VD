@@ -1,3 +1,5 @@
+
+from typing import Dict
 import numpy as np
 
 
@@ -10,6 +12,7 @@ class Channel:
             _s (np.ndarray: The matrix of the singular values.
             _vt (np.ndarray): The matrix of right singular vectors.
     """
+
     def __init__(self, matrix: np.ndarray):
         """
         Create a Channel instance.
@@ -17,6 +20,12 @@ class Channel:
         Args:
             matrix (np.ndarray): The matrix to decomposed
         """
+        if len(matrix.shape) == 0:
+            channel: Dict = matrix.item()
+            self._u: np.ndarray = channel["_u"]
+            self._s: np.ndarray = channel["_s"]
+            self._vt: np.ndarray = channel["_vt"]
+            return
         self._u, self._s, self._vt = np.linalg.svd(matrix, full_matrices=False)
 
     def compose(self, k: int) -> np.ndarray:

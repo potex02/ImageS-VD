@@ -1,5 +1,5 @@
 import os
-from typing import List
+from typing import List, Dict
 import numpy as np
 from PIL import Image
 from .channel import Channel
@@ -21,6 +21,7 @@ class Compressor:
         save(path: str, k: int) -> None:
             Compresses and saves the image to the specified path using 'k' singular values.
     """
+
     def __init__(self):
         """
         Creates a Compressor instances.
@@ -65,6 +66,17 @@ class Compressor:
         compression_rate: float = 1 - (compressed_size / original_size)
         return compression_rate
 
+    def load_channels(self, path: str):
+        """
+        Loads the decomposed image channels from a npz file.
+
+        Args:
+            path (str): path to the file where channels are stored.
+        """
+        channels = np.load(path, allow_pickle=True)
+        for i in sorted(channels.keys()):
+            self._channels.append(Channel(channels[i]))
+
     def load(self, path: str) -> None:
         """
         Loads an image to compress.
@@ -73,6 +85,9 @@ class Compressor:
             path (str): path to the image.
         """
         self._path = path
+        if os.path.splitext(self._path)[1] == ".npz":
+            self.load_channels(self._path)
+            return
         image = Image.open(self._path)
         image_array: np.ndarray = np.array(image)
         index: int = path.rfind('.')
@@ -89,6 +104,18 @@ class Compressor:
                 channel = image_array[:, :, i]
             self._channels.append(Channel(channel))
 
+    def save_channels(self, path: str) -> None:
+        """
+        Saves then channels on a .npz file
+
+        Args:
+            path (str): path to file.
+        """
+        channels: List[Dict] = []
+        for i in self._channels:
+            channels.append(vars(i))
+        np.savez(path, *channels)
+
     def save(self, path: str, k: int) -> None:
         """
         Loads an image to compress.
@@ -97,6 +124,9 @@ class Compressor:
             path (str): path where to save the image.
             k (int): number of singular values to use for compression.
         """
+        if os.path.splitext(path)[1] == ".npz":
+            self.save_channels(path)
+            return
         compressed_channels: List[np.ndarray] = []
         for i in self._channels:
             compressed_channels.append(i.compose(k))
