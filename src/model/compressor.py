@@ -127,6 +127,8 @@ class Compressor:
         if os.path.splitext(path)[1] == ".npz":
             self.save_channels(path)
             return
+        if k < 0:
+            raise ValueError(f"Unexpected k value: {k}")
         compressed_channels: List[np.ndarray] = []
         for i in self._channels:
             compressed_channels.append(i.compose(k))
