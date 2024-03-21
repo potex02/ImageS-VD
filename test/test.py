@@ -8,7 +8,7 @@ class Test(unittest.TestCase):
 
     def setUp(self):
         self._matrix: np.ndarray = np.array([[1, 2, 3, 4], [1, 2, 3, 4]])
-        self._threshold: float = 1 * 10 ** -7
+        self._threshold: float = 10 ** -7
 
     def compare_matrices(self, matrix: np.ndarray):
         for i in range(self._matrix.shape[0]):

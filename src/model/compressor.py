@@ -16,8 +16,12 @@ class Compressor:
     Methods:
         get_compression_rate(original_file: str, compressed_file: str) -> float:
             Calculates the compression rate of a result image.
+        load_channels(path: str) -> None:
+            Loads the decomposed image channels from a .npz file.
         load(path: str) -> None:
             Loads an image to compress.
+        save_channels(path: str) -> None:
+            Saves the decomposed channels on a .npz file.
         save(path: str, k: int) -> None:
             Compresses and saves the image to the specified path using 'k' singular values.
     """
@@ -66,9 +70,9 @@ class Compressor:
         compression_rate: float = 1 - (compressed_size / original_size)
         return compression_rate
 
-    def load_channels(self, path: str):
+    def load_channels(self, path: str) -> None:
         """
-        Loads the decomposed image channels from a npz file.
+        Loads the decomposed image channels from a .npz file.
 
         Args:
             path (str): path to the file where channels are stored.
@@ -106,7 +110,7 @@ class Compressor:
 
     def save_channels(self, path: str) -> None:
         """
-        Saves then channels on a .npz file
+        Saves the decomposed channels on a .npz file.
 
         Args:
             path (str): path to file.

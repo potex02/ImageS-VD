@@ -8,9 +8,13 @@ class Channel:
     Representation of an SVD decomposition of a matrix.
 
     Attributes:
-            _u (np.ndarray): The matrix of the left singular vectors.
-            _s (np.ndarray: The matrix of the singular values.
-            _vt (np.ndarray): The matrix of right singular vectors.
+        _u (np.ndarray): The matrix of the left singular vectors.
+        _s (np.ndarray: The matrix of the singular values.
+        _vt (np.ndarray): The matrix of right singular vectors.
+
+    Mwthods:
+        compose(K: int) -> np.ndarray:
+            Compose the matrix from u, s and vt.
     """
 
     def __init__(self, matrix: np.ndarray):
