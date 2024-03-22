@@ -36,6 +36,22 @@ class Test(unittest.TestCase):
         self.assertEqual(result.shape, self._matrix.shape, "The matrices don't have the same dimensions")
         self.compare_matrices(result)
 
+    def test_compressor_bw(self):
+        compressor: Compressor = Compressor()
+        self.assertIsNotNone(compressor, "compressor is None")
+        self.assertIsInstance(compressor, Compressor, "compressor is not a Compressor")
+        compressor.load("test_bw.jpg")
+        compressor.save("result_bw.jpg", 100)
+        self.assertGreater(Compressor.get_compression_rate("test_bw.jpg", "result_bw.jpg"), 0, "The image is not compressed")
+
+    def test_compressor(self):
+        compressor: Compressor = Compressor()
+        self.assertIsNotNone(compressor, "compressor is None")
+        self.assertIsInstance(compressor, Compressor, "compressor is not a Compressor")
+        compressor.load("test.jpg")
+        compressor.save("result.jpg", 100)
+        self.assertGreater(Compressor.get_compression_rate("test.jpg", "result.jpg"), 0, "The image is not compressed")
+
 
 if __name__ == "__main__":
     unittest.main()
