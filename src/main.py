@@ -5,8 +5,8 @@ from view.application import Application
 
 
 if __name__ == "__main__":
-    #root: tk.Tk = tk.Tk()
-    #app: Application = Application(root)
+    root: tk.Tk = tk.Tk()
+    app: Application = Application(root)
     if len(sys.argv) < 3:
         print("Bad arguments", file=sys.stderr)
         sys.exit(1)
