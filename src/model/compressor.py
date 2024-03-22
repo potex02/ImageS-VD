@@ -1,5 +1,5 @@
 import os
-from typing import List, Dict
+from typing import List, Dict, NoReturn
 import numpy as np
 from PIL import Image
 from .channel import Channel
@@ -16,17 +16,17 @@ class Compressor:
     Methods:
         get_compression_rate(original_file: str, compressed_file: str) -> float:
             Calculates the compression rate of a result image.
-        load_channels(path: str) -> None:
+        load_channels(path: str):
             Loads the decomposed image channels from a .npz file.
         load(path: str) -> None:
             Loads an image to compress.
-        save_channels(path: str) -> None:
+        save_channels(path: str):
             Saves the decomposed channels on a .npz file.
-        save(path: str, k: int) -> None:
+        save(path: str, k: int) :
             Compresses and saves the image to the specified path using 'k' singular values.
     """
 
-    def __init__(self):
+    def __init__(self) -> NoReturn:
         """
         Creates a Compressor instances.
         """
@@ -70,7 +70,7 @@ class Compressor:
         compression_rate: float = 1 - (compressed_size / original_size)
         return compression_rate
 
-    def load_channels(self, path: str) -> None:
+    def load_channels(self, path: str) -> NoReturn:
         """
         Loads the decomposed image channels from a .npz file.
 
@@ -81,7 +81,7 @@ class Compressor:
         for i in sorted(channels.keys()):
             self._channels.append(Channel(channels[i]))
 
-    def load(self, path: str) -> None:
+    def load(self, path: str) -> NoReturn:
         """
         Loads an image to compress.
 
@@ -108,7 +108,7 @@ class Compressor:
                 channel = image_array[:, :, i]
             self._channels.append(Channel(channel))
 
-    def save_channels(self, path: str) -> None:
+    def save_channels(self, path: str) -> NoReturn:
         """
         Saves the decomposed channels on a .npz file.
 
@@ -120,7 +120,7 @@ class Compressor:
             channels.append(vars(i))
         np.savez(path, *channels)
 
-    def save(self, path: str, k: int) -> None:
+    def save(self, path: str, k: int) -> NoReturn:
         """
         Loads an image to compress.
 

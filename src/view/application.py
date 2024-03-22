@@ -1,3 +1,5 @@
+
+from typing import NoReturn
 import tkinter as tk
 from tkinter import ttk
 
@@ -10,11 +12,13 @@ class Application:
         _root (tk.Tk): The tkinter Tk root window.
 
     Methods:
-        add_components() -> None:
+        add_components():
             Load the gui components on the window.
+        add_menubar():
+            Creates the menubar and load it in the window.
     """
 
-    def __init__(self, root: tk.Tk):
+    def __init__(self, root: tk.Tk) -> NoReturn:
         """
         Creates an Application.
 
@@ -27,14 +31,14 @@ class Application:
         self.add_components()
         self._root.mainloop()
 
-    def add_components(self) -> None:
+    def add_components(self) -> NoReturn:
         """
         Load the gui components on the window.
         """
         ttk.Label(self._root, text="ImageS-VD").pack()
         self.add_menubar()
 
-    def add_menubar(self) -> None:
+    def add_menubar(self) -> NoReturn:
         """
         Creates the menubar and load it in the window.
         """
