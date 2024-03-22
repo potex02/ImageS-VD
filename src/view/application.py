@@ -18,7 +18,7 @@ class Application:
             Creates the menubar and load it in the window.
     """
 
-    def __init__(self, root: tk.Tk) -> NoReturn:
+    def __init__(self, root: tk.Tk) -> None:
         """
         Creates an Application.
 
@@ -31,14 +31,14 @@ class Application:
         self.add_components()
         self._root.mainloop()
 
-    def add_components(self) -> NoReturn:
+    def add_components(self) -> None:
         """
         Load the gui components on the window.
         """
         ttk.Label(self._root, text="ImageS-VD").pack()
         self.add_menubar()
 
-    def add_menubar(self) -> NoReturn:
+    def add_menubar(self) -> None:
         """
         Creates the menubar and load it in the window.
         """

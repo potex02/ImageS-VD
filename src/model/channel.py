@@ -1,4 +1,4 @@
-from typing import Dict, NoReturn
+from typing import Dict
 import numpy as np
 
 
@@ -16,7 +16,7 @@ class Channel:
             Compose the matrix from u, s and vt.
     """
 
-    def __init__(self, matrix: np.ndarray) -> NoReturn:
+    def __init__(self, matrix: np.ndarray) -> None:
         """
         Create a Channel instance.
 

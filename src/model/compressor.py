@@ -26,7 +26,7 @@ class Compressor:
             Compresses and saves the image to the specified path using 'k' singular values.
     """
 
-    def __init__(self) -> NoReturn:
+    def __init__(self) -> None:
         """
         Creates a Compressor instances.
         """
@@ -70,7 +70,7 @@ class Compressor:
         compression_rate: float = 1 - (compressed_size / original_size)
         return compression_rate
 
-    def load_channels(self, path: str) -> NoReturn:
+    def load_channels(self, path: str) -> None:
         """
         Loads the decomposed image channels from a .npz file.
 
@@ -81,7 +81,7 @@ class Compressor:
         for i in sorted(channels.keys()):
             self._channels.append(Channel(channels[i]))
 
-    def load(self, path: str) -> NoReturn:
+    def load(self, path: str) -> None:
         """
         Loads an image to compress.
 
@@ -108,7 +108,7 @@ class Compressor:
                 channel = image_array[:, :, i]
             self._channels.append(Channel(channel))
 
-    def save_channels(self, path: str) -> NoReturn:
+    def save_channels(self, path: str) -> None:
         """
         Saves the decomposed channels on a .npz file.
 
@@ -120,7 +120,7 @@ class Compressor:
             channels.append(vars(i))
         np.savez(path, *channels)
 
-    def save(self, path: str, k: int) -> NoReturn:
+    def save(self, path: str, k: int) -> None:
         """
         Loads an image to compress.
 
