@@ -1,5 +1,5 @@
 import os
-from typing import List, Dict, NoReturn
+from typing import List, Dict
 import numpy as np
 from PIL import Image
 from .channel import Channel

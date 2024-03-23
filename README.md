@@ -5,21 +5,22 @@ The program allows also to save the decomposed matrices of an image as npz file 
 The project is written in Python using the numpy library.
 
 ## Current status
-The project is in a very early state of development and can be used only by command line for now.
+The project is in a early state of development.
 
 ## Dependecies
 - Pillow;
 - Numpy;
 
 # Usage
-The project provides two scripts to launch the program.
+The project provides two scripts to launch the program.<br/>
+It can be used also in cli mode with the --cli or -c flag:
 ## Windows
 ```
-imageS-VD <input-file-name> <output-file-name> <singular-value-threshold>
+imageS-VD --cli <input-file-name> <output-file-name> <singular-value-threshold>
 ```
 ## Unix
 ```
-./imageS-VD.sh <input-file-name> <output-file-name> <singular-value-threshold>
+./imageS-VD.sh --cli <input-file-name> <output-file-name> <singular-value-threshold>
 ```
 
 # License
