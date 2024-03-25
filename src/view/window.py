@@ -1,73 +1,66 @@
-import tkinter
-import tkinter as tk
-from tkinter import ttk
-from typing import Dict
+import sys
+from PySide6.QtWidgets import QMainWindow, QToolBar, QLabel, QVBoxLayout, QScrollArea, QWidget, QTabWidget
+from PySide6.QtGui import QAction, QIcon
 
 
-class Window(tk.Tk):
+class Window(QMainWindow):
     """
     The class representing the main window of the application.
-
-    Attributes:
-        _icons (Dict[str, tk.PhotoImage]): The dictionary of the gui images used by the application.
-
-    Methods:
-        add_components():
-            Load the gui components on the window.
-        add_menubar():
-            Creates the menubar and load it in the window.
-        add_toolbar():
-            Creates the toolbar and load it in the window.
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """
         Creates an Application.
         """
         super().__init__()
         self._icons = self.create_icons()
-        self.title("ImageS-VD")
-        self.geometry("800x500")
+        self.setWindowTitle("ImageS-VD")
+        self.setGeometry(100, 100, 800, 500)
         self.add_components()
-        self.mainloop()
+        self.show()
 
-    def create_icons(self) -> Dict[str, tk.PhotoImage]:
+    def create_icons(self):
         """
         Creates the dictionary of gui icons.
-
-        Returns:
-            Dict[str, tk.PhotoImage]: The dictionary of gui icons.
         """
-        open_icon: tk.PhotoImage = tk.PhotoImage(file="./assets/open.png")
-        return {"open": open_icon}
+        # Nota: PyQt5 non supporta direttamente PhotoImage. È necessario utilizzare QPixmap per le immagini.
+        # Tuttavia, per mantenere le cose semplici, userò solo i nomi delle icone a scopo dimostrativo.
+        return {"open": "./assets/open.png"}  # Store paths to image files.
 
-    def add_components(self) -> None:
+    def add_components(self):
         """
         Load the gui components on the window.
         """
         self.add_menubar()
         self.add_toolbar()
 
-    def add_menubar(self) -> None:
+    def add_menubar(self):
         """
         Creates the menubar and load it in the window.
         """
-        menubar: tk.Menu = tk.Menu(self)
-        file: tk.Menu = tk.Menu(menubar, tearoff=0)
-        imagesvd: tk.Menu = tk.Menu(menubar, tearoff=0)
-        file.add_command(label="Open", command=lambda: print("Open"))
-        imagesvd.add_command(label="About", command=lambda: print("Ciao"))
-        imagesvd.add_command(label="Exit", command=lambda: self.destroy())
-        menubar.add_cascade(label="File", menu=file)
-        menubar.add_cascade(label=self.title(), menu=imagesvd)
-        self.config(menu=menubar)
+        menubar = self.menuBar()
+        file_menu = menubar.addMenu("File")
+        imagesvd_menu = menubar.addMenu(self.windowTitle())
 
-    def add_toolbar(self) -> None:
+        open_action = QAction("Open", self)
+        open_action.triggered.connect(lambda: print("Open"))
+        file_menu.addAction(open_action)
+
+        about_action = QAction("About", self)
+        about_action.triggered.connect(lambda: print("Ciao"))
+        imagesvd_menu.addAction(about_action)
+
+        exit_action = QAction("Exit", self)
+        exit_action.triggered.connect(self.close)
+        imagesvd_menu.addAction(exit_action)
+
+    def add_toolbar(self):
         """
         Creates the toolbar and load it in the window.
         """
-        toolbar = ttk.Frame(self)
-        toolbar.pack(side="top", fill="x")
-        ttk.Button(toolbar, image=self._icons["open"], compound="none", command=lambda: print("Open")).pack(side=tk.LEFT)
-        separator: ttk.Separator = ttk.Separator(toolbar, orient=tk.HORIZONTAL)
-        separator.pack(fill=tkinter.X, side=tk.BOTTOM)
+        toolbar = QToolBar()
+        self.addToolBar(toolbar)
+        open_action = QAction(self)
+        open_action.setIcon(QIcon("./assets/open.png"))
+        open_action.triggered.connect(lambda: print("Open"))
+        toolbar.addAction(open_action)

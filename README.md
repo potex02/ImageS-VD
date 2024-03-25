@@ -10,6 +10,7 @@ The project is in a early state of development.
 ## Dependencies
 - Pillow;
 - Numpy;
+- PySide6.
 
 # Usage
 The project provides two scripts to launch the program.<br/>

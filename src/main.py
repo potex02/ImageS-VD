@@ -1,4 +1,5 @@
 import sys
+from PySide6.QtWidgets import QApplication
 from model.compressor import Compressor
 from view.window import Window
 
@@ -35,4 +36,6 @@ if __name__ == "__main__":
     if index != -1:
         cli_usage(index)
         sys.exit(0)
-    Window()
+    app = QApplication(sys.argv)
+    window = Window()
+    sys.exit(app.exec())
