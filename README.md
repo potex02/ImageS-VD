@@ -7,7 +7,7 @@ The project is written in Python using the numpy library.
 ## Current status
 The project is in a early state of development.
 
-## Dependecies
+## Dependencies
 - Pillow;
 - Numpy;
 
@@ -16,12 +16,13 @@ The project provides two scripts to launch the program.<br/>
 It can be used also in cli mode with the --cli or -c flag:
 ## Windows
 ```
-imageS-VD --cli <input-file-name> <output-file-name> <singular-value-threshold>
+imageS-VD --cli <input-file-name> <output-file-name> [singular-value-threshold]
 ```
 ## Unix
 ```
-./imageS-VD.sh --cli <input-file-name> <output-file-name> <singular-value-threshold>
+./imageS-VD.sh --cli <input-file-name> <output-file-name> [singular-value-threshold]
 ```
+The threshold is needed only if the output file isn't a .npz file.
 
 # License
 This project is distributed under the BSD-3 license.

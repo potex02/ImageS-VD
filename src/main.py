@@ -25,6 +25,7 @@ def cli_usage(index: int) -> None:
     except Exception as ex:
         print("Errore: ", ex)
 
+
 if __name__ == "__main__":
     index: int = -1
     if "--cli" in sys.argv:
