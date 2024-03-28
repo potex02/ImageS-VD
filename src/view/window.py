@@ -1,16 +1,27 @@
 from PySide6.QtWidgets import QMainWindow, QToolBar, QVBoxLayout, QWidget, QScrollArea, QLabel, QTabWidget, QMenuBar, \
     QMenu
 from PySide6.QtGui import QAction, QIcon
+from .panel import Panel
 
 
 class Window(QMainWindow):
     """
     The class representing the main window of the application.
+
+    Methods:
+        add_components() -> None:
+            Load the gui components on the window.
+        add_menubar() -> None:
+            Creates the menubar and load it in the window.
+        add_toolbar() -> None:
+            Creates the toolbar and load it in the window.
+        add_tab_widget() -> None:
+            Creates the main part of the window.
     """
 
     def __init__(self) -> None:
         """
-        Creates an Application.
+        Creates a Window.
         """
         super().__init__()
         self.setWindowTitle("ImageS-VD")
@@ -58,18 +69,10 @@ class Window(QMainWindow):
         """
         Creates the main part of the window.
         """
-        widget: QWidget = QWidget()
-        layout: QVBoxLayout = QVBoxLayout()
         tab_widget: QTabWidget = QTabWidget()
-        layout.addWidget(tab_widget)
-        for i in range(10):
-            tab_widget.addTab(QLabel("Text"), f"Text {i}")
-        container: QWidget = QWidget()
-        container.setLayout(layout)
+        for i in range(5):
+            tab_widget.addTab(Panel(), f"Panel {i}")
         scroll_area: QScrollArea = QScrollArea()
         scroll_area.setWidgetResizable(True)
-        scroll_area.setWidget(container)
-        main_layout: QVBoxLayout = QVBoxLayout()
-        main_layout.addWidget(scroll_area)
-        widget.setLayout(main_layout)
-        self.setCentralWidget(widget)
+        scroll_area.setWidget(tab_widget)
+        self.setCentralWidget(scroll_area)
