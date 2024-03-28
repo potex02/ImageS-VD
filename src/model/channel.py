@@ -21,7 +21,7 @@ class Channel:
         Create a Channel instance.
 
         Args:
-            matrix (np.ndarray): The matrix to decomposed
+            matrix (np.ndarray): The matrix to decomposed or a np.ndarray containing the u, s and vt values.
         """
         if len(matrix.shape) == 0:
             channel: Dict = matrix.item()

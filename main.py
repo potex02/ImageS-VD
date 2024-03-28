@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from model.compressor import Compressor
-from view.window import Window
+from src.model.compressor import Compressor
+from src.view.window import Window
 
 
 def cli_usage(index: int) -> None:

@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QMainWindow, QToolBar, QVBoxLayout, QWidget, QScro
     QMenu
 from PySide6.QtGui import QAction, QIcon
 from .panel import Panel
+from ..control.action import Action
 
 
 class Window(QMainWindow):
@@ -24,6 +25,7 @@ class Window(QMainWindow):
         Creates a Window.
         """
         super().__init__()
+        self._action: Action = Action(lambda: print("Open"), "Open", "./assets/open.png")
         self.setWindowTitle("ImageS-VD")
         self.setGeometry(100, 100, 800, 500)
         self.add_components()
@@ -44,8 +46,8 @@ class Window(QMainWindow):
         menubar: QMenuBar = self.menuBar()
         file_menu: QMenu = menubar.addMenu("File")
         imagesvd_menu: QMenu = menubar.addMenu(self.windowTitle())
-        open_action: QAction = QAction("Open", self)
-        open_action.triggered.connect(lambda: print("Open"))
+        open_action: QAction = QAction(self)
+        self._action.register_widget(open_action)
         file_menu.addAction(open_action)
         about_action: QAction = QAction("About", self)
         about_action.triggered.connect(lambda: print("Ciao"))
@@ -61,8 +63,7 @@ class Window(QMainWindow):
         toolbar: QToolBar = QToolBar()
         self.addToolBar(toolbar)
         open_action: QAction = QAction(self)
-        open_action.setIcon(QIcon("./assets/open.png"))
-        open_action.triggered.connect(lambda: print("Open"))
+        self._action.register_widget(open_action, True)
         toolbar.addAction(open_action)
 
     def add_tab_widget(self) -> None:
