@@ -1,6 +1,5 @@
 from typing import Callable
 from PySide6.QtGui import QIcon, QAction
-from PySide6.QtWidgets import QPushButton
 
 
 class Action:

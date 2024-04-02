@@ -1,15 +1,15 @@
-from PySide6.QtWidgets import QMainWindow, QToolBar, QVBoxLayout, QWidget, QScrollArea, QLabel, QTabWidget, QMenuBar, \
-    QMenu
-from PySide6.QtGui import QAction, QIcon
+from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu
+from PySide6.QtGui import QAction
 from .panel import Panel
-from ..control.menu_controller import MenuController
 
 
 class Window(QMainWindow):
     """
     The class representing the main window of the application.
 
-
+    Attributes:
+        _tab_widget (QTabWidget): The widget used as main part of the window.
+        _menu_controller (MenuController): The controller used for the window menu.
 
     Methods:
         add_components() -> None:
@@ -27,7 +27,9 @@ class Window(QMainWindow):
         Creates a Window.
         """
         super().__init__()
-        self._menu_controller: MenuController = MenuController()
+        from ..control.menu_controller import MenuController
+        self._tab_widget: QTabWidget = QTabWidget()
+        self._menu_controller: MenuController = MenuController(self)
         self.setWindowTitle("ImageS-VD")
         self.setGeometry(100, 100, 800, 500)
         self.add_components()
@@ -72,10 +74,16 @@ class Window(QMainWindow):
         """
         Creates the main part of the window.
         """
-        tab_widget: QTabWidget = QTabWidget()
-        for i in range(5):
-            tab_widget.addTab(Panel(), f"Panel {i}")
         scroll_area: QScrollArea = QScrollArea()
         scroll_area.setWidgetResizable(True)
-        scroll_area.setWidget(tab_widget)
+        scroll_area.setWidget(self._tab_widget)
         self.setCentralWidget(scroll_area)
+
+    def add_tab(self, path: str) -> None:
+        """
+        Add a tab to the main port of the window.
+
+        Args:
+            path (str): the path to file to open.
+        """
+        self._tab_widget.addTab(Panel(path), path)
