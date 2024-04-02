@@ -11,6 +11,10 @@ class Action:
         _function (Callable[[], None]): The code to execute when the action is called.
         _text (str): The text of the action.
         _icon (QIcon): The icon of the action.
+
+    Methods:
+        register_widget(self, widget: QAction, icon: bool) -> None:
+            Registers a widget to the action.
     """
 
     def __init__(self, function: Callable[[], None], text: str, icon_path: str) -> None:
@@ -26,7 +30,7 @@ class Action:
         self._text: str = text
         self._icon: QIcon = QIcon(icon_path)
 
-    def register_widget(self, widget: QAction, icon: bool = False) -> None:
+    def register_widget(self, widget: QAction, icon: bool) -> None:
         """
         Registers a widget to the action.
 
