@@ -1,3 +1,4 @@
+import os.path
 from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu
 from PySide6.QtGui import QAction
 from .panel import Panel
@@ -31,7 +32,7 @@ class Window(QMainWindow):
         self._tab_widget: QTabWidget = QTabWidget()
         self._menu_controller: MenuController = MenuController(self)
         self.setWindowTitle("ImageS-VD")
-        self.setGeometry(100, 100, 800, 500)
+        self.setGeometry(100, 100, 800, 600)
         self.add_components()
         self.show()
 
@@ -86,4 +87,4 @@ class Window(QMainWindow):
         Args:
             path (str): the path to file to open.
         """
-        self._tab_widget.addTab(Panel(path), path)
+        self._tab_widget.addTab(Panel(path), os.path.split(path)[1])
