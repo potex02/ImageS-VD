@@ -11,7 +11,7 @@ class Channel:
         _s (np.ndarray: The matrix of the singular values.
         _vt (np.ndarray): The matrix of right singular vectors.
 
-    Mwthods:
+    Methods:
         compose(K: int) -> np.ndarray:
             Compose the matrix from u, s and vt.
     """

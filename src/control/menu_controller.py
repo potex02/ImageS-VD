@@ -11,7 +11,7 @@ class MenuController:
 
     Attributes:
         _window (Window): The window controlled by the controller.
-        _actions: Dict[str, Action]: The dictionary of the menu actions.
+        _actions: (Dict[str, Action]): The dictionary of the menu actions.
 
     Methods:
         register_widget(self, action_name: str, widget: QAction, icon: bool) -> None
