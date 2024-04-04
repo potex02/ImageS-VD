@@ -1,3 +1,4 @@
+import os
 import sys
 from PySide6.QtWidgets import QApplication
 from src.model.compressor import Compressor
@@ -22,7 +23,9 @@ def cli_usage(index: int) -> None:
             k = int(sys.argv[index + 3])
         compressor: Compressor = Compressor()
         compressor.load(original_image_path)
-        compressor.save(result_image_path, k)
+        if os.path.splitext(result_image_path)[1] != ".npz":
+            compressor.compose(k)
+        compressor.save(result_image_path)
     except Exception as ex:
         print("Errore: ", ex)
 

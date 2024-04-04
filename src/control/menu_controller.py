@@ -15,7 +15,7 @@ class MenuController:
 
     Methods:
         register_widget(self, action_name: str, widget: QAction, icon: bool) -> None
-        Registers a widget to an action.
+            Registers a widget to an action.
     """
 
     def __init__(self, window: Window) -> None:

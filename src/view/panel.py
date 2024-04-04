@@ -18,7 +18,7 @@ class Panel(QWidget):
         Creates a Panel.
 
         Args:
-            path (str): The path to the file of the panel,
+            path (str): The path to the file of the panel.
         """
         super().__init__()
         from ..control.panel_controller import PanelController

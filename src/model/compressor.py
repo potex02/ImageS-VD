@@ -20,10 +20,12 @@ class Compressor:
             Loads the decomposed image channels from a .npz file.
         load(path: str) -> None:
             Loads an image to compress.
-        save_channels(path: str):
+         def compose(self, k: int) -> None:
+            Composes a compressed image.
+        save_channels(path: str) -> None:
             Saves the decomposed channels on a .npz file.
-        save(path: str, k: int) :
-            Compresses and saves the image to the specified path using 'k' singular values.
+        save(path: str) -> None:
+            Saves a compressed image.
     """
 
     def __init__(self) -> None:
@@ -32,6 +34,7 @@ class Compressor:
         """
         self._path: str = ""
         self._channels: List[Channel] = []
+        self._image: np.ndarray
 
     @property
     def path(self) -> str:
@@ -92,7 +95,7 @@ class Compressor:
         if os.path.splitext(self._path)[1] == ".npz":
             self.load_channels(self._path)
             return
-        image = Image.open(self._path)
+        image: Image.Image = Image.open(self._path)
         image_array: np.ndarray = np.array(image)
         index: int = path.rfind('.')
         if index != -1 and path[index + 1:].lower() == "pbm":
@@ -108,6 +111,20 @@ class Compressor:
                 channel = image_array[:, :, i]
             self._channels.append(Channel(channel))
 
+    def compose(self, k: int) -> None:
+        """
+        Composes a compressed image.
+
+        Args:
+            k (int): number of singular values to use for compression."""
+        if k < 0:
+            raise ValueError(f"Unexpected k value: {k}")
+        compressed_channels: List[np.ndarray] = []
+        for i in self._channels:
+            compressed_channels.append(i.compose(k))
+        compressed_image_array: np.ndarray = np.stack(compressed_channels, axis=-1)
+        self._image = np.clip(compressed_image_array, 0, 255).astype(np.uint8)
+
     def save_channels(self, path: str) -> None:
         """
         Saves the decomposed channels on a .npz file.
@@ -120,24 +137,16 @@ class Compressor:
             channels.append(vars(i))
         np.savez(path, *channels)
 
-    def save(self, path: str, k: int) -> None:
+    def save(self, path: str) -> None:
         """
-        Loads an image to compress.
+        Saves a compressed image.
 
         Args:
             path (str): path where to save the image.
-            k (int): number of singular values to use for compression.
         """
         if os.path.splitext(path)[1] == ".npz":
             self.save_channels(path)
             return
-        if k < 0:
-            raise ValueError(f"Unexpected k value: {k}")
-        compressed_channels: List[np.ndarray] = []
-        for i in self._channels:
-            compressed_channels.append(i.compose(k))
-        compressed_image_array: np.ndarray = np.stack(compressed_channels, axis=-1)
-        compressed_image_array = np.clip(compressed_image_array, 0, 255).astype(np.uint8)
-        result: Image.Image = Image.fromarray(compressed_image_array.squeeze())
+        result: Image.Image =  Image.fromarray(self._image.squeeze())
         result.save(path)
         print(Compressor.get_compression_rate(self._path, path))
