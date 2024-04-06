@@ -147,6 +147,10 @@ class Compressor:
         if os.path.splitext(path)[1] == ".npz":
             self.save_channels(path)
             return
-        result: Image.Image =  Image.fromarray(self._image.squeeze())
-        result.save(path)
+        result = Image.fromarray(self._image.squeeze())
+        try:
+            result.save(path)
+        except Exception:
+            result = result.convert("RGB")
+            result.save(path)
         print(Compressor.get_compression_rate(self._path, path))
