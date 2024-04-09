@@ -14,8 +14,10 @@ class MenuController:
         _actions: (Dict[str, Action]): The dictionary of the menu actions.
 
     Methods:
-        register_widget(self, action_name: str, widget: QAction, icon: bool) -> None
+        register_widget(self, action_name: str, widget: QAction, icon: bool) -> None:
             Registers a widget to an action.
+        _open() -> None:
+            Opens a file.
     """
 
     def __init__(self, window: Window) -> None:
@@ -27,7 +29,7 @@ class MenuController:
         """
         self._window: Window = window
         self._actions: Dict[str, Action] = {
-            "open": Action(self.open, "Open", "./assets/open.png")
+            "open": Action(self._open, "Open", "./assets/open.png")
         }
 
     def register_widget(self, action_name: str, widget: QAction, icon: bool = False) -> None:
@@ -41,7 +43,7 @@ class MenuController:
         """
         self._actions[action_name].register_widget(widget, icon)
 
-    def open(self) -> None:
+    def _open(self) -> None:
         """
         Opens a file.
         """

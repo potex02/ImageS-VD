@@ -37,24 +37,14 @@ class Compressor:
         self._image: np.ndarray
 
     @property
-    def path(self) -> str:
+    def image(self) -> np.ndarray:
         """
-        Gets the path of the image to compress.
+        Gets the image.
 
         Returns:
-            str: The path to the image.
+            np.ndarray: The ndarray representing the image.
         """
-        return self._path
-
-    @property
-    def channels(self) -> List[Channel]:
-        """
-        Gets the image decomposed channels
-
-        Returns:
-            List[Channel]: The image decomposed channels.
-        """
-        return self._channels
+        return self._image
 
     @staticmethod
     def get_compression_rate(original_file: str, compressed_file: str) -> float:
