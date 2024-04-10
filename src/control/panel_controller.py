@@ -48,5 +48,4 @@ class PanelController:
             k (int): the number of singular values to use.
         """
         self._compressor.compose(k)
-        image: Image.Image = Image.fromarray(self._compressor.image.squeeze())
-        self._panel.set_image(image.convert("RGBA" if image.mode == "RGBA" else "RGB"))
+        self._panel.set_image(self._compressor.image.squeeze())

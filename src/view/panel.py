@@ -45,16 +45,24 @@ class Panel(QWidget):
         self.setLayout(layout)
         self._panel_controller.load_image(path)
 
-    def set_image(self, image: Image.Image) -> None:
+    def set_image(self, image: np.ndarray) -> None:
         """
         Sets the images to show.
 
         Args:
             image (np.ndarray): The data of the image to show.
         """
-        width, height = image.size
-        qimage: QImage = QImage(image.tobytes(), width, height,
-                        QImage.Format_RGBA8888 if image.mode == "RGBA" else QImage.Format_RGB888)
+        height, width = image.shape[:2]
+        qimage: QImage
+        if len(image.shape) == 2:
+            qimage = QImage(image.data, width, height, width, QImage.Format_Grayscale8)
+        elif len(image.shape) == 3:
+            if image.shape[2] == 3:
+                qimage = QImage(image.data, width, height, 3 * width, QImage.Format_RGB888)
+            elif image.shape[2] == 4:
+                qimage = QImage(image.data, width, height, 4 * width, QImage.Format_RGBA8888)
+            else:
+                raise ValueError("Unsupported number of channels for image")
         pixmap: QPixmap = QPixmap.fromImage(qimage)
         pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatioByExpanding)
         self._image.setPixmap(pixmap)
