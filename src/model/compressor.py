@@ -16,16 +16,16 @@ class Compressor:
     Methods:
         get_compression_rate(original_file: str, compressed_file: str) -> float:
             Calculates the compression rate of a result image.
-        load_channels(path: str):
-            Loads the decomposed image channels from a .npz file.
         load(path: str) -> None:
             Loads an image to compress.
-         def compose(self, k: int) -> None:
+        compose(self, k: int) -> None:
             Composes a compressed image.
-        save_channels(path: str) -> None:
-            Saves the decomposed channels on a .npz file.
         save(path: str) -> None:
             Saves a compressed image.
+        _load_channels(path: str):
+            Loads the decomposed image channels from a .npz file.
+        _save_channels(path: str) -> None:
+            Saves the decomposed channels on a .npz file.
     """
 
     def __init__(self) -> None:
@@ -63,16 +63,7 @@ class Compressor:
         compression_rate: float = 1 - (compressed_size / original_size)
         return compression_rate
 
-    def load_channels(self, path: str) -> None:
-        """
-        Loads the decomposed image channels from a .npz file.
 
-        Args:
-            path (str): path to the file where channels are stored.
-        """
-        channels = np.load(path, allow_pickle=True)
-        for i in sorted(channels.keys()):
-            self._channels.append(Channel(channels[i]))
 
     def load(self, path: str) -> None:
         """
@@ -83,7 +74,7 @@ class Compressor:
         """
         self._path = path
         if os.path.splitext(self._path)[1] == ".npz":
-            self.load_channels(self._path)
+            self._load_channels(self._path)
             return
         image: Image.Image = Image.open(self._path)
         image_array: np.ndarray = np.array(image)
@@ -115,7 +106,36 @@ class Compressor:
         compressed_image_array: np.ndarray = np.stack(compressed_channels, axis=-1)
         self._image = np.clip(compressed_image_array, 0, 255).astype(np.uint8)
 
-    def save_channels(self, path: str) -> None:
+    def save(self, path: str) -> None:
+        """
+        Saves a compressed image.
+
+        Args:
+            path (str): path where to save the image.
+        """
+        if os.path.splitext(path)[1] == ".npz":
+            self._save_channels(path)
+            return
+        result = Image.fromarray(self._image.squeeze())
+        try:
+            result.save(path)
+        except Exception:
+            result = result.convert("RGB")
+            result.save(path)
+        print(Compressor.get_compression_rate(self._path, path))
+
+    def _load_channels(self, path: str) -> None:
+        """
+        Loads the decomposed image channels from a .npz file.
+
+        Args:
+            path (str): path to the file where channels are stored.
+        """
+        channels = np.load(path, allow_pickle=True)
+        for i in sorted(channels.keys()):
+            self._channels.append(Channel(channels[i]))
+
+    def _save_channels(self, path: str) -> None:
         """
         Saves the decomposed channels on a .npz file.
 
@@ -126,21 +146,3 @@ class Compressor:
         for i in self._channels:
             channels.append(vars(i))
         np.savez(path, *channels)
-
-    def save(self, path: str) -> None:
-        """
-        Saves a compressed image.
-
-        Args:
-            path (str): path where to save the image.
-        """
-        if os.path.splitext(path)[1] == ".npz":
-            self.save_channels(path)
-            return
-        result = Image.fromarray(self._image.squeeze())
-        try:
-            result.save(path)
-        except Exception:
-            result = result.convert("RGB")
-            result.save(path)
-        print(Compressor.get_compression_rate(self._path, path))

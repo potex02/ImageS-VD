@@ -13,13 +13,15 @@ class Window(QMainWindow):
         _menu_controller (MenuController): The controller used for the window menu.
 
     Methods:
-        add_components() -> None:
+        add_tab(self, path: str) -> None:
+            Adds a tab to the main port of the window.
+        _add_components() -> None:
             Load the gui components on the window.
-        add_menubar() -> None:
+        _add_menubar() -> None:
             Creates the menubar and load it in the window.
-        add_toolbar() -> None:
+        _add_toolbar() -> None:
             Creates the toolbar and load it in the window.
-        add_tab_widget() -> None:
+        _add_tab_widget() -> None:
             Creates the main part of the window.
     """
 
@@ -33,18 +35,27 @@ class Window(QMainWindow):
         self._menu_controller: MenuController = MenuController(self)
         self.setWindowTitle("ImageS-VD")
         self.setGeometry(100, 100, 800, 600)
-        self.add_components()
+        self._add_components()
         self.show()
 
-    def add_components(self) -> None:
+    def add_tab(self, path: str) -> None:
+        """
+        Adds a tab to the main port of the window.
+
+        Args:
+            path (str): the path to file to open.
+        """
+        self._tab_widget.addTab(Panel(path), os.path.split(path)[1])
+
+    def _add_components(self) -> None:
         """
         Load the gui components on the window.
         """
-        self.add_menubar()
-        self.add_toolbar()
-        self.add_tab_widget()
+        self._add_menubar()
+        self._add_toolbar()
+        self._add_tab_widget()
 
-    def add_menubar(self) -> None:
+    def _add_menubar(self) -> None:
         """
         Creates the menubar and load it in the window.
         """
@@ -61,7 +72,7 @@ class Window(QMainWindow):
         exit_action.triggered.connect(self.close)
         about_menu.addAction(exit_action)
 
-    def add_toolbar(self) -> None:
+    def _add_toolbar(self) -> None:
         """
         Creates the toolbar and load it in the window.
         """
@@ -71,7 +82,7 @@ class Window(QMainWindow):
         self._menu_controller.register_widget("open", open_action, True)
         toolbar.addAction(open_action)
 
-    def add_tab_widget(self) -> None:
+    def _add_tab_widget(self) -> None:
         """
         Creates the main part of the window.
         """
@@ -79,12 +90,3 @@ class Window(QMainWindow):
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(self._tab_widget)
         self.setCentralWidget(scroll_area)
-
-    def add_tab(self, path: str) -> None:
-        """
-        Add a tab to the main port of the window.
-
-        Args:
-            path (str): the path to file to open.
-        """
-        self._tab_widget.addTab(Panel(path), os.path.split(path)[1])
