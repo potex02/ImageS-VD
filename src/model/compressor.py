@@ -16,13 +16,13 @@ class Compressor:
     Methods:
         get_compression_rate(original_file: str, compressed_file: str) -> float:
             Calculates the compression rate of a result image.
-        load(path: str) -> None:
+        load(path: str) -> int:
             Loads an image to compress.
-        compose(self, k: int) -> None:
+        compose(k: int) -> None:
             Composes a compressed image.
         save(path: str) -> None:
             Saves a compressed image.
-        _load_channels(path: str):
+        _load_channels(path: str) -> int:
             Loads the decomposed image channels from a .npz file.
         _save_channels(path: str) -> None:
             Saves the decomposed channels on a .npz file.
@@ -63,34 +63,39 @@ class Compressor:
         compression_rate: float = 1 - (compressed_size / original_size)
         return compression_rate
 
-
-
-    def load(self, path: str) -> None:
+    def load(self, path: str) -> int:
         """
         Loads an image to compress.
 
         Args:
             path (str): path to the image.
+
+        Returns:
+            int: The number of the singular values of the image.
         """
         self._path = path
         if os.path.splitext(self._path)[1] == ".npz":
-            self._load_channels(self._path)
-            return
+            return self._load_channels(self._path)
         image: Image.Image = Image.open(self._path)
         image_array: np.ndarray = np.array(image)
         index: int = path.rfind('.')
         if index != -1 and path[index + 1:].lower() == "pbm":
             image_array = np.where(image_array, 0, 255)
         channels: int = 1
+        k: int = 0
         if len(image_array.shape) == 3:
             _, _, channels = image_array.shape
         for i in range(channels):
-            channel: np.ndarray
+            channel_array: np.ndarray
             if channels == 1:
-                channel = image_array
+                channel_array = image_array
             else:
-                channel = image_array[:, :, i]
-            self._channels.append(Channel(channel))
+                channel_array = image_array[:, :, i]
+            channel: Channel = Channel(channel_array)
+            if k == 0:
+                k = channel.get_singular_values()
+            self._channels.append(channel)
+        return k
 
     def compose(self, k: int) -> None:
         """
@@ -124,16 +129,24 @@ class Compressor:
             result.save(path)
         print(Compressor.get_compression_rate(self._path, path))
 
-    def _load_channels(self, path: str) -> None:
+    def _load_channels(self, path: str) -> int:
         """
         Loads the decomposed image channels from a .npz file.
 
         Args:
             path (str): path to the file where channels are stored.
+
+        Returns:
+            int: The number of the singular values of the image.
         """
+        k: int = 0
         channels = np.load(path, allow_pickle=True)
         for i in sorted(channels.keys()):
-            self._channels.append(Channel(channels[i]))
+            channel: Channel = Channel(channels[i])
+            self._channels.append(channel)
+            if k == 0:
+                k = channel.get_singular_values()
+        return k
 
     def _save_channels(self, path: str) -> None:
         """

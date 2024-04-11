@@ -1,5 +1,5 @@
+import threading
 import numpy as np
-from PIL import Image
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QSlider
@@ -15,8 +15,10 @@ class Panel(QWidget):
         _panel_controller (PanelController): The controller of the panel.
 
     Methods:
-        set_image(self, image: Image.Image) -> None:
+        set_image(image: Image.Image, k: int) -> None:
             Sets the images to show.
+         def _add_components() -> None:
+            Adds and initializes the gui components of the panel.
     """
 
     def __init__(self, path: str) -> None:
@@ -31,26 +33,19 @@ class Panel(QWidget):
         self._image: QLabel = QLabel()
         self._slider: QSlider = QSlider(Qt.Horizontal)
         self._panel_controller: PanelController = PanelController(self)
-        self._slider.setMinimum(0)
-        self._slider.setMaximum(100)
-        self._slider.setEnabled(False)
-        self._slider.valueChanged.connect(lambda: print(self._slider.value()))
-        pixmap: QPixmap = QPixmap("./assets/loading.png")
-        layout: QVBoxLayout = QVBoxLayout()
-        layout.setAlignment(Qt.AlignHCenter)
-        pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatioByExpanding)
-        self._image.setPixmap(pixmap)
-        layout.addWidget(self._slider)
-        layout.addWidget(self._image)
-        self.setLayout(layout)
-        self._panel_controller.load_image(path)
+        self._add_components()
+        threading.Thread(
+            target=lambda: self._panel_controller.load_image(path)
+        ).start()
+        #self._panel_controller.load_image(path)
 
-    def set_image(self, image: np.ndarray) -> None:
+    def set_image(self, image: np.ndarray, k: int) -> None:
         """
         Sets the images to show.
 
         Args:
             image (np.ndarray): The data of the image to show.
+            k (int): The number of singular values of the image.
         """
         height, width = image.shape[:2]
         qimage: QImage
@@ -66,3 +61,23 @@ class Panel(QWidget):
         pixmap: QPixmap = QPixmap.fromImage(qimage)
         pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatioByExpanding)
         self._image.setPixmap(pixmap)
+        self._slider.setMinimum(1)
+        self._slider.setMaximum(k)
+        self._slider.setEnabled(True)
+
+    def _add_components(self) -> None:
+        """
+        Adds and initializes the gui components of the panel.
+        """
+        self._slider.setMinimum(0)
+        self._slider.setMaximum(100)
+        self._slider.setEnabled(False)
+        self._slider.valueChanged.connect(lambda: print(self._slider.value()))
+        pixmap: QPixmap = QPixmap("./assets/loading.png")
+        layout: QVBoxLayout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignHCenter)
+        pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatioByExpanding)
+        self._image.setPixmap(pixmap)
+        layout.addWidget(self._slider)
+        layout.addWidget(self._image)
+        self.setLayout(layout)

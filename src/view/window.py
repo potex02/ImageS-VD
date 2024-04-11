@@ -13,10 +13,10 @@ class Window(QMainWindow):
         _menu_controller (MenuController): The controller used for the window menu.
 
     Methods:
-        add_tab(self, path: str) -> None:
+        add_tab(path: str) -> None:
             Adds a tab to the main port of the window.
         _add_components() -> None:
-            Load the gui components on the window.
+            Adds the gui components to the window.
         _add_menubar() -> None:
             Creates the menubar and load it in the window.
         _add_toolbar() -> None:
@@ -49,7 +49,7 @@ class Window(QMainWindow):
 
     def _add_components(self) -> None:
         """
-        Load the gui components on the window.
+        Adds the gui components to the window.
         """
         self._add_menubar()
         self._add_toolbar()

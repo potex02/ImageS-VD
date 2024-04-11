@@ -23,7 +23,7 @@ imageS-VD --cli <input-file-name> <output-file-name> [singular-value-threshold]
 ```
 ./imageS-VD.sh --cli <input-file-name> <output-file-name> [singular-value-threshold]
 ```
-The threshold is needed only if the output file isn't a .npz file.
-
+The threshold is needed only if the output file isn't a .npz file.<br/>
+If the threshold is set to 0, the image is reconstructed using all singular values.
 # License
 This project is distributed under the BSD-3 license.

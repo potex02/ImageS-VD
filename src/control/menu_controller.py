@@ -14,7 +14,7 @@ class MenuController:
         _actions: (Dict[str, Action]): The dictionary of the menu actions.
 
     Methods:
-        register_widget(self, action_name: str, widget: QAction, icon: bool) -> None:
+        register_widget(action_name: str, widget: QAction, icon: bool) -> None:
             Registers a widget to an action.
         _open() -> None:
             Opens a file.

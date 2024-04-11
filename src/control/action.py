@@ -12,7 +12,7 @@ class Action:
         _icon (QIcon): The icon of the action.
 
     Methods:
-        register_widget(self, widget: QAction, icon: bool) -> None:
+        register_widget(widget: QAction, icon: bool) -> None:
             Registers a widget to the action.
     """
 

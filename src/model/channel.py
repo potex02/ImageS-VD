@@ -12,7 +12,9 @@ class Channel:
         _vt (np.ndarray): The matrix of right singular vectors.
 
     Methods:
-        compose(K: int) -> np.ndarray:
+        get_singular_values() -> int:
+            Gets the number of the singular values of the channel.
+        compose(k: int) -> np.ndarray:
             Compose the matrix from u, s and vt.
     """
 
@@ -30,6 +32,15 @@ class Channel:
             self._vt: np.ndarray = channel["_vt"]
             return
         self._u, self._s, self._vt = np.linalg.svd(matrix, full_matrices=False)
+
+    def get_singular_values(self) -> int:
+        """
+        Gets the number of the singular values of the channel.
+
+        Returns:
+            The number of singular values.
+        """
+        return min(self._vt.shape)
 
     def compose(self, k: int) -> np.ndarray:
         """
