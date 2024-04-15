@@ -1,3 +1,4 @@
+import functools
 import threading
 import numpy as np
 from PySide6.QtCore import Qt
@@ -35,11 +36,10 @@ class Panel(QWidget):
         self._panel_controller: PanelController = PanelController(self)
         self._add_components()
         threading.Thread(
-            target=lambda: self._panel_controller.load_image(path)
+           target=functools.partial(self._panel_controller.load_image, path)
         ).start()
-        #self._panel_controller.load_image(path)
 
-    def set_image(self, image: np.ndarray, k: int) -> None:
+    def set_image(self, image: np.ndarray, k: int = -1) -> None:
         """
         Sets the images to show.
 
@@ -61,9 +61,10 @@ class Panel(QWidget):
         pixmap: QPixmap = QPixmap.fromImage(qimage)
         pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatioByExpanding)
         self._image.setPixmap(pixmap)
-        self._slider.setMinimum(1)
-        self._slider.setMaximum(k)
-        self._slider.setEnabled(True)
+        if k != -1:
+            self._slider.setMinimum(1)
+            self._slider.setMaximum(k - 1)
+            self._slider.setEnabled(True)
 
     def _add_components(self) -> None:
         """
@@ -72,7 +73,7 @@ class Panel(QWidget):
         self._slider.setMinimum(0)
         self._slider.setMaximum(100)
         self._slider.setEnabled(False)
-        self._slider.valueChanged.connect(lambda: print(self._slider.value()))
+        self._slider.valueChanged.connect(self._panel_controller.change_value)
         pixmap: QPixmap = QPixmap("./assets/loading.png")
         layout: QVBoxLayout = QVBoxLayout()
         layout.setAlignment(Qt.AlignHCenter)

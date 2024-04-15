@@ -9,6 +9,7 @@ class PanelController:
     Attributes:
         _panel (Panel): The panel controlled by the controller.
         _compressor (Compressor): The compressor used to compress the panel image.
+        _values (int): number of image singular values.
 
     Methods:
         load_image(self, path: str) -> None:
@@ -24,14 +25,27 @@ class PanelController:
         """
         self._panel: Panel = panel
         self._compressor: Compressor = Compressor()
+        self._values: int = 0
 
     def load_image(self, path: str) -> None:
         """
         Loads and decomposes the image.
 
         Args:
-            path: he path to the file of the panel.
+            path (str): he path to the file of the panel.
         """
-        k: int = self._compressor.load(path)
+        self._values = self._compressor.load(path)
         self._compressor.compose(0)
-        self._panel.set_image(self._compressor.image.squeeze(), k)
+        self._panel.set_image(self._compressor.image.squeeze(), self._values)
+
+    def change_value(self, k: int) -> None:
+        """
+        Changes the number of the singular values.
+
+        Args:
+            k (int): The value of the slider. The number of singular values is calculated as values - k.
+        """
+        self._compressor.compose(self._values - k)
+        self._panel.set_image(self._compressor.image.squeeze(), self._values)
+
+
