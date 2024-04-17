@@ -18,6 +18,8 @@ class MenuController:
             Registers a widget to an action.
         _open() -> None:
             Opens a file.
+        _save() -> None:
+            Saves a file
     """
 
     def __init__(self, window: Window) -> None:
@@ -29,7 +31,8 @@ class MenuController:
         """
         self._window: Window = window
         self._actions: Dict[str, Action] = {
-            "open": Action(self._open, "Open", "./assets/open.png")
+            "open": Action(self._open, "Open", "./assets/open.png"),
+            "save": Action(self._save, "Save", "./assets/open.png")
         }
 
     def register_widget(self, action_name: str, widget: QAction, icon: bool = False) -> None:
@@ -49,3 +52,9 @@ class MenuController:
         """
         path: Tuple[str, str] = QFileDialog.getOpenFileName(self._window, 'Open File')
         self._window.add_tab(path[0])
+
+    def _save(self) -> None:
+        """
+        Saves a file
+        """
+        print("Save")

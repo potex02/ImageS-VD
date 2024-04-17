@@ -63,8 +63,11 @@ class Window(QMainWindow):
         file_menu: QMenu = menubar.addMenu("File")
         about_menu: QMenu = menubar.addMenu(self.windowTitle())
         open_action: QAction = QAction(self)
+        save_action: QAction = QAction(self)
         self._menu_controller.register_widget("open", open_action)
+        self._menu_controller.register_widget("save", save_action)
         file_menu.addAction(open_action)
+        file_menu.addAction(save_action)
         about_action: QAction = QAction("About", self)
         about_action.triggered.connect(lambda: print("Ciao"))
         about_menu.addAction(about_action)
@@ -79,8 +82,11 @@ class Window(QMainWindow):
         toolbar: QToolBar = QToolBar()
         self.addToolBar(toolbar)
         open_action: QAction = QAction(self)
+        save_action: QAction = QAction(self)
         self._menu_controller.register_widget("open", open_action, True)
+        self._menu_controller.register_widget("save", save_action, True)
         toolbar.addAction(open_action)
+        toolbar.addAction(save_action)
 
     def _add_tab_widget(self) -> None:
         """
