@@ -32,7 +32,7 @@ class MenuController:
         self._window: Window = window
         self._actions: Dict[str, Action] = {
             "open": Action(self._open, "Open", "./assets/open.png"),
-            "save": Action(self._save, "Save", "./assets/open.png")
+            "save": Action(self._save, "Save", "./assets/save.png")
         }
 
     def register_widget(self, action_name: str, widget: QAction, icon: bool = False) -> None:
@@ -57,4 +57,5 @@ class MenuController:
         """
         Saves a file
         """
-        print("Save")
+        path: Tuple[str, str] = QFileDialog.getSaveFileName(self._window, "Save file")
+        self._window.get_current_panel().save(path[0])

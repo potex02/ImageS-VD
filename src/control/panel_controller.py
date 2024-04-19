@@ -14,6 +14,10 @@ class PanelController:
     Methods:
         load_image(self, path: str) -> None:
             Loads and decomposes the image.
+        change_value(k: int) -> None:
+            Changes the number of the singular values.
+        save(path: str) -> None:
+            Saves the image.
     """
 
     def __init__(self, panel: Panel) -> None:
@@ -48,4 +52,11 @@ class PanelController:
         self._compressor.compose(self._values - k)
         self._panel.set_image(self._compressor.image.squeeze(), self._values)
 
+    def save(self, path: str) -> None:
+        """
+        Saves the image
 
+        Args:
+            path (str): The path where to save the image.
+        """
+        self._compressor.save(path)

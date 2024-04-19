@@ -18,7 +18,9 @@ class Panel(QWidget):
     Methods:
         set_image(image: Image.Image, k: int) -> None:
             Sets the images to show.
-         def _add_components() -> None:
+        save(path: str) -> None:
+            Saves the image.
+        def _add_components() -> None:
             Adds and initializes the gui components of the panel.
     """
 
@@ -65,6 +67,15 @@ class Panel(QWidget):
             self._slider.setMinimum(1)
             self._slider.setMaximum(k - 1)
             self._slider.setEnabled(True)
+
+    def save(self, path: str) -> None:
+        """
+        Saves the image
+
+        Args:
+            path (str): The path where to save the image.
+        """
+        self._panel_controller.save(path)
 
     def _add_components(self) -> None:
         """

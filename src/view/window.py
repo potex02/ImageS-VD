@@ -15,6 +15,8 @@ class Window(QMainWindow):
     Methods:
         add_tab(path: str) -> None:
             Adds a tab to the main port of the window.
+        get_current_panel() -> Panel:
+            Gets the current active panel.
         _add_components() -> None:
             Adds the gui components to the window.
         _add_menubar() -> None:
@@ -43,9 +45,15 @@ class Window(QMainWindow):
         Adds a tab to the main port of the window.
 
         Args:
-            path (str): the path to file to open.
+            path (str): The path to file to open.
         """
         self._tab_widget.addTab(Panel(path), os.path.split(path)[1])
+
+    def get_current_panel(self) -> Panel:
+        """
+        Gets the current active panel
+        """
+        return self._tab_widget.currentWidget()
 
     def _add_components(self) -> None:
         """
