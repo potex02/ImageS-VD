@@ -32,7 +32,7 @@ class MenuController:
         self._window: Window = window
         self._actions: Dict[str, Action] = {
             "open": Action(self._open, "Open", "./assets/open.png"),
-            "save": Action(self._save, "Save", "./assets/save.png")
+            "save": Action(self._save, "Save", "./assets/save.png", False)
         }
 
     def register_widget(self, action_name: str, widget: QAction, icon: bool = False) -> None:
