@@ -51,7 +51,7 @@ class MenuController:
         Opens a file.
         """
         path: Tuple[str, str] = QFileDialog.getOpenFileName(self._window, 'Open File')
-        self._window.add_tab(path[0])
+        self._window.add_tab(path[0], self._actions["save"])
 
     def _save(self) -> None:
         """

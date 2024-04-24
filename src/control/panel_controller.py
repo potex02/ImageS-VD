@@ -1,5 +1,6 @@
 from ..model.compressor import Compressor
 from ..view.panel import Panel
+from .action import Action
 
 
 class PanelController:
@@ -10,6 +11,7 @@ class PanelController:
         _panel (Panel): The panel controlled by the controller.
         _compressor (Compressor): The compressor used to compress the panel image.
         _values (int): number of image singular values.
+        _save_action (Action): The action used to save the images.
 
     Methods:
         load_image(self, path: str) -> None:
@@ -20,16 +22,18 @@ class PanelController:
             Saves the image.
     """
 
-    def __init__(self, panel: Panel) -> None:
+    def __init__(self, panel: Panel, save_action: Action) -> None:
         """
         Creates a new PanelController.
 
         Args:
             panel (Panel): The panel controlled by the controller.
+            save_action (Action): The action used to save the images.
         """
         self._panel: Panel = panel
         self._compressor: Compressor = Compressor()
         self._values: int = 0
+        self._save_action = save_action
 
     def load_image(self, path: str) -> None:
         """
@@ -41,6 +45,7 @@ class PanelController:
         self._values = self._compressor.load(path)
         self._compressor.compose(0)
         self._panel.set_image(self._compressor.image.squeeze(), self._values)
+        self._save_action.set_enabled(True)
 
     def change_value(self, k: int) -> None:
         """

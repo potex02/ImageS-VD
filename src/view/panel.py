@@ -4,6 +4,7 @@ import numpy as np
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QSlider
+from ..control.action import Action
 
 
 class Panel(QWidget):
@@ -24,18 +25,19 @@ class Panel(QWidget):
             Adds and initializes the gui components of the panel.
     """
 
-    def __init__(self, path: str) -> None:
+    def __init__(self, path: str, save_action: Action) -> None:
         """
         Creates a Panel.
 
         Args:
             path (str): The path to the file of the panel.
+            save_action (Action): The action used to save the images.
         """
         super().__init__()
         from ..control.panel_controller import PanelController
         self._image: QLabel = QLabel()
         self._slider: QSlider = QSlider(Qt.Horizontal)
-        self._panel_controller: PanelController = PanelController(self)
+        self._panel_controller: PanelController = PanelController(self, save_action)
         self._add_components()
         threading.Thread(
            target=functools.partial(self._panel_controller.load_image, path)

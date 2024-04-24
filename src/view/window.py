@@ -2,6 +2,7 @@ import os.path
 from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu
 from PySide6.QtGui import QAction
 from .panel import Panel
+from ..control.action import Action
 
 
 class Window(QMainWindow):
@@ -13,7 +14,7 @@ class Window(QMainWindow):
         _menu_controller (MenuController): The controller used for the window menu.
 
     Methods:
-        add_tab(path: str) -> None:
+        add_tab(path: str, save_action: Action) -> None:
             Adds a tab to the main port of the window.
         get_current_panel() -> Panel:
             Gets the current active panel.
@@ -40,14 +41,15 @@ class Window(QMainWindow):
         self._add_components()
         self.show()
 
-    def add_tab(self, path: str) -> None:
+    def add_tab(self, path: str, save_action: Action) -> None:
         """
         Adds a tab to the main port of the window.
 
         Args:
             path (str): The path to file to open.
+            save_action (Action): The action used to save the images.
         """
-        self._tab_widget.addTab(Panel(path), os.path.split(path)[1])
+        self._tab_widget.addTab(Panel(path, save_action), os.path.split(path)[1])
 
     def get_current_panel(self) -> Panel:
         """
