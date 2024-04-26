@@ -1,7 +1,8 @@
 import os.path
-from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu
+from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu, QWidget
 from PySide6.QtGui import QAction
 from .panel import Panel
+from .tab_widget import TabWidget
 from ..control.action import Action
 
 
@@ -10,7 +11,7 @@ class Window(QMainWindow):
     The class representing the main window of the application.
 
     Attributes:
-        _tab_widget (QTabWidget): The widget used as main part of the window.
+        _tab_widget (TabWidget): The widget used as main part of the window.
         _menu_controller (MenuController): The controller used for the window menu.
 
     Methods:
@@ -34,7 +35,7 @@ class Window(QMainWindow):
         """
         super().__init__()
         from ..control.menu_controller import MenuController
-        self._tab_widget: QTabWidget = QTabWidget()
+        self._tab_widget: TabWidget = TabWidget()
         self._menu_controller: MenuController = MenuController(self)
         self.setWindowTitle("ImageS-VD")
         self.setGeometry(100, 100, 800, 600)
@@ -55,7 +56,8 @@ class Window(QMainWindow):
         """
         Gets the current active panel
         """
-        return self._tab_widget.currentWidget()
+        widget: QWidget = self._tab_widget.currentWidget()
+        return widget if isinstance(widget, Panel) else None
 
     def _add_components(self) -> None:
         """
