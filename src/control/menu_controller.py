@@ -35,6 +35,16 @@ class MenuController:
             "save": Action(self._save, "Save", "./assets/save.png", False)
         }
 
+    @property
+    def actions(self) -> Dict[str, Action]:
+        """
+        Gets an actions
+
+        Returns:
+            Dict[str, Action]: The dictionary of the actions of the controller.
+        """
+        return self._actions
+
     def register_widget(self, action_name: str, widget: QAction, icon: bool = False) -> None:
         """
         Registers a widget to an action.
@@ -51,7 +61,7 @@ class MenuController:
         Opens a file.
         """
         path: Tuple[str, str] = QFileDialog.getOpenFileName(self._window, 'Open File')
-        self._window.add_tab(path[0], self._actions["save"])
+        self._window.add_tab(path[0])
 
     def _save(self) -> None:
         """

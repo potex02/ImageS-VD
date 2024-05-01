@@ -14,6 +14,7 @@ class Panel(QWidget):
     Attributes:
         _image (QLAbel): The label that contains the graphic representation of the image to compress.
         _slider (QSlider): The slider used to select the number of singular values.
+        _loaded (bool): The flag that indicates if the image has been loaded.
         _panel_controller (PanelController): The controller of the panel.
 
     Methods:
@@ -37,11 +38,22 @@ class Panel(QWidget):
         from ..control.panel_controller import PanelController
         self._image: QLabel = QLabel()
         self._slider: QSlider = QSlider(Qt.Horizontal)
+        self._loaded: bool = False
         self._panel_controller: PanelController = PanelController(self, save_action)
         self._add_components()
         threading.Thread(
            target=functools.partial(self._panel_controller.load_image, path)
         ).start()
+
+    @property
+    def loaded(self) -> bool:
+        """
+        Gets the loaded flag.
+
+        Returns:
+            bool: The flag that indicates if the image has been loaded.
+        """
+        return self._loaded
 
     def set_image(self, image: np.ndarray, k: int = -1) -> None:
         """
@@ -69,6 +81,7 @@ class Panel(QWidget):
             self._slider.setMinimum(1)
             self._slider.setMaximum(k - 1)
             self._slider.setEnabled(True)
+            self._loaded = True
 
     def save(self, path: str) -> None:
         """

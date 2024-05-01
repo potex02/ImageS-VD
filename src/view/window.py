@@ -11,11 +11,11 @@ class Window(QMainWindow):
     The class representing the main window of the application.
 
     Attributes:
-        _tab_widget (TabWidget): The widget used as main part of the window.
         _menu_controller (MenuController): The controller used for the window menu.
+        _tab_widget (TabWidget): The widget used as main part of the window.
 
     Methods:
-        add_tab(path: str, save_action: Action) -> None:
+        add_tab(path: str) -> None:
             Adds a tab to the main port of the window.
         get_current_panel() -> Panel:
             Gets the current active panel.
@@ -35,22 +35,21 @@ class Window(QMainWindow):
         """
         super().__init__()
         from ..control.menu_controller import MenuController
-        self._tab_widget: TabWidget = TabWidget()
         self._menu_controller: MenuController = MenuController(self)
+        self._tab_widget: TabWidget = TabWidget(self._menu_controller.actions["save"])
         self.setWindowTitle("ImageS-VD")
         self.setGeometry(100, 100, 800, 600)
         self._add_components()
         self.show()
 
-    def add_tab(self, path: str, save_action: Action) -> None:
+    def add_tab(self, path: str) -> None:
         """
         Adds a tab to the main port of the window.
 
         Args:
             path (str): The path to file to open.
-            save_action (Action): The action used to save the images.
         """
-        self._tab_widget.addTab(Panel(path, save_action), os.path.split(path)[1])
+        self._tab_widget.addTab(Panel(path, self._menu_controller.actions["save"]), os.path.split(path)[1])
 
     def get_current_panel(self) -> Panel:
         """
