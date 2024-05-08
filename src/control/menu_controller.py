@@ -32,7 +32,9 @@ class MenuController:
             "save": QAction(QIcon("./assets/save.png"), "Save")
         }
         self._actions["open"].triggered.connect(self._open)
+        self._actions["open"].setShortcut("ctrl+o")
         self._actions["save"].triggered.connect(self._save)
+        self._actions["save"].setShortcut("ctrl+s")
         self._actions["save"].setEnabled(False)
 
     @property
