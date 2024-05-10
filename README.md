@@ -12,7 +12,7 @@ The project is in a early state of development.
 - Numpy;
 - PySide6.
 
-It' possible to install all the dependencies using the provided requirements.txt file:
+It's possible to install all the dependencies using the provided requirements.txt file:
 ```
 pip install -r requirements.txt
 ```
