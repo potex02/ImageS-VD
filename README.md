@@ -12,6 +12,11 @@ The project is in a early state of development.
 - Numpy;
 - PySide6.
 
+It' possible to install all the dependencies using the provided requirements.txt file:
+```
+pip install -r requirements.txt
+```
+
 # Usage
 The project provides two scripts to launch the program.<br/>
 It can be used also in cli mode with the --cli or -c flag:
