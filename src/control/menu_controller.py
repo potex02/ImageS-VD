@@ -52,11 +52,13 @@ class MenuController:
         Opens a file.
         """
         path: Tuple[str, str] = QFileDialog.getOpenFileName(self._window, 'Open File')
-        self._window.add_tab(path[0])
+        if path[0]:
+            self._window.add_tab(path[0])
 
     def _save(self) -> None:
         """
         Saves a file
         """
         path: Tuple[str, str] = QFileDialog.getSaveFileName(self._window, "Save file")
-        self._window.get_current_panel().save(path[0])
+        if path[0]:
+            self._window.get_current_panel().save(path[0])
