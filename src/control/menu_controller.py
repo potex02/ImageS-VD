@@ -13,6 +13,8 @@ class MenuController:
         _actions: (Dict[str, QAction]): The dictionary of the menu actions.
 
     Methods:
+        _get_supported_formats() -> str:
+            Gets all the supported image extensions by the app, plus the .npz extension.
         _open() -> None:
             Opens a file.
         _save() -> None:
@@ -47,11 +49,26 @@ class MenuController:
         """
         return self._actions
 
+    @staticmethod
+    def _get_supported_formats() -> str:
+        """
+        Gets all the supported image extensions by the app, plus the .npz extension.
+
+        Returns:
+             String: The string used as dialog filter.
+        """
+        supported_formats = [
+            "*.bmp", "*.eps", "*.gif", "*.icns", "*.ico", "*.im", "*.jpeg", "*.jpg", "*.jp2",
+            "*.msp", "*.pcx", "*.png", "*.ppm", "*.sgi", "*.spider", "*.tga", "*.tiff", "*.tif",
+            "*.webp", "*.xbm", "*.xpm", "*.npz"
+        ]
+        return "Supported Files (" + " ".join(supported_formats) + ")"
+
     def _open(self) -> None:
         """
         Opens a file.
         """
-        path: Tuple[str, str] = QFileDialog.getOpenFileName(self._window, 'Open File')
+        path: Tuple[str, str] = QFileDialog.getOpenFileName(self._window, 'Open File', filter=MenuController._get_supported_formats())
         if path[0]:
             self._window.add_tab(path[0])
 
@@ -59,6 +76,6 @@ class MenuController:
         """
         Saves a file
         """
-        path: Tuple[str, str] = QFileDialog.getSaveFileName(self._window, "Save file")
+        path: Tuple[str, str] = QFileDialog.getSaveFileName(self._window, "Save file", filter=MenuController._get_supported_formats())
         if path[0]:
             self._window.get_current_panel().save(path[0])
