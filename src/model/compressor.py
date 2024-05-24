@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import List, Dict
 import numpy as np
@@ -127,7 +128,7 @@ class Compressor:
         except Exception:
             result = result.convert("RGB")
             result.save(path)
-        print(Compressor.get_compression_rate(self._path, path))
+        logging.info(f"Compression ration:\t{Compressor.get_compression_rate(self._path, path)}")
 
     def _load_channels(self, path: str) -> int:
         """

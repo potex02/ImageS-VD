@@ -61,9 +61,7 @@ class MenuController:
              String: The string used as dialog filter.
         """
         supported_formats = [
-            "*.bmp", "*.eps", "*.gif", "*.icns", "*.ico", "*.im", "*.jpeg", "*.jpg", "*.jp2",
-            "*.msp", "*.pcx", "*.png", "*.ppm", "*.sgi", "*.spider", "*.tga", "*.tiff", "*.tif",
-            "*.webp", "*.xbm", "*.xpm", "*.npz"
+            "*.bmp", "*.jpeg", "*.jpg", "*.jp2", "*.png", "*.ppm", "*.tiff", "*.tif", "*.npz"
         ]
         return "Supported Files (" + " ".join(supported_formats) + ")"
 

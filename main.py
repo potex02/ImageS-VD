@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 from PySide6.QtWidgets import QApplication
@@ -14,7 +15,7 @@ def cli_usage(index: int) -> None:
     """
     try:
         if len(sys.argv) < index + 3:
-            print("Bad arguments", file=sys.stderr)
+            logging.error("Bad arguments")
             sys.exit(1)
         original_image_path: str = sys.argv[index + 1]
         result_image_path: str = sys.argv[index + 2]
@@ -27,10 +28,11 @@ def cli_usage(index: int) -> None:
             compressor.compose(k)
         compressor.save(result_image_path)
     except Exception as ex:
-        print("Errore: ", ex)
+        logging.error(f"Error:\t{ex}")
 
 
 if __name__ == "__main__":
+    logging.getLogger().setLevel(logging.INFO)
     index: int = -1
     if "--cli" in sys.argv:
         index = sys.argv.index("--cli")
