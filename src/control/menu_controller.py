@@ -1,6 +1,6 @@
 from typing import Dict, Tuple
 from PySide6.QtGui import QAction, QIcon
-from PySide6.QtWidgets import QFileDialog
+from PySide6.QtWidgets import QFileDialog, QMessageBox
 from ..view.window import Window
 
 
@@ -31,13 +31,16 @@ class MenuController:
         self._window: Window = window
         self._actions: Dict[str, QAction] = {
             "open": QAction(QIcon("./assets/open.png"), "Open"),
-            "save": QAction(QIcon("./assets/save.png"), "Save")
+            "save": QAction(QIcon("./assets/save.png"), "Save"),
+            "about": QAction("About")
         }
         self._actions["open"].triggered.connect(self._open)
         self._actions["open"].setShortcut("ctrl+o")
         self._actions["save"].triggered.connect(self._save)
         self._actions["save"].setShortcut("ctrl+s")
         self._actions["save"].setEnabled(False)
+        self._actions["about"].triggered.connect(self._about)
+        self._actions["about"].setShortcut("ctrl+i")
 
     @property
     def actions(self) -> Dict[str, QAction]:
@@ -79,3 +82,6 @@ class MenuController:
         path: Tuple[str, str] = QFileDialog.getSaveFileName(self._window, "Save file", filter=MenuController._get_supported_formats())
         if path[0]:
             self._window.get_current_panel().save(path[0])
+
+    def _about(self) -> None:
+        QMessageBox.about(self._window, "ImageS-VD", "ImageS-VD\nDeveloped by potex02")
