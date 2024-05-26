@@ -3,7 +3,7 @@ import threading
 import numpy as np
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap, QImage, QAction
-from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QSlider
+from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QSlider, QHBoxLayout, QLineEdit
 
 
 class Panel(QWidget):
@@ -13,6 +13,7 @@ class Panel(QWidget):
     Attributes:
         _image (QLAbel): The label that contains the graphic representation of the image to compress.
         _slider (QSlider): The slider used to select the number of singular values.
+        _slider_line (QLineEdit): The entry to show and change the slider value.
         _loaded (bool): The flag that indicates if the image has been loaded.
         _panel_controller (PanelController): The controller of the panel.
 
@@ -37,6 +38,7 @@ class Panel(QWidget):
         from ..control.panel_controller import PanelController
         self._image: QLabel = QLabel()
         self._slider: QSlider = QSlider(Qt.Horizontal)
+        self._slider_line: QLineEdit = QLineEdit()
         self._loaded: bool = False
         self._panel_controller: PanelController = PanelController(self, save_action)
         self._add_components()
@@ -99,11 +101,15 @@ class Panel(QWidget):
         self._slider.setMaximum(100)
         self._slider.setEnabled(False)
         self._slider.valueChanged.connect(self._panel_controller.change_value)
+        self._slider_line.setText("0")
         pixmap: QPixmap = QPixmap("./assets/loading.png")
+        slider_layout: QHBoxLayout = QHBoxLayout()
         layout: QVBoxLayout = QVBoxLayout()
         layout.setAlignment(Qt.AlignHCenter)
         pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatioByExpanding)
         self._image.setPixmap(pixmap)
-        layout.addWidget(self._slider)
+        slider_layout.addWidget(self._slider, stretch=10)
+        slider_layout.addWidget(self._slider_line, stretch=1)
+        layout.addLayout(slider_layout)
         layout.addWidget(self._image)
         self.setLayout(layout)
