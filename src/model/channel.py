@@ -56,6 +56,5 @@ class Channel:
             error: str = f"Cannot use {k} values for {len(self._s)} vector"
             raise ValueError(error)
         sigma: np.ndarray = self._s.copy()
-        if k != 0:
-            sigma[k:] = 0
+        sigma[k:] = 0
         return np.dot(np.dot(self._u, np.diag(sigma)), self._vt)

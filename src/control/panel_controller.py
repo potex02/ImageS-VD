@@ -43,7 +43,7 @@ class PanelController:
             path (str): he path to the file of the panel.
         """
         self._values = self._compressor.load(path)
-        self._compressor.compose(0)
+        self._compressor.compose(self._values - 1)
         self._panel.set_image(self._compressor.image.squeeze(), self._values)
         self._save_action.setEnabled(True)
 
@@ -54,8 +54,9 @@ class PanelController:
         Args:
             k (int): The value of the slider. The number of singular values is calculated as values - k.
         """
-        self._compressor.compose(self._values - k)
-        self._panel.set_image(self._compressor.image.squeeze(), self._values)
+        self._compressor.compose(self._values - k - 1)
+        self._panel.set_image(self._compressor.image.squeeze())
+        self._panel.set_slider_value(k)
 
     def save(self, path: str) -> None:
         """

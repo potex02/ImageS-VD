@@ -20,6 +20,8 @@ class Panel(QWidget):
     Methods:
         set_image(image: Image.Image, k: int) -> None:
             Sets the images to show.
+        set_slider_value(k: int) -> None:
+            Sets the text of _slider_line
         save(path: str) -> None:
             Saves the image.
         def _add_components() -> None:
@@ -79,10 +81,19 @@ class Panel(QWidget):
         pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatioByExpanding)
         self._image.setPixmap(pixmap)
         if k != -1:
-            self._slider.setMinimum(1)
+            self._slider.setMinimum(0)
             self._slider.setMaximum(k - 1)
             self._slider.setEnabled(True)
             self._loaded = True
+
+    def set_slider_value(self, k: int) -> None:
+        """
+        Sets the text of _slider_line
+
+        Params:
+            k (int): The value to set as text
+        """
+        self._slider_line.setText(str(k))
 
     def save(self, path: str) -> None:
         """
