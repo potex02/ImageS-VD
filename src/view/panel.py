@@ -113,6 +113,7 @@ class Panel(QWidget):
         self._slider.setEnabled(False)
         self._slider.valueChanged.connect(self._panel_controller.change_value)
         self._slider_line.setText("0")
+        self._slider_line.editingFinished.connect(functools.partial(self._panel_controller.change_line,self._slider_line, self._slider))
         pixmap: QPixmap = QPixmap("./assets/loading.png")
         slider_layout: QHBoxLayout = QHBoxLayout()
         layout: QVBoxLayout = QVBoxLayout()
