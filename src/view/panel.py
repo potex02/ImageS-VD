@@ -20,8 +20,6 @@ class Panel(QWidget):
     Methods:
         set_image(image: Image.Image, k: int) -> None:
             Sets the images to show.
-        set_slider_value(k: int) -> None:
-            Sets the text of _slider_line
         save(path: str) -> None:
             Saves the image.
         def _add_components() -> None:
@@ -47,6 +45,26 @@ class Panel(QWidget):
         threading.Thread(
            target=functools.partial(self._panel_controller.load_image, path)
         ).start()
+
+    @property
+    def slider(self) -> QSlider:
+        """
+        Gets the panel slider.
+
+        Returns:
+            QSlider: The panel slider.
+        """
+        return self._slider
+
+    @property
+    def slider_line(self) -> QLineEdit:
+        """
+        Gets the panel slider_line.
+
+        Returns:
+            QLineEdit: The panel slider_line.
+        """
+        return self._slider_line
 
     @property
     def loaded(self) -> bool:
@@ -86,15 +104,6 @@ class Panel(QWidget):
             self._slider.setEnabled(True)
             self._loaded = True
 
-    def set_slider_value(self, k: int) -> None:
-        """
-        Sets the text of _slider_line
-
-        Params:
-            k (int): The value to set as text
-        """
-        self._slider_line.setText(str(k))
-
     def save(self, path: str) -> None:
         """
         Saves the image
@@ -113,7 +122,7 @@ class Panel(QWidget):
         self._slider.setEnabled(False)
         self._slider.valueChanged.connect(self._panel_controller.change_value)
         self._slider_line.setText("0")
-        self._slider_line.editingFinished.connect(functools.partial(self._panel_controller.change_line,self._slider_line, self._slider))
+        self._slider_line.editingFinished.connect(self._panel_controller.change_line)
         pixmap: QPixmap = QPixmap("./assets/loading.png")
         slider_layout: QHBoxLayout = QHBoxLayout()
         layout: QVBoxLayout = QVBoxLayout()

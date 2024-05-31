@@ -1,7 +1,5 @@
 import logging
-
 from PySide6.QtGui import QAction
-from PySide6.QtWidgets import QLineEdit, QSlider
 from ..model.compressor import Compressor
 from ..view.panel import Panel
 
@@ -15,6 +13,7 @@ class PanelController:
         _compressor (Compressor): The compressor used to compress the panel image.
         _values (int): number of image singular values.
         _save_action (QAction): The action used to save the images.
+        _last_value (int): The last valid value for the singular values.
 
     Methods:
         load_image(self, path: str) -> None:
@@ -39,6 +38,7 @@ class PanelController:
         self._compressor: Compressor = Compressor()
         self._values: int = 0
         self._save_action: QAction = save_action
+        self._last_value: int = 0
 
     def load_image(self, path: str) -> None:
         """
@@ -61,9 +61,10 @@ class PanelController:
         """
         self._compressor.compose(self._values - k - 1)
         self._panel.set_image(self._compressor.image.squeeze())
-        self._panel.set_slider_value(k)
+        self._panel.slider_line.setText(str(k))
+        self._last_value = k
 
-    def change_line(self, line: QLineEdit, slider: QSlider) -> None:
+    def change_line(self) -> None:
         """
         Changes the value of singular values through a QLineEdit.
 
@@ -72,9 +73,16 @@ class PanelController:
             slider (QSlider): The slider of the Panel.
         """
         try:
-            slider.setValue(int(line.text()))
-        except:
-            logging.error(f"Cannot parse {line.text()} to int")
+            value: int = int(self._panel.slider_line.text())
+            print(self._values)
+            if value >= self._values:
+                value = self._values - 1
+                self._panel.slider_line.setText(str(value))
+            self._panel.slider.setValue(value)
+            self._last_value = value
+        except ValueError:
+            logging.error(f"Cannot parse {self._panel.slider_line.text()} to int")
+            self._panel.slider_line.setText(str(self._last_value))
 
     def save(self, path: str) -> None:
         """
