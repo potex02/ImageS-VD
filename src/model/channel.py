@@ -40,7 +40,7 @@ class Channel:
         Returns:
             The number of singular values.
         """
-        return min(self._vt.shape)
+        return self._s.shape[0]
 
     def compose(self, k: int) -> np.ndarray:
         """

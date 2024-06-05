@@ -120,7 +120,7 @@ class Panel(QWidget):
         self._slider.setMinimum(0)
         self._slider.setMaximum(100)
         self._slider.setEnabled(False)
-        self._slider.valueChanged.connect(self._panel_controller.change_value)
+        self._slider.sliderReleased.connect(self._panel_controller.change_value)
         self._slider_line.setText("0")
         self._slider_line.editingFinished.connect(self._panel_controller.change_line)
         pixmap: QPixmap = QPixmap("./assets/loading.png")

@@ -93,8 +93,9 @@ class Compressor:
             else:
                 channel_array = image_array[:, :, i]
             channel: Channel = Channel(channel_array)
-            if k == 0:
-                k = channel.get_singular_values()
+            values: int = channel.get_singular_values()
+            if values > k:
+                k = values
             self._channels.append(channel)
         return k
 
