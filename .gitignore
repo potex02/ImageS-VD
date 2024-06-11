@@ -1,6 +1,8 @@
 images/
 results/
 .mypy_cache/
-.venv/
 .idea/
+Scripts/
+Lib/
+pyvenv.cfg
 **/*.pyc

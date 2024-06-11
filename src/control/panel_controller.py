@@ -2,6 +2,7 @@ import logging
 from PySide6.QtGui import QAction
 from ..model.compressor import Compressor
 from ..view.panel import Panel
+from .compose_thread import ComposeThread
 
 
 class PanelController:
@@ -14,6 +15,7 @@ class PanelController:
         _values (int): number of image singular values.
         _save_action (QAction): The action used to save the images.
         _last_value (int): The last valid value for the singular values.
+        _current_thread (ComposeThread): The thread that update the ui.
 
     Methods:
         load_image(self, path: str) -> None:
@@ -24,6 +26,8 @@ class PanelController:
             change_line(line: QLineEdit, slider: QSlider) -> None:
         save(path: str) -> None:
             Saves the image.
+        _set_image() -> None:
+            Sets the panel image ath the end of the _current_thread.
     """
 
     def __init__(self, panel: Panel, save_action: QAction) -> None:
@@ -39,6 +43,7 @@ class PanelController:
         self._values: int = 0
         self._save_action: QAction = save_action
         self._last_value: int = 0
+        self._currentThread: ComposeThread = None
 
     def load_image(self, path: str) -> None:
         """
@@ -57,8 +62,9 @@ class PanelController:
         Changes the number of the singular values through a QSlider.
         """
         k: int = self._panel.slider.value()
-        self._compressor.compose(self._values - k - 1)
-        self._panel.set_image(self._compressor.image.squeeze())
+        self._currentThread: ComposeThread = ComposeThread(self._compressor, self._values - k - 1)
+        self._currentThread.finished.connect(self._set_image)
+        self._currentThread.start()
         self._panel.slider_line.setText(str(k))
         self._last_value = k
 
@@ -79,6 +85,7 @@ class PanelController:
                 value = 0
                 self._panel.slider_line.setText(str(value))
             self._panel.slider.setValue(value)
+            self._panel.slider.sliderReleased.emit()
             self._last_value = value
         except ValueError:
             logging.error(f"Cannot parse {self._panel.slider_line.text()} to int")
@@ -92,3 +99,9 @@ class PanelController:
             path (str): The path where to save the image.
         """
         self._compressor.save(path)
+
+    def _set_image(self) -> None:
+        """
+        Sets the panel image ath the end of the _current_thread
+        """
+        self._panel.set_image(self._compressor.image.squeeze())
