@@ -1,6 +1,5 @@
 from PySide6.QtCore import QThread
 from ..model.compressor import Compressor
-from ..view.panel import Panel
 
 
 class ComposeThread(QThread):
