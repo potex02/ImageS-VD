@@ -1,10 +1,25 @@
 import logging
 import os
 import sys
+from typing import Optional
+from PySide6.QtCore import QCoreApplication, QTranslator, QLocale
 from PySide6.QtWidgets import QApplication
 from src.model.compressor import Compressor
 from src.view.window import Window
 
+
+def load_translations(app: QCoreApplication) -> Optional[QTranslator]:
+    translator: QTranslator = QTranslator()
+    locale: str = QLocale.system().name()  # Get the system locale, e.g., 'en_US'
+    ts_file_path: str = f"translations/app_en.qm"  # Adjust the path to your ts file
+    if not os.path.exists(ts_file_path):
+        logging.warning(f"Translation file not found: {ts_file_path}")
+        return None
+    if not translator.load(ts_file_path):
+        logging.error(f"Failed to load translation file: {ts_file_path}")
+        return None
+    app.installTranslator(translator)
+    return translator
 
 def cli_usage(index: int) -> None:
     """
@@ -14,8 +29,11 @@ def cli_usage(index: int) -> None:
         index: index of the cli flag in the argv.
     """
     try:
+        app: QCoreApplication = QCoreApplication(sys.argv)
+        translator: Optional[QTranslator] = load_translations(app)
+        print(translator)
         if len(sys.argv) < index + 3:
-            logging.error("Bad arguments")
+            logging.error(QCoreApplication.translate("Cli", "bad"))
             sys.exit(1)
         original_image_path: str = sys.argv[index + 1]
         result_image_path: str = sys.argv[index + 2]
