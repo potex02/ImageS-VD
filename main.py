@@ -10,8 +10,8 @@ from src.view.window import Window
 
 def load_translations(app: QCoreApplication) -> Optional[QTranslator]:
     translator: QTranslator = QTranslator()
-    locale: str = QLocale.system().name()  # Get the system locale, e.g., 'en_US'
-    ts_file_path: str = f"translations/app_en.qm"  # Adjust the path to your ts file
+    locale: str = QLocale.system().name()
+    ts_file_path: str = f"translations/app_it.qm"
     if not os.path.exists(ts_file_path):
         logging.warning(f"Translation file not found: {ts_file_path}")
         return None
@@ -20,6 +20,7 @@ def load_translations(app: QCoreApplication) -> Optional[QTranslator]:
         return None
     app.installTranslator(translator)
     return translator
+
 
 def cli_usage(index: int) -> None:
     """
@@ -31,7 +32,6 @@ def cli_usage(index: int) -> None:
     try:
         app: QCoreApplication = QCoreApplication(sys.argv)
         translator: Optional[QTranslator] = load_translations(app)
-        print(translator)
         if len(sys.argv) < index + 3:
             logging.error(QCoreApplication.translate("Cli", "bad"))
             sys.exit(1)
@@ -60,6 +60,7 @@ if __name__ == "__main__":
         cli_usage(index)
         sys.exit(0)
     app = QApplication(sys.argv)
+    translator: Optional[QTranslator] = load_translations(app)
     window = Window()
     window.show()
     sys.exit(app.exec())

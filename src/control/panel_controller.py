@@ -1,6 +1,7 @@
 import functools
 import logging
 from typing import List
+from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QAction
 from ..model.compressor import Compressor
 from ..view.panel import Panel
@@ -91,7 +92,7 @@ class PanelController:
             self._panel.slider.sliderReleased.emit()
             self._last_value = value
         except ValueError:
-            logging.error(f"Cannot parse {self._panel.slider_line.text()} to int")
+            logging.error(QCoreApplication.translate("Gui", "parse").format(value=self._panel.slider_line.text()))
             self._panel.slider_line.setText(str(self._last_value))
 
     def save(self, path: str) -> None:

@@ -1,7 +1,7 @@
 import functools
 import threading
 import numpy as np
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QCoreApplication
 from PySide6.QtGui import QPixmap, QImage, QAction
 from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QSlider, QHBoxLayout, QLineEdit
 
@@ -94,7 +94,7 @@ class Panel(QWidget):
             elif image.shape[2] == 4:
                 qimage = QImage(image.data, width, height, 4 * width, QImage.Format_RGBA8888)
             else:
-                raise ValueError("Unsupported number of channels for image")
+                raise ValueError(QCoreApplication.translate("Gui", "channels"))
         pixmap: QPixmap = QPixmap.fromImage(qimage)
         pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatioByExpanding)
         self._image.setPixmap(pixmap)

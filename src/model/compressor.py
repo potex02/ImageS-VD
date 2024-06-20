@@ -3,6 +3,7 @@ import os
 from typing import List, Dict
 import numpy as np
 from PIL import Image
+from PySide6.QtCore import QCoreApplication
 from .channel import Channel
 
 
@@ -106,7 +107,8 @@ class Compressor:
         Args:
             k (int): number of singular values to use for compression."""
         if k < 0:
-            raise ValueError(f"Unexpected k value: {k}")
+            error: str
+            raise ValueError(QCoreApplication.translate("Cli", "unexpected_value").format(k=k))
         compressed_channels: List[np.ndarray] = []
         for i in self._channels:
             compressed_channels.append(i.compose(k))
@@ -129,7 +131,7 @@ class Compressor:
         except Exception:
             result = result.convert("RGB")
             result.save(path)
-        logging.info(f"Compression ration:\t{Compressor.get_compression_rate(self._path, path)}")
+        logging.info(QCoreApplication.translate("Cli", "ratio").format(ratio=Compressor.get_compression_rate(self._path, path)))
 
     def _load_channels(self, path: str) -> int:
         """

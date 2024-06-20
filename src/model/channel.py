@@ -1,5 +1,6 @@
 from typing import Dict
 import numpy as np
+from PySide6.QtCore import QCoreApplication
 
 
 class Channel:
@@ -53,8 +54,7 @@ class Channel:
             np.ndarray The composed matrix.
         """
         if k >= len(self._s):
-            error: str = f"Cannot use {k} values for {len(self._s)} vector"
-            raise ValueError(error)
+            raise ValueError(QCoreApplication.translate("Cli", "values").format(values=k, max=len(self._s)))
         sigma: np.ndarray = self._s.copy()
         sigma[k:] = 0
         return np.dot(np.dot(self._u, np.diag(sigma)), self._vt)

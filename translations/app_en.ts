@@ -7,5 +7,40 @@
             <source>bad</source>
             <translation>Bad arguments</translation>
         </message>
+        <message>
+            <source>values</source>
+            <translation>Cannot use {values} values for a max of {max} values</translation>
+        </message>
+        <message>
+            <source>unexpected_value</source>
+            <translation>Unexpected k value:&#x9;{k}</translation>
+        </message>
+        <message>
+            <source>ratio</source>
+            <translation>Compression ratio:&#x9;{ratio}</translation>
+        </message>
+    </context>
+    <context>
+        <name>Gui</name>
+        <message>
+            <source>channels</source>
+            <translation>Unsupported number of channels for image</translation>
+        </message>
+        <message>
+            <source>open</source>
+            <translation>Open</translation>
+        </message>
+        <message>
+            <source>save</source>
+            <translation>Save</translation>
+        </message>
+        <message>
+            <source>about</source>
+            <translation>About</translation>
+        </message>
+        <message>
+            <source>parse</source>
+            <translation>Cannot parse '{value}' to int</translation>
+        </message>
     </context>
 </TS>

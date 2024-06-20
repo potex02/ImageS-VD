@@ -1,4 +1,5 @@
 from typing import Dict, Tuple
+from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QAction, QIcon
 from PySide6.QtWidgets import QFileDialog, QMessageBox
 from ..view.window import Window
@@ -30,9 +31,9 @@ class MenuController:
         """
         self._window: Window = window
         self._actions: Dict[str, QAction] = {
-            "open": QAction(QIcon("./assets/open.png"), "Open"),
-            "save": QAction(QIcon("./assets/save.png"), "Save"),
-            "about": QAction("About")
+            "open": QAction(QIcon("./assets/open.png"), QCoreApplication.translate("Gui", "open")),
+            "save": QAction(QIcon("./assets/save.png"), QCoreApplication.translate("Gui", "save")),
+            "about": QAction(QCoreApplication.translate("Gui", "about"))
         }
         self._actions["open"].triggered.connect(self._open)
         self._actions["open"].setShortcut("ctrl+o")
