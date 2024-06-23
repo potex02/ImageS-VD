@@ -1,8 +1,8 @@
 import os.path
 from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu, QWidget
 from PySide6.QtGui import QAction
-from .panel import Panel
-from .tab_widget import TabWidget
+from src.view.panel import Panel
+from src.view.tab_widget import TabWidget
 
 
 class Window(QMainWindow):

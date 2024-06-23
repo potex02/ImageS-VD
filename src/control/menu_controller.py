@@ -2,7 +2,8 @@ from typing import Dict, Tuple
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QAction, QIcon
 from PySide6.QtWidgets import QFileDialog, QMessageBox
-from ..view.window import Window
+from src.view.window import Window
+from src.view.about_dialog import AboutDialog
 
 
 class MenuController:
@@ -83,4 +84,5 @@ class MenuController:
             self._window.get_current_panel().save(path[0])
 
     def _about(self) -> None:
-        QMessageBox.about(self._window, "ImageS-VD", "ImageS-VD\nDeveloped by potex02")
+        about_dialog: AboutDialog = AboutDialog(self._window)
+        about_dialog.exec()

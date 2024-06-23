@@ -4,7 +4,7 @@ from typing import List, Dict
 import numpy as np
 from PIL import Image
 from PySide6.QtCore import QCoreApplication
-from .channel import Channel
+from src.model.channel import Channel
 
 
 class Compressor:

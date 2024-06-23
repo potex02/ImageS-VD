@@ -3,9 +3,9 @@ import logging
 from typing import List
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QAction
-from ..model.compressor import Compressor
-from ..view.panel import Panel
-from .compose_thread import ComposeThread
+from src.model.compressor import Compressor
+from src.view.panel import Panel
+from src.control.compose_thread import ComposeThread
 
 
 class PanelController:
