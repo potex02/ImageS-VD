@@ -1,6 +1,7 @@
 import logging
 import os
 import sys
+import locale
 from typing import Optional
 from PySide6.QtCore import QCoreApplication, QTranslator, QLocale
 from PySide6.QtWidgets import QApplication
@@ -9,14 +10,23 @@ from src.view.window import Window
 
 
 def load_translations(app: QCoreApplication) -> Optional[QTranslator]:
+    """
+    Loads the translations file from a qm file.
+
+    Args:
+        app (QCoreApplication): The PySide app application.
+
+    Returns:
+        Optional[QTranslator]: An optional containing the translator if the loading is successfully.
+    """
     translator: QTranslator = QTranslator()
-    locale: str = QLocale.system().name()
-    ts_file_path: str = f"translations/app_it.qm"
-    if not os.path.exists(ts_file_path):
-        logging.warning(f"Translation file not found: {ts_file_path}")
+    locale: str = QLocale.system().name()[0: 2]
+    file_path: str = f"translations/app_{locale}.qm"
+    if not os.path.exists(file_path):
+        logging.warning(f"Translation file not found: {file_path}")
         return None
-    if not translator.load(ts_file_path):
-        logging.error(f"Failed to load translation file: {ts_file_path}")
+    if not translator.load(file_path):
+        logging.error(f"Failed to load translation file: {file_path}")
         return None
     app.installTranslator(translator)
     return translator
@@ -50,6 +60,7 @@ def cli_usage(index: int) -> None:
 
 
 if __name__ == "__main__":
+    locale.setlocale(locale.LC_ALL, "")
     logging.getLogger().setLevel(logging.INFO)
     index: int = -1
     if "--cli" in sys.argv:
