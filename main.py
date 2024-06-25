@@ -24,7 +24,7 @@ def load_translations(app: QCoreApplication) -> Optional[QTranslator]:
     file_path: str = f"translations/app_{locale}.qm"
     if not os.path.exists(file_path):
         logging.warning(f"Translation file not found: {file_path}")
-        return None
+        file_path: str = f"translations/app_en.qm"
     if not translator.load(file_path):
         logging.error(f"Failed to load translation file: {file_path}")
         return None
