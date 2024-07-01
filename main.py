@@ -2,7 +2,9 @@ import logging
 import os
 import sys
 import locale
+import configparser
 from typing import Optional
+import platformdirs
 from PySide6.QtCore import QCoreApplication, QTranslator, QLocale
 from PySide6.QtWidgets import QApplication
 from src.model.compressor import Compressor
@@ -19,8 +21,14 @@ def load_translations(app: QCoreApplication) -> Optional[QTranslator]:
     Returns:
         Optional[QTranslator]: An optional containing the translator if the loading is successfully.
     """
-    translator: QTranslator = QTranslator()
+    config_file: str = platformdirs.user_config_dir("ImageS-VD", False) + "/imageS-VD.conf"
     locale: str = QLocale.system().name()[0: 2]
+    if os.path.exists(config_file):
+        config: configparser.ConfigParser = configparser.ConfigParser()
+        config.read(config_file)
+        if "config" in config and "locale" in config["config"]:
+            locale = config["config"]["locale"]
+    translator: QTranslator = QTranslator()
     file_path: str = f"translations/app_{locale}.qm"
     if not os.path.exists(file_path):
         logging.warning(f"Translation file not found: {file_path}")
