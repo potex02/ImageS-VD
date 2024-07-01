@@ -10,7 +10,8 @@ The project is in a early state of development.
 ## Dependencies
 - Pillow;
 - Numpy;
-- PySide6.
+- PySide6;
+- Platformdirs.
 
 It's possible to install all the dependencies using the provided requirements.txt file:
 ```
