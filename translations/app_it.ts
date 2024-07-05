@@ -27,6 +27,10 @@
             <translation>Numero di canali non supportato</translation>
         </message>
         <message>
+            <source>file</source>
+            <translation>File</translation>
+        </message>
+        <message>
             <source>open</source>
             <translation>Apri</translation>
         </message>
@@ -37,6 +41,10 @@
         <message>
             <source>about</source>
             <translation>About</translation>
+        </message>
+        <message>
+            <source>exit</source>
+            <translation>Esci</translation>
         </message>
         <message>
             <source>parse</source>

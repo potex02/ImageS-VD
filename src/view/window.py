@@ -1,4 +1,5 @@
 import os.path
+from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu, QWidget
 from PySide6.QtGui import QAction
 from src.view.panel import Panel
@@ -70,14 +71,15 @@ class Window(QMainWindow):
         Creates the menubar and load it in the window.
         """
         menubar: QMenuBar = self.menuBar()
-        file_menu: QMenu = menubar.addMenu("File")
+        file_menu: QMenu = menubar.addMenu(QCoreApplication.translate("Gui", "file"))
         about_menu: QMenu = menubar.addMenu(self.windowTitle())
         file_menu.addAction(self._menu_controller.actions["open"])
         file_menu.addAction(self._menu_controller.actions["save"])
+        language_menu: QMenu = about_menu.addMenu("Language")
+        language_menu.addAction(QAction("Italian", self))
+        language_menu.addAction(QAction("English", self))
         about_menu.addAction(self._menu_controller.actions["about"])
-        exit_action: QAction = QAction("Exit", self)
-        exit_action.triggered.connect(self.close)
-        about_menu.addAction(exit_action)
+        about_menu.addAction(self._menu_controller.actions["exit"])
 
     def _add_toolbar(self) -> None:
         """

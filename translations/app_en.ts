@@ -27,6 +27,10 @@
             <translation>Unsupported number of channels for image</translation>
         </message>
         <message>
+            <source>file</source>
+            <translation>File</translation>
+        </message>
+        <message>
             <source>open</source>
             <translation>Open</translation>
         </message>
@@ -37,6 +41,10 @@
         <message>
             <source>about</source>
             <translation>About</translation>
+        </message>
+        <message>
+            <source>exit</source>
+            <translation>Exit</translation>
         </message>
         <message>
             <source>parse</source>

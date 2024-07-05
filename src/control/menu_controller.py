@@ -34,7 +34,8 @@ class MenuController:
         self._actions: Dict[str, QAction] = {
             "open": QAction(QIcon("./assets/open.png"), QCoreApplication.translate("Gui", "open")),
             "save": QAction(QIcon("./assets/save.png"), QCoreApplication.translate("Gui", "save")),
-            "about": QAction(QCoreApplication.translate("Gui", "about"))
+            "about": QAction(QCoreApplication.translate("Gui", "about")),
+            "exit": QAction(QCoreApplication.translate("Gui", "exit")),
         }
         self._actions["open"].triggered.connect(self._open)
         self._actions["open"].setShortcut("ctrl+o")
@@ -43,6 +44,9 @@ class MenuController:
         self._actions["save"].setEnabled(False)
         self._actions["about"].triggered.connect(self._about)
         self._actions["about"].setShortcut("ctrl+i")
+        self._actions["exit"].triggered.connect(window.close)
+        self._actions["exit"].setShortcut("ctrl+x")
+
 
     @property
     def actions(self) -> Dict[str, QAction]:
