@@ -21,11 +21,11 @@ def load_translations(app: QCoreApplication) -> Optional[QTranslator]:
     Returns:
         Optional[QTranslator]: An optional containing the translator if the loading is successfully.
     """
-    config_file: str = platformdirs.user_config_dir("ImageS-VD", False) + "/imageS-VD.conf"
+    path: str = platformdirs.user_config_dir("ImageS-VD", False) + "/imageS-VD.conf"
     locale: str = QLocale.system().name()[0: 2]
-    if os.path.exists(config_file):
+    if os.path.exists(path):
         config: configparser.ConfigParser = configparser.ConfigParser()
-        config.read(config_file)
+        config.read(path)
         if "config" in config and "locale" in config["config"]:
             locale = config["config"]["locale"]
     translator: QTranslator = QTranslator()

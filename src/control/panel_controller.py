@@ -21,12 +21,12 @@ class PanelController:
         _threads (List[ComposeThread]): The list of ComposeThraed associated at the controller.
 
     Methods:
-        load_image(self, path: str) -> None:
+        load_image(path: str) -> None:
             Loads and decomposes the image.
         change_value() -> None:
             Changes the number of the singular values through a QSlider.
-        Changes the value of singular values through a QLineEdit.
-            change_line(line: QLineEdit, slider: QSlider) -> None:
+        change_line() -> None:
+            Changes the value of singular values through a QLineEdit.
         save(path: str) -> None:
             Saves the image.
         _set_image(thread: ComposeThread) -> None:

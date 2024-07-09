@@ -39,6 +39,10 @@
             <translation>Save</translation>
         </message>
         <message>
+            <source>lang</source>
+            <translation>Language</translation>
+        </message>
+        <message>
             <source>about</source>
             <translation>About</translation>
         </message>

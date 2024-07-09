@@ -1,4 +1,7 @@
-from typing import Dict, Tuple
+import functools
+import configparser
+from typing import List, Dict, Tuple
+import platformdirs
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QAction, QIcon
 from PySide6.QtWidgets import QFileDialog, QMessageBox
@@ -20,7 +23,11 @@ class MenuController:
         _open() -> None:
             Opens a file.
         _save() -> None:
-            Saves a file
+            Saves a file.
+        _change_language(lang: str) -> None:
+            Change the application language.
+        _about() -> None:
+            Shows the application about dialog.
     """
 
     def __init__(self, window: Window) -> None:
@@ -35,13 +42,17 @@ class MenuController:
             "open": QAction(QIcon("./assets/open.png"), QCoreApplication.translate("Gui", "open")),
             "save": QAction(QIcon("./assets/save.png"), QCoreApplication.translate("Gui", "save")),
             "about": QAction(QCoreApplication.translate("Gui", "about")),
+            "en": QAction("English"),
+            "it": QAction("Italiano"),
             "exit": QAction(QCoreApplication.translate("Gui", "exit")),
         }
         self._actions["open"].triggered.connect(self._open)
         self._actions["open"].setShortcut("ctrl+o")
         self._actions["save"].triggered.connect(self._save)
         self._actions["save"].setShortcut("ctrl+s")
-        self._actions["save"].setEnabled(False)
+        self._actions["en"].triggered.connect(functools.partial(self._change_language, "en"))
+        self._actions["it"].triggered.connect(functools.partial(self._change_language, "it"))
+        self._actions["it"].setCheckable(True)
         self._actions["about"].triggered.connect(self._about)
         self._actions["about"].setShortcut("ctrl+i")
         self._actions["exit"].triggered.connect(window.close)
@@ -51,7 +62,7 @@ class MenuController:
     @property
     def actions(self) -> Dict[str, QAction]:
         """
-        Gets an actions
+        Gets the menu actions.
 
         Returns:
             Dict[str, QAction]: The dictionary of the actions of the controller.
@@ -81,12 +92,29 @@ class MenuController:
 
     def _save(self) -> None:
         """
-        Saves a file
+        Saves a file.
         """
         path: Tuple[str, str] = QFileDialog.getSaveFileName(self._window, "Save file", filter=MenuController._get_supported_formats())
         if path[0]:
             self._window.get_current_panel().save(path[0])
 
+    def _change_language(self, lang: str) -> None:
+        """
+        Change the application language.
+
+        Args:
+            lang (str): The new language of the application.
+        """
+        path: str = platformdirs.user_config_dir("ImageS-VD", False, ensure_exists=True) + "/imageS-VD.conf"
+        with open(path, "w") as file:
+            config: configparser.ConfigParser = configparser.ConfigParser()
+            config.add_section("config")
+            config["config"]["locale"] = lang
+            config.write(file)
+
     def _about(self) -> None:
+        """
+        Shows the application about dialog.
+        """
         about_dialog: AboutDialog = AboutDialog(self._window)
         about_dialog.exec()
