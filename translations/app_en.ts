@@ -43,6 +43,10 @@
             <translation>Language</translation>
         </message>
         <message>
+            <source>reboot</source>
+            <translation>Reboot the application to apply the changes.</translation>
+        </message>
+        <message>
             <source>about</source>
             <translation>About</translation>
         </message>

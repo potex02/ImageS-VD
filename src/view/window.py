@@ -30,16 +30,20 @@ class Window(QMainWindow):
             Creates the main part of the window.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, locale: str) -> None:
         """
         Creates a Window.
+
+        Args:
+            locale (str): The app locale.
         """
         super().__init__()
         from ..control.menu_controller import MenuController
-        self._menu_controller: MenuController = MenuController(self)
+        self._menu_controller: MenuController = MenuController(self, locale)
         self._tab_widget: TabWidget = TabWidget(self._menu_controller.actions["save"])
         self.setWindowTitle("ImageS-VD")
         self.setGeometry(100, 100, 800, 600)
+        self._menu_controller.actions[locale].setChecked(True)
         self._add_components()
         self.show()
 

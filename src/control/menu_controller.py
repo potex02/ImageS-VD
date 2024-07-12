@@ -16,6 +16,7 @@ class MenuController:
     Attributes:
         _window (Window): The window controlled by the controller.
         _actions: (Dict[str, QAction]): The dictionary of the menu actions.
+        _locale: (str): The application locale.
 
     Methods:
         _get_supported_formats() -> str:
@@ -24,18 +25,19 @@ class MenuController:
             Opens a file.
         _save() -> None:
             Saves a file.
-        _change_language(lang: str) -> None:
+        _change_language(locale: str) -> None:
             Change the application language.
         _about() -> None:
             Shows the application about dialog.
     """
 
-    def __init__(self, window: Window) -> None:
+    def __init__(self, window: Window, locale: str) -> None:
         """
         Creates a new MenuController.
 
         Args:
             window (Window): The window controlled by the controller.
+            locale (str): The app locale.
         """
         self._window: Window = window
         self._actions: Dict[str, QAction] = {
@@ -46,11 +48,13 @@ class MenuController:
             "it": QAction("Italiano"),
             "exit": QAction(QCoreApplication.translate("Gui", "exit")),
         }
+        self._locale: str = locale
         self._actions["open"].triggered.connect(self._open)
         self._actions["open"].setShortcut("ctrl+o")
         self._actions["save"].triggered.connect(self._save)
         self._actions["save"].setShortcut("ctrl+s")
         self._actions["en"].triggered.connect(functools.partial(self._change_language, "en"))
+        self._actions["en"].setCheckable(True)
         self._actions["it"].triggered.connect(functools.partial(self._change_language, "it"))
         self._actions["it"].setCheckable(True)
         self._actions["about"].triggered.connect(self._about)
@@ -98,19 +102,26 @@ class MenuController:
         if path[0]:
             self._window.get_current_panel().save(path[0])
 
-    def _change_language(self, lang: str) -> None:
+    def _change_language(self, locale: str) -> None:
         """
         Change the application language.
 
         Args:
-            lang (str): The new language of the application.
+            locale (str): The new language of the application.
         """
         path: str = platformdirs.user_config_dir("ImageS-VD", False, ensure_exists=True) + "/imageS-VD.conf"
+        self._actions[locale].setChecked(locale == self._locale)
         with open(path, "w") as file:
             config: configparser.ConfigParser = configparser.ConfigParser()
             config.add_section("config")
-            config["config"]["locale"] = lang
+            config["config"]["locale"] = locale
             config.write(file)
+            dialog = QMessageBox()
+            dialog.setIcon(QMessageBox.Information)
+            dialog.setText(QCoreApplication.translate("Gui", "reboot"))
+            dialog.setWindowTitle("Info")
+            dialog.exec()
+
 
     def _about(self) -> None:
         """
