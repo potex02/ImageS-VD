@@ -4,25 +4,25 @@ from src.model.compressor import Compressor
 
 class ComposeThread(QThread):
     """
-        The class used to compose the panel image.
+    The class used to compose the panel image.
 
-        Attributes:
-            _compressor (Compressor): The compressor used to compress the panel image.
-            _values (int): number of image singular values.
+    Attributes:
+        _compressor (Compressor): The compressor used to compress the panel image.
+        _values (int): number of image singular values.
 
-        Methods:
-            run() -> None:
-                Composes the image.
-        """
+    Methods:
+        run() -> None:
+            Composes the image.
+    """
 
     def __init__(self, compressor: Compressor, values: int) -> None:
         """
-            Creates a ComposeThread
+        Creates a ComposeThread.
 
-            Args:
-                compressor (Compressor): The compressor used to compress the panel image.
-                values (int): number of image singular values.:
-            """
+        Args:
+            compressor (Compressor): The compressor used to compress the panel image.
+            values (int): number of image singular values.
+        """
         super().__init__()
         self._compressor: Compressor = compressor
         self._values: int = values

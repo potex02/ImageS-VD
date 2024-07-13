@@ -14,6 +14,7 @@ class Compressor:
     Attributes:
         _path (str): The path to the image to compress.
         _channels (List[Channel]): The channels of the decomposed image.
+        _image (np.ndarray): The image ndarray.
 
     Methods:
         get_compression_rate(original_file: str, compressed_file: str) -> float:

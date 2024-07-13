@@ -53,6 +53,7 @@ class MenuController:
         self._actions["open"].setShortcut("ctrl+o")
         self._actions["save"].triggered.connect(self._save)
         self._actions["save"].setShortcut("ctrl+s")
+        self._actions["save"].setEnabled(False)
         self._actions["en"].triggered.connect(functools.partial(self._change_language, "en"))
         self._actions["en"].setCheckable(True)
         self._actions["it"].triggered.connect(functools.partial(self._change_language, "it"))
