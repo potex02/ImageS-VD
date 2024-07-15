@@ -1,4 +1,5 @@
 import os
+import functools
 import unittest
 import numpy as np
 from src.model.compressor import Compressor
@@ -12,6 +13,7 @@ class Test(unittest.TestCase):
     Attributes:
         _matrix (np.ndarray): The matrix used during some test cases.
         _values: (List[int]): The values to test the image decomposiotion.
+        _max_values (int): The number of singular values of the test images.
 
     Methods:
         setUp() -> None:
@@ -20,15 +22,19 @@ class Test(unittest.TestCase):
             Compares two matrices with a threshold value.
         test_channel_from_matrix() -> None:
             Tests a channel creation from a np.ndarray.
+        test_channel_out_of_bound_value() -> None:
+            Tests the exception throwing for an out of bound singular value.
         test_compressor_from_svd() -> None:
             Tests a channel creation from a {u, s, vt} dictionany.
+        test_compressor_negative_value() -> None:
+            Tests the exception throwing for a negative singular value.
         test_compressor_grayscale() -> None:
             Tests the compression of a grayscale image.
         test_compressor_rgb() -> None.
             Tests the compression of a RGB image.
-        def test_npz_grayscale() -> None:
+        test_npz_grayscale() -> None:
             Tests the saving and loading of an .npz file of a grayscale image.
-        def test_npz_rgb() -> None:
+        test_npz_rgb() -> None:
             Tests the saving and loading of an .npz file of a RGB image.
     """
 
@@ -38,6 +44,7 @@ class Test(unittest.TestCase):
         """
         self._matrix: np.ndarray = np.array([[1, 2, 3, 4], [1, 2, 3, 4]])
         self._values: List[int] = [500, 250, 100, 75, 50, 10]
+        self._max_values: int = 1333
 
     def compare_matrices(self, matrix: np.ndarray, threshold: float) -> None:
         """
@@ -63,6 +70,13 @@ class Test(unittest.TestCase):
         self.assertEqual(result.shape, self._matrix.shape, "The matrices don't have the same dimensions")
         self.compare_matrices(result, 10 ** -15)
 
+    def test_channel_out_of_bound_value(self) -> None:
+        """
+        Tests the exception throwing for a out of bound singular value.
+        """
+        channel: Channel = Channel(self._matrix)
+        self.assertRaises(ValueError, functools.partial(channel.compose, 2))
+
     def test_compressor_from_svd(self) -> None:
         """
         Tests a channel creation from a {u, s, vt} dictionany.
@@ -77,6 +91,14 @@ class Test(unittest.TestCase):
         result: np.ndarray = channel.compose(1)
         self.assertEqual(result.shape, self._matrix.shape, "The matrices don't have the same dimensions")
         self.compare_matrices(result, 10 ** -14.5)
+
+    def test_compressor_negative_value(self) -> None:
+        """
+        Tests the exception throwing for a negative singular value.
+        """
+        compressor: Compressor = Compressor()
+        compressor.load("test.jpg")
+        self.assertRaises(ValueError, functools.partial(compressor.compose, -1))
 
     def test_compressor_grayscale(self) -> None:
         """
@@ -125,12 +147,12 @@ class Test(unittest.TestCase):
         """
         compressor: Compressor = Compressor()
         compressor.load("test_bw.jpg")
-        compressor.compose(0)
+        compressor.compose(self._max_values)
         image: Image.Image = compressor.image
         compressor.save("result_bw.npz")
         compressor = Compressor()
         compressor.load("result_bw.npz")
-        compressor.compose(0)
+        compressor.compose(self._max_values)
         self.assertTrue((image == compressor.image).all())
         if os.path.exists("result_bw.npz"):
             os.remove("result_bw.npz")
@@ -141,12 +163,12 @@ class Test(unittest.TestCase):
         """
         compressor: Compressor = Compressor()
         compressor.load("test.jpg")
-        compressor.compose(0)
+        compressor.compose(self._max_values)
         image: Image.Image = compressor.image
         compressor.save("result.npz")
         compressor = Compressor()
         compressor.load("result.npz")
-        compressor.compose(0)
+        compressor.compose(self._max_values)
         self.assertTrue((image == compressor.image).all())
         if os.path.exists("result.npz"):
             os.remove("result.npz")
