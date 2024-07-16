@@ -65,7 +65,7 @@ class PanelController:
         Changes the number of the singular values through a QSlider.
         """
         k: int = self._panel.slider.value()
-        thread: ComposeThread = ComposeThread(self._compressor, self._values - k - 1)
+        thread: ComposeThread = ComposeThread(self._compressor, self._values - k)
         self._threads.append(thread)
         thread.finished.connect(functools.partial(self._set_image, thread))
         thread.start()

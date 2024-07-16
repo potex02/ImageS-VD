@@ -44,7 +44,7 @@ class Test(unittest.TestCase):
         """
         self._matrix: np.ndarray = np.array([[1, 2, 3, 4], [1, 2, 3, 4]])
         self._values: List[int] = [500, 250, 100, 75, 50, 10]
-        self._max_values: int = 1333
+        self._max_values: int = 1334
 
     def compare_matrices(self, matrix: np.ndarray, threshold: float) -> None:
         """
@@ -75,7 +75,7 @@ class Test(unittest.TestCase):
         Tests the exception throwing for a out of bound singular value.
         """
         channel: Channel = Channel(self._matrix)
-        self.assertRaises(ValueError, functools.partial(channel.compose, 2))
+        self.assertRaises(ValueError, functools.partial(channel.compose, 3))
 
     def test_compressor_from_svd(self) -> None:
         """

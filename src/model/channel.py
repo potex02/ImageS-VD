@@ -53,7 +53,7 @@ class Channel:
         Returns:
             np.ndarray The composed matrix.
         """
-        if k >= len(self._s):
+        if k > len(self._s):
             raise ValueError(QCoreApplication.translate("Cli", "values").format(values=k, max=len(self._s)))
         sigma: np.ndarray = self._s.copy()
         sigma[k:] = 0

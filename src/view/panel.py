@@ -100,7 +100,7 @@ class Panel(QWidget):
         self._image.setPixmap(pixmap)
         if k != -1:
             self._slider.setMinimum(0)
-            self._slider.setMaximum(k - 1)
+            self._slider.setMaximum(k)
             self._slider.setEnabled(True)
             self._loaded = True
 
