@@ -41,6 +41,32 @@ def load_translations(app: QCoreApplication) -> Optional[Tuple[QTranslator, str]
     return (translator, locale)
 
 
+def show_help() -> None:
+    """
+    Shows the help of the application.
+    """
+    help_text = """
+        imageS-VD - Image Compression Tool
+
+        Usage:
+           imageS-VD [options]
+
+        Options:
+            -h, --help          Show this help message and exit.
+            -c, --cli           Run the application in CLI mode.
+
+        CLI Mode Usage:
+            imageS-VD --cli <original_file_path> <result_file_path> [k]
+            imageS-VD -c <original_file_path> <result_file_path> [k]
+
+        Arguments:
+            <original_file_path>    The path to the file image to be compressed. It can be an image or a .npz file.
+            <result_file_path>      The path where the file will be saved. It can be a compressed image or a .npz file.
+            [k]                     The number of singular values to use for the image reconstructing. It is required only if the result file is an image, otherwise it's ignored.
+        """
+    print(help_text)
+
+
 def cli_usage(index: int) -> None:
     """
     Executes the program in the command line mode.
@@ -72,6 +98,9 @@ if __name__ == "__main__":
     locale.setlocale(locale.LC_ALL, "")
     logging.getLogger().setLevel(logging.INFO)
     index: int = -1
+    if "--help" in sys.argv or "-h" in sys.argv:
+        show_help()
+        sys.exit(0)
     if "--cli" in sys.argv:
         index = sys.argv.index("--cli")
     if "-c" in sys.argv:
