@@ -89,7 +89,9 @@ def cli_usage(index: int) -> None:
         compressor.load(original_image_path)
         if os.path.splitext(result_image_path)[1] != ".npz":
             compressor.compose(k)
-        compressor.save(result_image_path)
+        ratio: Optional[float] = compressor.save(result_image_path)
+        if ratio != None:
+            logging.info(QCoreApplication.translate("Cli", "ratio").format(ratio=ratio))
     except Exception as ex:
         logging.error(f"Error:\t{ex}")
 

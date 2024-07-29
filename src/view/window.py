@@ -2,7 +2,7 @@ import os.path
 import typing
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu, QWidget
-from PySide6.QtGui import QAction
+from PySide6.QtGui import QAction, QIcon
 from src.view.panel import Panel
 from src.view.tab_widget import TabWidget
 
@@ -42,6 +42,7 @@ class Window(QMainWindow):
         self._menu_controller: MenuController = MenuController(self, locale)
         self._tab_widget: TabWidget = TabWidget(self._menu_controller.actions["save"])
         self.setWindowTitle("ImageS-VD")
+        self.setWindowIcon(QIcon("./assets/images_vd.png"))
         self.setGeometry(100, 100, 800, 600)
         self._menu_controller.actions[locale].setChecked(True)
         self._add_components()

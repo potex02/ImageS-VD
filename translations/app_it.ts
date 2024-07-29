@@ -58,5 +58,13 @@
             <source>parse</source>
             <translation>Impossibile convertire '{value}' in int</translation>
         </message>
+        <message>
+            <source>info</source>
+            <translation>Informazione</translation>
+        </message>
+        <message>
+            <source>compression</source>
+            <translation>Rapporto di compressione: '{ratio}'</translation>
+        </message>
     </context>
 </TS>

@@ -83,7 +83,7 @@ class MenuController:
              String: The string used as dialog filter.
         """
         supported_formats = [
-            "*.bmp", "*.jpeg", "*.jpg", "*.jp2", "*.png", "*.ppm", "*.tiff", "*.tif", "*.npz"
+            "*.jpeg", "*.jpg", "*.jp2", "*.png", "*.npz"
         ]
         return "Supported Files (" + " ".join(supported_formats) + ")"
 
@@ -118,9 +118,9 @@ class MenuController:
             config["config"]["locale"] = locale
             config.write(file)
             dialog = QMessageBox()
+            dialog.setWindowTitle(QCoreApplication.translate("Gui", "info"))
             dialog.setIcon(QMessageBox.Information)
             dialog.setText(QCoreApplication.translate("Gui", "reboot"))
-            dialog.setWindowTitle("Info")
             dialog.exec()
 
 

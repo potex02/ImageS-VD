@@ -1,8 +1,10 @@
+import os
 import functools
 import logging
-from typing import List
+from typing import List, Optional
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QAction
+from PySide6.QtWidgets import QMessageBox
 from src.model.compressor import Compressor
 from src.view.panel import Panel
 from src.control.compose_thread import ComposeThread
@@ -55,6 +57,7 @@ class PanelController:
         Args:
             path (str): he path to the file of the panel.
         """
+        self._path = path
         self._values = self._compressor.load(path)
         self._compressor.compose(self._values - 1)
         self._panel.set_image(self._compressor.image.squeeze(), self._values)
@@ -102,7 +105,13 @@ class PanelController:
         Args:
             path (str): The path where to save the image.
         """
-        self._compressor.save(path)
+        ratio: Optional[float] = self._compressor.save(path)
+        if ratio != None:
+            msg_box = QMessageBox(self._panel)
+            msg_box.setWindowTitle(QCoreApplication.translate("Gui", "info"))
+            msg_box.setIcon(QMessageBox.Information)
+            msg_box.setText(QCoreApplication.translate("Gui", "compression").format(ratio="{:.2f}".format(ratio * 100)))
+            msg_box.exec()
 
     def _set_image(self, thread: ComposeThread) -> None:
         """

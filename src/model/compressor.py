@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import List, Dict
+from typing import List, Dict, Optional
 import numpy as np
 from PIL import Image
 from PySide6.QtCore import QCoreApplication
@@ -23,7 +23,7 @@ class Compressor:
             Loads an image to compress.
         compose(k: int) -> None:
             Composes a compressed image.
-        save(path: str) -> None:
+        save(path: str) -> Optional[float]:
             Saves a compressed image.
         _load_channels(path: str) -> int:
             Loads the decomposed image channels from a .npz file.
@@ -116,23 +116,28 @@ class Compressor:
         compressed_image_array: np.ndarray = np.stack(compressed_channels, axis=-1)
         self._image = np.clip(compressed_image_array, 0, 255).astype(np.uint8)
 
-    def save(self, path: str) -> None:
+    def save(self, path: str) -> Optional[float]:
         """
         Saves a compressed image.
 
         Args:
             path (str): path where to save the image.
+
+        Returns:
+            Optional[float]: The compression ratio if both input and output files are images.
         """
         if os.path.splitext(path)[1] == ".npz":
             self._save_channels(path)
-            return
+            return None
         result = Image.fromarray(self._image.squeeze())
         try:
             result.save(path)
         except Exception:
             result = result.convert("RGB")
             result.save(path)
-        logging.info(QCoreApplication.translate("Cli", "ratio").format(ratio=Compressor.get_compression_rate(self._path, path)))
+        if os.path.splitext(self._path)[1] == ".npz":
+            return None
+        return Compressor.get_compression_rate(self._path, path)
 
     def _load_channels(self, path: str) -> int:
         """
