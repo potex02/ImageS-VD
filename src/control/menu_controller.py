@@ -117,11 +117,8 @@ class MenuController:
             config.add_section("config")
             config["config"]["locale"] = locale
             config.write(file)
-            dialog = QMessageBox()
-            dialog.setWindowTitle(QCoreApplication.translate("Gui", "info"))
-            dialog.setIcon(QMessageBox.Information)
-            dialog.setText(QCoreApplication.translate("Gui", "reboot"))
-            dialog.exec()
+            Window.create_message_dialog(self._window, QCoreApplication.translate("Gui", "info"),
+                                         QCoreApplication.translate("Gui", "reboot"))
 
 
     def _about(self) -> None:

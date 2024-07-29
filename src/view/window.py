@@ -1,7 +1,7 @@
 import os.path
 import typing
 from PySide6.QtCore import QCoreApplication
-from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu, QWidget
+from PySide6.QtWidgets import QMainWindow, QToolBar, QScrollArea, QTabWidget, QMenuBar, QMenu, QWidget, QMessageBox
 from PySide6.QtGui import QAction, QIcon
 from src.view.panel import Panel
 from src.view.tab_widget import TabWidget
@@ -16,6 +16,8 @@ class Window(QMainWindow):
         _tab_widget (TabWidget): The widget used as main part of the window.
 
     Methods:
+        create_message_dialog(parent: QWidget, title: str, text: str) -> None:
+            Creates an informational message dialog.
         add_tab(path: str) -> None:
             Adds a tab to the main port of the window.
         get_current_panel() -> Panel:
@@ -47,6 +49,22 @@ class Window(QMainWindow):
         self._menu_controller.actions[locale].setChecked(True)
         self._add_components()
         self.show()
+
+    @staticmethod
+    def create_message_dialog(parent: QWidget, title: str, text: str) -> None:
+        """
+        Creates an informational message dialog.
+
+        Args:
+            parent (QWidget): The parent widget of the dialog.
+            title (str): The title of the dialog.
+            text (str): The text of the dialog.
+        """
+        dialog = QMessageBox(parent)
+        dialog.setWindowTitle(title)
+        dialog.setIcon(QMessageBox.Information)
+        dialog.setText(text)
+        dialog.exec()
 
     def add_tab(self, path: str) -> None:
         """

@@ -6,6 +6,7 @@ from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import QMessageBox
 from src.model.compressor import Compressor
+from src.view.window import Window
 from src.view.panel import Panel
 from src.control.compose_thread import ComposeThread
 
@@ -107,11 +108,8 @@ class PanelController:
         """
         ratio: Optional[float] = self._compressor.save(path)
         if ratio != None:
-            msg_box = QMessageBox(self._panel)
-            msg_box.setWindowTitle(QCoreApplication.translate("Gui", "info"))
-            msg_box.setIcon(QMessageBox.Information)
-            msg_box.setText(QCoreApplication.translate("Gui", "compression").format(ratio="{:.2f}".format(ratio * 100)))
-            msg_box.exec()
+            Window.create_message_dialog(self._panel, QCoreApplication.translate("Gui", "info"),
+                                         QCoreApplication.translate("Gui", "compression").format(ratio="{:.2f}".format(ratio * 100)))
 
     def _set_image(self, thread: ComposeThread) -> None:
         """

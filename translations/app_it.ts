@@ -64,7 +64,7 @@
         </message>
         <message>
             <source>compression</source>
-            <translation>Rapporto di compressione: '{ratio}'</translation>
+            <translation>Rapporto di compressione: {ratio}%</translation>
         </message>
     </context>
 </TS>
