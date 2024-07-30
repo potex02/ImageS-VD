@@ -108,7 +108,7 @@ class PanelController:
         """
         try:
             ratio: Optional[float] = self._compressor.save(path)
-            if ratio != None:
+            if ratio is not None:
                 Window.create_message_dialog(self._panel, QCoreApplication.translate("Gui", "info"),
                             QCoreApplication.translate("Gui", "compression").format(ratio="{:.2f}".format(ratio * 100)))
         except FileNotFoundError as ex:
