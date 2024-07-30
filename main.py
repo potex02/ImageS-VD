@@ -76,7 +76,10 @@ def cli_usage(index: int) -> None:
     """
     try:
         app: QCoreApplication = QCoreApplication(sys.argv)
+        dir: str = os.getcwd()
+        os.chdir(os.path.dirname(os.path.realpath(__file__)))
         translator: Optional[QTranslator] = load_translations(app)
+        os.chdir(dir)
         if len(sys.argv) < index + 3:
             logging.error(QCoreApplication.translate("Cli", "bad"))
             sys.exit(1)
@@ -110,6 +113,7 @@ if __name__ == "__main__":
     if index != -1:
         cli_usage(index)
         sys.exit(0)
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     app = QApplication(sys.argv)
     translator, code = load_translations(app)
     window = Window(code)

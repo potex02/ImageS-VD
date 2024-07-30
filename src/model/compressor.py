@@ -106,7 +106,11 @@ class Compressor:
         Composes a compressed image.
 
         Args:
-            k (int): number of singular values to use for compression."""
+            k (int): number of singular values to use for compression.
+
+        Raises:
+            ValueError: If k is negative.
+        """
         if k < 0:
             error: str
             raise ValueError(QCoreApplication.translate("Cli", "unexpected_value").format(k=k))

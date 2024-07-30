@@ -52,6 +52,9 @@ class Channel:
 
         Returns:
             np.ndarray The composed matrix.
+
+        Raises:
+            ValueError: if k is greater than the number of singular values.
         """
         if k > len(self._s):
             raise ValueError(QCoreApplication.translate("Cli", "values").format(values=k, max=len(self._s)))

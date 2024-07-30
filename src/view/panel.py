@@ -83,6 +83,9 @@ class Panel(QWidget):
         Args:
             image (np.ndarray): The data of the image to show.
             k (int): The number of singular values of the image.
+
+        Raises:
+            ValueError: is the number of channel of the image is not supported.
         """
         height, width = image.shape[:2]
         qimage: QImage

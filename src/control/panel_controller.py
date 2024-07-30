@@ -106,10 +106,13 @@ class PanelController:
         Args:
             path (str): The path where to save the image.
         """
-        ratio: Optional[float] = self._compressor.save(path)
-        if ratio != None:
-            Window.create_message_dialog(self._panel, QCoreApplication.translate("Gui", "info"),
-                                         QCoreApplication.translate("Gui", "compression").format(ratio="{:.2f}".format(ratio * 100)))
+        try:
+            ratio: Optional[float] = self._compressor.save(path)
+            if ratio != None:
+                Window.create_message_dialog(self._panel, QCoreApplication.translate("Gui", "info"),
+                            QCoreApplication.translate("Gui", "compression").format(ratio="{:.2f}".format(ratio * 100)))
+        except FileNotFoundError as ex:
+            logging.error(f"Error:\t{ex}")
 
     def _set_image(self, thread: ComposeThread) -> None:
         """
