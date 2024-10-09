@@ -8,6 +8,7 @@ from PySide6.QtWidgets import QMessageBox
 from src.model.compressor import Compressor
 from src.view.window import Window
 from src.view.panel import Panel
+from src.control.decompose_thread import DecomposeThread
 from src.control.compose_thread import ComposeThread
 
 
@@ -21,6 +22,7 @@ class PanelController:
         _values (int): number of image singular values.
         _save_action (QAction): The action used to save the images.
         _last_value (int): The last valid value for the singular values.
+        _decompose_thread (DecomposeThread): The DecomposeThread used to decompose the image.
         _threads (List[ComposeThread]): The list of ComposeThraed associated at the controller.
 
     Methods:
@@ -49,6 +51,7 @@ class PanelController:
         self._values: int = 0
         self._save_action: QAction = save_action
         self._last_value: int = 0
+        self._decompose_thread: DecomposeThread = None
         self._threads: List[ComposeThread] = []
 
     def load_image(self, path: str) -> None:
@@ -59,10 +62,9 @@ class PanelController:
             path (str): he path to the file of the panel.
         """
         self._path = path
-        self._values = self._compressor.load(path)
-        self._compressor.compose(self._values - 1)
-        self._panel.set_image(self._compressor.image.squeeze(), self._values)
-        self._save_action.setEnabled(True)
+        self._decompose_thread = DecomposeThread(self._compressor, self._path)
+        self._decompose_thread.decomposed.connect(self._decomposed_image)
+        self._decompose_thread.start()
 
     def change_value(self) -> None:
         """
@@ -113,6 +115,11 @@ class PanelController:
                             QCoreApplication.translate("Gui", "compression").format(ratio="{:.2f}".format(ratio * 100)))
         except FileNotFoundError as ex:
             logging.error(f"Error:\t{ex}")
+
+    def _decomposed_image(self, values: int) -> None:
+        self._values = values
+        self._panel.set_image(self._compressor.image.squeeze(), self._values)
+        self._save_action.setEnabled(True)
 
     def _set_image(self, thread: ComposeThread) -> None:
         """

@@ -42,9 +42,7 @@ class Panel(QWidget):
         self._loaded: bool = False
         self._panel_controller: PanelController = PanelController(self, save_action)
         self._add_components()
-        threading.Thread(
-           target=functools.partial(self._panel_controller.load_image, path)
-        ).start()
+        self._panel_controller.load_image(path)
 
     @property
     def slider(self) -> QSlider:
