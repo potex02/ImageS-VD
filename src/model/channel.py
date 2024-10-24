@@ -58,6 +58,4 @@ class Channel:
         """
         if k > len(self._s):
             raise ValueError(QCoreApplication.translate("Cli", "values").format(values=k, max=len(self._s)))
-        sigma: np.ndarray = self._s.copy()
-        sigma[k:] = 0
-        return np.dot(np.dot(self._u, np.diag(sigma)), self._vt)
+        return np.dot(self._u[:, :k], np.dot(np.diag(self._s[:k]), self._vt[:k, :]))
