@@ -107,13 +107,7 @@ class Compressor:
 
         Args:
             k (int): number of singular values to use for compression.
-
-        Raises:
-            ValueError: If k is negative.
         """
-        if k < 0:
-            error: str
-            raise ValueError(QCoreApplication.translate("Cli", "unexpected_value").format(k=k))
         compressed_channels: List[np.ndarray] = []
         for i in self._channels:
             compressed_channels.append(i.compose(k))

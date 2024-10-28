@@ -89,9 +89,12 @@ def cli_usage(index: int) -> None:
         if result_image_ext != ".npz" and len(sys.argv) < index + 4:
             logging.error(QCoreApplication.translate("Cli", "bad"))
             sys.exit(1)
-        k: int = -1
+        k: int = 0
         if len(sys.argv) > index + 3:
             k = int(sys.argv[index + 3])
+        if k < 0:
+            logging.error(QCoreApplication.translate("Cli", "bad"))
+            sys.exit(1)
         compressor: Compressor = Compressor()
         compressor.load(original_image_path)
         if result_image_ext != ".npz":
