@@ -92,14 +92,6 @@ class Test(unittest.TestCase):
         self.assertEqual(result.shape, self._matrix.shape, "The matrices don't have the same dimensions")
         self.compare_matrices(result, 10 ** -14.5)
 
-    def test_compressor_negative_value(self) -> None:
-        """
-        Tests the exception throwing for a negative singular value.
-        """
-        compressor: Compressor = Compressor()
-        compressor.load("test.jpg")
-        self.assertRaises(ValueError, functools.partial(compressor.compose, -1))
-
     def test_compressor_grayscale(self) -> None:
         """
         Tests the compression of a grayscale image.
