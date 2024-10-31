@@ -35,7 +35,6 @@ The scripts must be launched in the same folder they are, otherwise the main.py 
 Move to the test folder:
 ```
 cd test
-
 ```
 On Unix add the project root to the PYTHONPATH:
 ```
