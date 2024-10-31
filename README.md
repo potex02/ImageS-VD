@@ -31,5 +31,19 @@ imageS-VD --cli <input-file-name> <output-file-name> [singular-value-threshold]
 ```
 The threshold is needed only if the output file isn't a .npz file.<br/>
 The scripts must be launched in the same folder they are, otherwise the main.py file won't be found and the execution will fail.
+# Test
+Move to the test folder:
+```
+cd test
+
+```
+On Unix add the project root to the PYTHONPATH:
+```
+export PYTHONPATH=..
+```
+Run the test:
+```
+python -m unittest test.py
+```
 # License
 This project is distributed under the BSD-3 license.
