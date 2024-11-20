@@ -58,4 +58,4 @@ class Channel:
         """
         if k > len(self._s):
             raise ValueError(QCoreApplication.translate("Cli", "values").format(values=k, max=len(self._s)))
-        return np.dot(self._u[:, :k], np.dot(np.diag(self._s[:k]), self._vt[:k, :]))
+        return self._u[:, :k] @ np.diag(self._s[:k]) @ self._vt[:k, :]

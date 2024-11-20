@@ -81,9 +81,6 @@ class Compressor:
             return self._load_channels(self._path)
         image: Image.Image = Image.open(self._path)
         image_array: np.ndarray = np.array(image)
-        index: int = path.rfind('.')
-        if index != -1 and path[index + 1:].lower() == "pbm":
-            image_array = np.where(image_array, 0, 255)
         channels: int = 1
         k: int = 0
         if len(image_array.shape) == 3:
